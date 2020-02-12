@@ -10,7 +10,7 @@ public class RunViewModel extends ViewModel {
 
     public RunViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is run fragment");
+        mText.setValue("We need a 'Start Run' activity");
     }
 
     public LiveData<String> getText() {

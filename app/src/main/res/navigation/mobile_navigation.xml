@@ -9,7 +9,8 @@
         android:id="@+id/navigation_run"
         android:name="com.cs2063.runsmart.ui.run.RunFragment"
         android:label="@string/title_run"
-        tools:layout="@layout/fragment_run" />
+        tools:layout="@layout/fragment_run"
+          />
 
     <fragment
         android:id="@+id/navigation_history"
