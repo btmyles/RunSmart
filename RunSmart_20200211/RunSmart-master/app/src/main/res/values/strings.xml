@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">RunSmart</string>
+    <string name="title_run">Run</string>
+    <string name="title_history">History</string>
+    <string name="title_articles">Articles</string>
+    <string name="startrun_text">Start Run</string>
+</resources>
