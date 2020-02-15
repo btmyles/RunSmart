@@ -10,11 +10,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class JsonUtils {
 
@@ -35,6 +38,28 @@ public class JsonUtils {
 
     // Initializer to read our data source (JSON file) into an array of course objects
     public JsonUtils(Context context) {
+        // Write History.json to app local files
+
+        File file = new File(context.getFilesDir(),"history");
+        if(!file.exists()){
+            file.mkdir();
+        }
+
+        try{
+            Scanner sc = new Scanner("History.json");
+            File gpxfile = new File(file, "History.json");
+            FileWriter writer = new FileWriter(gpxfile);
+            while (sc.hasNextLine()) {
+                writer.append(sc.nextLine());
+            }
+            writer.flush();
+            writer.close();
+
+        }catch (Exception e){
+            Log.i(TAG, e.toString());
+
+        }
+
         processJSON(context);
     }
 
@@ -79,7 +104,7 @@ public class JsonUtils {
 
     private String loadJSONFromAssets(Context context) {
         try {
-            InputStream is = context.getAssets().open(HISTORY_JSON_FILE);
+            InputStream is = new FileInputStream(new File(context.getFilesDir(),"history/History.json"));
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -92,7 +117,7 @@ public class JsonUtils {
 
     }
 
-    public String toJSon(HistoryData history) {
+    public String toJSon(Context context, HistoryData history) {
         try {
             // Here we convert Java Object to JSON
 
@@ -134,14 +159,7 @@ public class JsonUtils {
 
 
             // Overwrite History.json
-            try {
-                FileWriter writer = new FileWriter("History.json");
-                writer.write(mainObject.toString());
-            }
-            catch (IOException e) {
-                Log.i(TAG, "Error reading History.json");
-                Log.i(TAG, e.toString());
-            }
+            writeToFile(mainObject.toString(), context);
 
             return mainObject.toString();
 
@@ -150,6 +168,36 @@ public class JsonUtils {
         }
 
         return null;
+    }
+
+    private void writeToFile(String data,Context context) {
+//        try {
+//            Log.i(TAG, "Starting output stream writer");
+//            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("History.json", Context.MODE_PRIVATE));
+//            outputStreamWriter.write(data);
+//            outputStreamWriter.close();
+//
+//        }
+//        catch (IOException e) {
+//            Log.e("Exception", "File write failed: " + e.toString());
+//        }
+
+        File file = new File(context.getFilesDir(),"history");
+        if(!file.exists()){
+            file.mkdir();
+        }
+
+        try{
+            File gpxfile = new File(file, "History.json");
+            FileWriter writer = new FileWriter(gpxfile);
+            writer.write(data);
+            writer.flush();
+            writer.close();
+
+        }catch (Exception e){
+            Log.i(TAG, e.toString());
+
+        }
     }
 
     // Getter method for courses ArrayList

@@ -74,7 +74,7 @@ public class HistoryFragment extends Fragment {
         startTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                jsonUtils.toJSon(testHistory);
+                jsonUtils.toJSon(context, testHistory);
             }
         });
 
