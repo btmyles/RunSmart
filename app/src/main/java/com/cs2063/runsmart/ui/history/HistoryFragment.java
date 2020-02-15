@@ -26,6 +26,15 @@ public class HistoryFragment extends Fragment {
     private static final String TAG = "HistoryFragment.java";
     private HistoryViewModel historyViewModel;
 
+    TextView startTime;
+    TextView endTime;
+    TextView latitude;
+    TextView longitude;
+    TextView dataStart;
+    TextView dataEnd;
+    TextView dataLatitude;
+    TextView dataLongitude;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         historyViewModel =
@@ -39,35 +48,37 @@ public class HistoryFragment extends Fragment {
             }
         });
 
-        TextView startTime = (TextView) root.findViewById(R.id.text_start);
-        TextView endTime = (TextView) root.findViewById(R.id.text_end);
-        TextView latitude = (TextView) root.findViewById(R.id.text_latitude);
-        TextView longitude = (TextView) root.findViewById(R.id.text_longitude);
-        TextView dataStart = (TextView) root.findViewById(R.id.data_start);
-        TextView dataEnd = (TextView) root.findViewById(R.id.data_end);
-        TextView dataLatitude = (TextView) root.findViewById(R.id.data_latitude);
-        TextView dataLongitude = (TextView) root.findViewById(R.id.data_longitude);
+        // Temporary textviews for testing the ability to read JSON file.
+        startTime = (TextView) root.findViewById(R.id.text_start);
+        endTime = (TextView) root.findViewById(R.id.text_end);
+        latitude = (TextView) root.findViewById(R.id.text_latitude);
+        longitude = (TextView) root.findViewById(R.id.text_longitude);
+        dataStart = (TextView) root.findViewById(R.id.data_start);
+        dataEnd = (TextView) root.findViewById(R.id.data_end);
+        dataLatitude = (TextView) root.findViewById(R.id.data_latitude);
+        dataLongitude = (TextView) root.findViewById(R.id.data_longitude);
 
         final Context context = getContext();
 
+        // This should read the Json file in assets directory, copy it to
+        // local storage, and parse the data into the historyList variable within jsonUtils
         Log.i(TAG, "Starting JSON Utils");
         final JsonUtils jsonUtils = new JsonUtils(context);
         Log.i(TAG, "Done with JSON Utils");
 
         ArrayList<HistoryData> mDataset = jsonUtils.getHistoryData();
-
         HistoryData history = mDataset.get(0);
-
-
-        startTime.setText("TESTING STRING");
         dataStart.setText(Long.toString(history.getStartTime()));
 
         //Random setup
         Random rand = new Random();
-
         double[] testLat = {1.5, 1.6};
         double[] testLon = {2.5, 2.6};
 
+        // This is what should happen at the end of a run:
+        // A new HistoryData object is initialized with the data from the run
+        // The new HistoryData object should have its attributes calculated
+        // At some point the new HistoryData should be written to local storage in History.json
         final HistoryData testHistory = new HistoryData.Builder(rand.nextLong(), rand.nextLong(), testLat, testLon).build();
         testHistory.deriveAttributes();
 

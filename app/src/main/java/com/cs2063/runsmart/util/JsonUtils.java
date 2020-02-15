@@ -14,7 +14,6 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -26,11 +25,8 @@ public class JsonUtils {
     private static final String HISTORY_JSON_FILE = "History.json";
 
     private static final String KEY_HISTORY = "history";
-    private static final String KEY_AVERAGE_PACE = "average_pace";
     private static final String KEY_LATITUDE = "latitude";
     private static final String KEY_LONGITUDE = "longitude";
-    private static final String KEY_DISTANCE = "distance";
-    private static final String KEY_DURATION = "duration";
     private static final String KEY_END_TIME = "end_time";
     private static final String KEY_START_TIME = "start_time";
 
@@ -38,12 +34,15 @@ public class JsonUtils {
 
     // Initializer to read our data source (JSON file) into an array of course objects
     public JsonUtils(Context context) {
-        // Write History.json to app local files
+        // Write History.json to local files before reading from said local file
 
+
+        // This is not actually creating the required directory
         File file = new File(context.getFilesDir(),"history");
         if(!file.exists()){
             file.mkdir();
         }
+        Log.i(TAG, "history directory should now exist");
 
         try{
             Scanner sc = new Scanner("History.json");
@@ -60,6 +59,7 @@ public class JsonUtils {
 
         }
 
+        // Read from local files
         processJSON(context);
     }
 
@@ -104,6 +104,7 @@ public class JsonUtils {
 
     private String loadJSONFromAssets(Context context) {
         try {
+            // read file from local storage
             InputStream is = new FileInputStream(new File(context.getFilesDir(),"history/History.json"));
             int size = is.available();
             byte[] buffer = new byte[size];
@@ -119,8 +120,7 @@ public class JsonUtils {
 
     public String toJSon(Context context, HistoryData history) {
         try {
-            // Here we convert Java Object to JSON
-
+            // Convert HistoryData Java Object to JSON
             JSONObject mainObject = new JSONObject();
             JSONArray list = new JSONArray();
 
@@ -137,6 +137,7 @@ public class JsonUtils {
 
             list.put(valuesObject);
 
+            // convert the rest of the history into JSON and place it in the list, following the new data
             for (int i=0; i<historyArray.size(); i++) {
                 valuesObject = new JSONObject();
 
@@ -171,22 +172,17 @@ public class JsonUtils {
     }
 
     private void writeToFile(String data,Context context) {
-//        try {
-//            Log.i(TAG, "Starting output stream writer");
-//            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("History.json", Context.MODE_PRIVATE));
-//            outputStreamWriter.write(data);
-//            outputStreamWriter.close();
-//
-//        }
-//        catch (IOException e) {
-//            Log.e("Exception", "File write failed: " + e.toString());
-//        }
 
+        // Open History.json to overwrite it
         File file = new File(context.getFilesDir(),"history");
+
+        // This should be unnecessary since the directory was created
+        // upon initialization, but leaving it here in case it was deleted somehow
         if(!file.exists()){
             file.mkdir();
         }
 
+        // overwrite history.json
         try{
             File gpxfile = new File(file, "History.json");
             FileWriter writer = new FileWriter(gpxfile);
