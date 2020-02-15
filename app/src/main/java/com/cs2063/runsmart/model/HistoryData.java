@@ -63,7 +63,7 @@ public class HistoryData {
         this.longitude = builder.longitude;
     }
 
-    private void deriveAttributes() {
+    public void deriveAttributes() {
         // Calculate duration, distance, avg pace
         this.duration = endTime-startTime;
         this.distance = 0; //TODO

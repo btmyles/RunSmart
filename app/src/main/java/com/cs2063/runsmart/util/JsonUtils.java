@@ -1,6 +1,7 @@
 package com.cs2063.runsmart.util;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.cs2063.runsmart.model.HistoryData;
 
@@ -8,11 +9,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class JsonUtils {
+
+    private static final String TAG = "JsonUtils.java";
 
     private static final String HISTORY_JSON_FILE = "History.json";
 
@@ -84,6 +90,66 @@ public class JsonUtils {
             return null;
         }
 
+    }
+
+    public String toJSon(HistoryData history) {
+        try {
+            // Here we convert Java Object to JSON
+
+            JSONObject mainObject = new JSONObject();
+            JSONArray list = new JSONArray();
+
+            JSONObject valuesObject = new JSONObject();
+            valuesObject.put("start_time", history.getStartTime());
+            valuesObject.put("end_time", history.getEndTime());
+            valuesObject.put("duration", history.getDuration());
+            valuesObject.put("distance", history.getDistance());
+            valuesObject.put("avg_pace", history.getAvgPace());
+            JSONArray jsonArrayLat = new JSONArray(Arrays.asList(history.getLatitude()));
+            JSONArray jsonArrayLon = new JSONArray(Arrays.asList(history.getLongitude()));
+            valuesObject.put("latitude", jsonArrayLat);
+            valuesObject.put("longitude", jsonArrayLon);
+
+            list.put(valuesObject);
+
+            for (int i=0; i<historyArray.size(); i++) {
+                valuesObject = new JSONObject();
+
+                valuesObject.put("start_time", historyArray.get(i).getStartTime());
+                valuesObject.put("end_time", historyArray.get(i).getEndTime());
+                valuesObject.put("duration", historyArray.get(i).getDuration());
+                valuesObject.put("distance", historyArray.get(i).getDistance());
+                valuesObject.put("avg_pace", historyArray.get(i).getAvgPace());
+                jsonArrayLat = new JSONArray(Arrays.asList(historyArray.get(i).getLatitude()));
+                jsonArrayLon = new JSONArray(Arrays.asList(historyArray.get(i).getLongitude()));
+                valuesObject.put("latitude", jsonArrayLat);
+                valuesObject.put("longitude", jsonArrayLon);
+
+                list.put(valuesObject);
+            }
+
+            mainObject.accumulate("history", list);
+
+            Log.i(TAG, mainObject.toString());
+
+
+            // Overwrite History.json
+            try {
+                FileWriter writer = new FileWriter("History.json");
+                writer.write(mainObject.toString());
+            }
+            catch (IOException e) {
+                Log.i(TAG, "Error reading History.json");
+                Log.i(TAG, e.toString());
+            }
+
+            return mainObject.toString();
+
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
     }
 
     // Getter method for courses ArrayList

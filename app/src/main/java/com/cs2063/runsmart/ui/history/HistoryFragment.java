@@ -19,6 +19,7 @@ import com.cs2063.runsmart.model.HistoryData;
 import com.cs2063.runsmart.util.JsonUtils;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class HistoryFragment extends Fragment {
 
@@ -47,10 +48,10 @@ public class HistoryFragment extends Fragment {
         TextView dataLatitude = (TextView) root.findViewById(R.id.data_latitude);
         TextView dataLongitude = (TextView) root.findViewById(R.id.data_longitude);
 
-        Context context = getContext();
+        final Context context = getContext();
 
         Log.i(TAG, "Starting JSON Utils");
-        JsonUtils jsonUtils = new JsonUtils(context);
+        final JsonUtils jsonUtils = new JsonUtils(context);
         Log.i(TAG, "Done with JSON Utils");
 
         ArrayList<HistoryData> mDataset = jsonUtils.getHistoryData();
@@ -60,6 +61,22 @@ public class HistoryFragment extends Fragment {
 
         startTime.setText("TESTING STRING");
         dataStart.setText(Long.toString(history.getStartTime()));
+
+        //Random setup
+        Random rand = new Random();
+
+        double[] testLat = {1.5, 1.6};
+        double[] testLon = {2.5, 2.6};
+
+        final HistoryData testHistory = new HistoryData.Builder(rand.nextLong(), rand.nextLong(), testLat, testLon).build();
+        testHistory.deriveAttributes();
+
+        startTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jsonUtils.toJSon(testHistory);
+            }
+        });
 
 
         return root;
