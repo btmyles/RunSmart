@@ -3,6 +3,8 @@ package com.cs2063.runsmart.model;
 import androidx.annotation.NonNull;
 
 public class HistoryData {
+
+
     private long startTime;   // in ms
     private long endTime;
     private long duration;
@@ -10,6 +12,34 @@ public class HistoryData {
     private double[] latitude;
     private double[] longitude;
     private double avgPace;
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public long getDuration() {
+        return duration;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public double[] getLatitude() {
+        return latitude;
+    }
+
+    public double[] getLongitude() {
+        return longitude;
+    }
+
+    public double getAvgPace() {
+        return avgPace;
+    }
 
     public static class Builder {
         private long startTime;   // in ms
