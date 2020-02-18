@@ -15,7 +15,7 @@ public class HistoryViewModel extends ViewModel {
 
     public HistoryViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("Recent Run History");
+        mText.setValue("This is history fragment");
 
     }
 

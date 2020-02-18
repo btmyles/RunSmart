@@ -1,8 +1,6 @@
 package com.cs2063.runsmart;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
