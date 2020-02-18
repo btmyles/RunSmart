@@ -27,14 +27,14 @@ public class HistoryFragment extends Fragment {
     private static final String TAG = "HistoryFragment.java";
     private HistoryViewModel historyViewModel;
 
-    TextView startTime;
-    TextView endTime;
-    TextView latitude;
-    TextView longitude;
-    TextView dataStart;
-    TextView dataEnd;
-    TextView dataLatitude;
-    TextView dataLongitude;
+    private TextView startTime;
+    private TextView endTime;
+    private TextView latitude;
+    private TextView longitude;
+    private TextView dataStart;
+    private TextView dataEnd;
+    private TextView dataLatitude;
+    private TextView dataLongitude;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -50,14 +50,14 @@ public class HistoryFragment extends Fragment {
         });
 
         // Temporary textviews for testing the ability to read JSON file.
-        startTime = (TextView) root.findViewById(R.id.text_start);
-        endTime = (TextView) root.findViewById(R.id.text_end);
-        latitude = (TextView) root.findViewById(R.id.text_latitude);
-        longitude = (TextView) root.findViewById(R.id.text_longitude);
-        dataStart = (TextView) root.findViewById(R.id.data_start);
-        dataEnd = (TextView) root.findViewById(R.id.data_end);
-        dataLatitude = (TextView) root.findViewById(R.id.data_latitude);
-        dataLongitude = (TextView) root.findViewById(R.id.data_longitude);
+        startTime = root.findViewById(R.id.text_start);
+        endTime = root.findViewById(R.id.text_end);
+        latitude = root.findViewById(R.id.text_latitude);
+        longitude = root.findViewById(R.id.text_longitude);
+        dataStart = root.findViewById(R.id.data_start);
+        dataEnd = root.findViewById(R.id.data_end);
+        dataLatitude = root.findViewById(R.id.data_latitude);
+        dataLongitude = root.findViewById(R.id.data_longitude);
 
         // Is this the right way to get context to be used for application storage??
         final Context context = getContext();
