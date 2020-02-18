@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.cs2063.runsmart.R;
+import com.cs2063.runsmart.Tools;
 import com.cs2063.runsmart.model.HistoryData;
 import com.cs2063.runsmart.util.JsonUtils;
 
@@ -65,10 +67,18 @@ public class HistoryFragment extends Fragment {
         Log.i(TAG, "Starting JSON Utils");
         final JsonUtils jsonUtils = new JsonUtils(context);
         Log.i(TAG, "Done with JSON Utils");
-
-        ArrayList<HistoryData> mDataset = jsonUtils.getHistoryData();
-        HistoryData history = mDataset.get(0);
-        dataStart.setText(Long.toString(history.getStartTime()));
+        try {
+            ArrayList<HistoryData> mDataset = jsonUtils.getHistoryData();
+            Log.i(TAG, "Created dataset arraylist. Accessing mDataset.get(0)");
+            HistoryData history = mDataset.get(0);
+            Log.i(TAG, "Successfully accessed first element of dataset");
+            dataStart.setText(Long.toString(history.getStartTime()));
+        }
+        catch(Exception e)
+        {
+            Log.e(TAG, "Caught Exception.", e);
+            Tools.exceptionToast(context, "Error: " + e.getMessage());
+        }
 
         //Random setup
         Random rand = new Random();
