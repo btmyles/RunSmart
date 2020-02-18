@@ -1,6 +1,10 @@
 package com.cs2063.runsmart;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -9,6 +13,14 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +37,67 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+        createHistoryDirectory("history");
     }
+
+    private void createHistoryDirectory(String filename) {
+        Context context = getApplicationContext();
+
+        // This is not actually creating the required directory
+
+        File folder = getFilesDir();
+        File f = new File(folder, filename);
+        Log.i("Main", f.getAbsolutePath());
+
+        if (!f.exists()) {
+            Log.i("Main", "File does not exist");
+            if (!f.mkdir()) {
+                Toast.makeText(context, "Unable to create folder: " + filename, Toast.LENGTH_SHORT).show();
+            }
+        }
+        String[] arr = context.fileList();
+        for (int i=0; i<arr.length; i++) {
+            Log.i("main", arr[i]);
+        }
+
+        try {
+            File outputFile = new File(f, "test.json");
+            FileWriter writer = new FileWriter(outputFile);
+            writer.append("Test file contents");
+            Log.i("Main", "test.json has been written - File list below");
+            String[] filelist = context.fileList();
+            for (int i=0; i<arr.length; i++) {
+                Log.i("main", arr[i]);
+            }
+            writer.flush();
+            writer.close();
+        }
+        catch (IOException e) {
+            Log.i("Main", e.toString());
+
+        }
+
+        try {
+            File outputFile = new File(f, "test.json");
+            FileInputStream is = new FileInputStream(outputFile);
+            int content;
+            Log.i("MAIN", "Starting to read from test.json");
+            while ((content=is.read()) != -1) {
+                Log.i("MAIN", Character.toString((char) content));
+            }
+            is.close();
+        }
+        catch (IOException e) {
+            Log.i("Main", e.toString());
+        }
+
+        // create dummy file and write to history folder
+        // history should show an empty list  if nothing is in the FS
+        // consider sqlite
+        //make read operation very efficient
+
+    }
+
 
 }

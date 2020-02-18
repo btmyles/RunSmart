@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -58,6 +59,7 @@ public class HistoryFragment extends Fragment {
         dataLatitude = (TextView) root.findViewById(R.id.data_latitude);
         dataLongitude = (TextView) root.findViewById(R.id.data_longitude);
 
+        // Is this the right way to get context to be used for application storage??
         final Context context = getContext();
 
         // This should read the Json file in assets directory, copy it to
@@ -67,8 +69,14 @@ public class HistoryFragment extends Fragment {
         Log.i(TAG, "Done with JSON Utils");
 
         ArrayList<HistoryData> mDataset = jsonUtils.getHistoryData();
-        HistoryData history = mDataset.get(0);
-        dataStart.setText(Long.toString(history.getStartTime()));
+        try {
+            HistoryData history = mDataset.get(0);
+            dataStart.setText(Long.toString(history.getStartTime()));
+
+        }
+        catch (Exception e) {
+            Toast.makeText(context, "No run data to display", Toast.LENGTH_SHORT).show();
+        }
 
         //Random setup
         Random rand = new Random();

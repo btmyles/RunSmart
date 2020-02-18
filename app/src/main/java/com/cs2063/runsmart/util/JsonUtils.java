@@ -36,29 +36,6 @@ public class JsonUtils {
     public JsonUtils(Context context) {
         // Write History.json to local files before reading from said local file
 
-
-        // This is not actually creating the required directory
-        File file = new File(context.getFilesDir(),"history");
-        if(!file.exists()){
-            file.mkdir();
-        }
-        Log.i(TAG, "history directory should now exist");
-
-        try{
-            Scanner sc = new Scanner("History.json");
-            File gpxfile = new File(file, "History.json");
-            FileWriter writer = new FileWriter(gpxfile);
-            while (sc.hasNextLine()) {
-                writer.append(sc.nextLine());
-            }
-            writer.flush();
-            writer.close();
-
-        }catch (Exception e){
-            Log.i(TAG, e.toString());
-
-        }
-
         // Read from local files
         processJSON(context);
     }
@@ -176,23 +153,17 @@ public class JsonUtils {
         // Open History.json to overwrite it
         File file = new File(context.getFilesDir(),"history");
 
-        // This should be unnecessary since the directory was created
-        // upon initialization, but leaving it here in case it was deleted somehow
-        if(!file.exists()){
-            file.mkdir();
-        }
-
         // overwrite history.json
         try{
             File gpxfile = new File(file, "History.json");
             FileWriter writer = new FileWriter(gpxfile);
             writer.write(data);
+            Log.i("Main", "History.json has been written");
             writer.flush();
             writer.close();
 
         }catch (Exception e){
             Log.i(TAG, e.toString());
-
         }
     }
 
