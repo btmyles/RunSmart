@@ -131,6 +131,9 @@ public class JsonUtils {
                 list.put(valuesObject);
             }
 
+            // Add the new history value to the list
+            historyArray.add(0, history);
+
             mainObject.accumulate("history", list);
 
             Log.i(TAG, mainObject.toString());

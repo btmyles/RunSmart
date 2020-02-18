@@ -26,8 +26,8 @@
         android:layout_marginStart="34dp"
         android:layout_marginTop="48dp"
         android:layout_marginBottom="46dp"
-        android:text="Start Time"
-        android:textColor="#FF5722"
+        android:text="Start Time:"
+        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@+id/data_end"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_history" />
@@ -38,8 +38,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
         android:layout_marginTop="49dp"
-        android:text="End Time"
-        android:textColor="#FF5722"
+        android:text="End Time:"
+        android:textColor="@color/colorAccent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_start" />
 
@@ -49,8 +49,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
         android:layout_marginTop="50dp"
-        android:text="Latitude"
-        android:textColor="#FF5722"
+        android:text="Latitude:"
+        android:textColor="@color/colorAccent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_end" />
 
@@ -60,8 +60,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
         android:layout_marginTop="58dp"
-        android:text="longitude"
-        android:textColor="#FF5722"
+        android:text="Longitude:"
+        android:textColor="@color/colorAccent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_latitude" />
 
