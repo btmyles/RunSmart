@@ -55,8 +55,8 @@ public class JsonUtils {
                 // Create a JSON Object from individual JSON Array element
                 JSONObject elementObject = jsonArray.getJSONObject(i);
 
-                JSONArray Jsonlatitude = elementObject.getJSONArray(KEY_LATITUDE);
-                JSONArray Jsonlongitude = elementObject.getJSONArray(KEY_LONGITUDE);
+                JSONArray Jsonlatitude = elementObject.getJSONArray(KEY_LATITUDE).getJSONArray(0);
+                JSONArray Jsonlongitude = elementObject.getJSONArray(KEY_LONGITUDE).getJSONArray(0);
                 double[] latitude = new double[Jsonlatitude.length()];
                 double[] longitude = new double[Jsonlongitude.length()];
 

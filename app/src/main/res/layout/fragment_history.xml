@@ -71,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text=""
-        android:textColor="#FF5722"
+        android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_history" />
@@ -83,7 +83,7 @@
         android:layout_marginStart="1dp"
         android:layout_marginTop="44dp"
         android:text=""
-        android:textColor="#FF5722"
+        android:textColor="@color/colorAccent"
         app:layout_constraintStart_toStartOf="@+id/data_start"
         app:layout_constraintTop_toBottomOf="@+id/data_start" />
 
@@ -93,7 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text=""
-        android:textColor="#FF5722"
+        android:textColor="@color/colorAccent"
         app:layout_constraintStart_toStartOf="@+id/data_end"
         app:layout_constraintTop_toBottomOf="@+id/data_end" />
 
@@ -104,7 +104,7 @@
         android:layout_marginStart="1dp"
         android:layout_marginTop="64dp"
         android:text=""
-        android:textColor="#FF5722"
+        android:textColor="@color/colorAccent"
         app:layout_constraintStart_toStartOf="@+id/data_latitude"
         app:layout_constraintTop_toBottomOf="@+id/data_latitude" />
 </androidx.constraintlayout.widget.ConstraintLayout>
