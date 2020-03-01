@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.cs2063.runsmart.util.JsonUtils;
 import com.cs2063.runsmart.util.LocationUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -27,6 +28,10 @@ import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static JsonUtils jsonUtils;
+    private final String TAG = "MainActivity.java";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
         createHistoryDirectory("history");
+
+        Log.i(TAG, "Starting JSON Utils");
+        jsonUtils = new JsonUtils(this);
+        Log.i(TAG, "Done with JSON Utils");
 
     }
 

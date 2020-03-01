@@ -10,13 +10,17 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.cs2063.runsmart.ui.run.RunFragment;
+
 public class LocationUtils {
 
     private LocationManager locationManager;
+    private final String TAG = "LocationUtils";
 
     public LocationUtils(LocationManager locationManager) {
         this.locationManager = locationManager;
@@ -40,7 +44,8 @@ public class LocationUtils {
             double latitude = location.getLatitude();
             // TODO: return the location data to RunFragment or find another way to
             //  incrementally store this data until the run is over.
-
+            RunFragment.addCoordinates(latitude, longitude);
+            Log.i(TAG, "Location updated: " + latitude + " : " + longitude);
 //            runOnUiThread(new Runnable() {
 //                @Override
 //                public void run() {

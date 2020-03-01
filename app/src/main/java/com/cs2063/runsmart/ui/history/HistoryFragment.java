@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.cs2063.runsmart.MainActivity;
 import com.cs2063.runsmart.R;
 import com.cs2063.runsmart.model.HistoryData;
 import com.cs2063.runsmart.util.JsonUtils;
@@ -64,11 +65,8 @@ public class HistoryFragment extends Fragment {
 
         // This should read the Json file in assets directory, copy it to
         // local storage, and parse the data into the historyList variable within jsonUtils
-        Log.i(TAG, "Starting JSON Utils");
-        final JsonUtils jsonUtils = new JsonUtils(context);
-        Log.i(TAG, "Done with JSON Utils");
 
-        ArrayList<HistoryData> mDataset = jsonUtils.getHistoryData();
+        ArrayList<HistoryData> mDataset = MainActivity.jsonUtils.getHistoryData();
         try {
             HistoryData history = mDataset.get(0);
             dataStart.setText(Long.toString(history.getStartTime()));
@@ -93,7 +91,7 @@ public class HistoryFragment extends Fragment {
         startTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                jsonUtils.toJSon(context, testHistory);
+                MainActivity.jsonUtils.toJSon(context, testHistory);
             }
         });
 

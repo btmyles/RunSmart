@@ -9,6 +9,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +24,18 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.cs2063.runsmart.MainActivity;
 import com.cs2063.runsmart.R;
 import com.cs2063.runsmart.model.HistoryData;
 import com.cs2063.runsmart.util.LocationUtils;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Calendar;
+
 public class RunFragment extends Fragment {
+
+    private final String TAG = "RunFragment";
 
     private RunViewModel runViewModel;
     private Button runButton;
@@ -35,10 +43,13 @@ public class RunFragment extends Fragment {
     private LocationManager locationManager;
     private LocationUtils locationUtils;
 
-    private int starttime;
-    private int endtime;
-    private double[] latitude;
-    private double[] longitude;
+    private long starttime;
+    private long endtime;
+    private static ArrayList<Double> latitudeList;
+    private static ArrayList<Double> longitudeList;
+    private double[] latitudeArray;
+    private double[] longitudeArray;
+    private int counter;
 
     HistoryData historyData;
 
@@ -78,9 +89,14 @@ public class RunFragment extends Fragment {
         }
         if (runButton.getText().equals(getResources().getString(R.string.endrun_text))) {
             locationUtils.shutoff();
-            historyData = new HistoryData.Builder(starttime, endtime, latitude, longitude).build();
-            // TODO: add this data to the JSON file
+            endtime = Calendar.getInstance().getTimeInMillis();
+            latitudeArray = list2double(latitudeList);
+            longitudeArray = list2double(longitudeList);
+            historyData = new HistoryData.Builder(starttime, endtime, latitudeArray, longitudeArray).build();
+            // add this data to the JSON file
+            MainActivity.jsonUtils.toJSon(getActivity(), historyData);
             runButton.setText(R.string.startrun_text);
+            Log.i(TAG, "End time = " + endtime/1000);
         } else {
             if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
@@ -94,8 +110,12 @@ public class RunFragment extends Fragment {
                 return;
             }
             locationUtils.turnon(getActivity());
+            latitudeList = new ArrayList<Double>();
+            longitudeList = new ArrayList<Double>();
+            starttime = Calendar.getInstance().getTimeInMillis();
             Toast.makeText(getActivity(), "GPS provider started running", Toast.LENGTH_SHORT).show();
-            runButton.setText(R.string.startrun_text);
+            Log.i(TAG, "Start time = " + starttime/1000);
+            runButton.setText(R.string.endrun_text);
         }
     }
 
@@ -128,5 +148,20 @@ public class RunFragment extends Fragment {
                     }
                 });
         dialog.show();
+    }
+
+    public static void addCoordinates(double latitude, double longitude) {
+        latitudeList.add(latitude);
+        longitudeList.add(longitude);
+    }
+
+    private double[] list2double(ArrayList<Double> list) {
+        Double[] array = new Double[list.size()];
+        double[] array2 = new double[list.size()];
+        list.toArray(array);
+        for (int i=0; i<list.size(); i++) {
+            array2[i] = array[i];
+        }
+        return array2;
     }
 }
