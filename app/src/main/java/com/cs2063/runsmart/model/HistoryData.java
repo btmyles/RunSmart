@@ -66,7 +66,10 @@ public class HistoryData {
     public void deriveAttributes() {
         // Calculate duration, distance, avg pace
         this.duration = endTime-startTime;
-        this.distance = 0; //TODO
+        this.distance=0;
+        for(int i=0; i<this.latitude.length-1;i++){
+            this.distance+=39963.0*Math.acos(Math.sin(latitude[i])*Math.sin(latitude[i+1])+Math.cos(latitude[i])*Math.cos(latitude[i+1])*Math.cos(longitude[i+1]-longitude[i]));
+        }
         this.avgPace = this.distance/this.duration;
     }
 }
