@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.cs2063.runsmart.LineLayerActivity;
 import com.cs2063.runsmart.MainActivity;
 import com.cs2063.runsmart.R;
 import com.cs2063.runsmart.model.HistoryData;
@@ -49,7 +50,6 @@ public class RunFragment extends Fragment {
     private static ArrayList<Double> longitudeList;
     private double[] latitudeArray;
     private double[] longitudeArray;
-    private int counter;
 
     HistoryData historyData;
 
@@ -89,14 +89,24 @@ public class RunFragment extends Fragment {
         }
         if (runButton.getText().equals(getResources().getString(R.string.endrun_text))) {
             locationUtils.shutoff();
+
+            // Get data from run
             endtime = Calendar.getInstance().getTimeInMillis();
             latitudeArray = list2double(latitudeList);
             longitudeArray = list2double(longitudeList);
             historyData = new HistoryData.Builder(starttime, endtime, latitudeArray, longitudeArray).build();
+
             // add this data to the JSON file
             MainActivity.jsonUtils.toJSon(getActivity(), historyData);
+
             runButton.setText(R.string.startrun_text);
-            Log.i(TAG, "End time = " + endtime/1000);
+            Log.i(TAG, "End time = " + endtime);
+
+            // Start map activity
+            Intent intent = new Intent(getActivity().getApplicationContext(), LineLayerActivity.class);
+            intent.putExtra("LATITUDE", historyData.getLatitude());
+            intent.putExtra("LONGITUDE", historyData.getLongitude());
+            startActivity(intent);
         } else {
             if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
@@ -110,11 +120,15 @@ public class RunFragment extends Fragment {
                 return;
             }
             locationUtils.turnon(getActivity());
+
+            // Initialize coordinate lists
             latitudeList = new ArrayList<Double>();
             longitudeList = new ArrayList<Double>();
             starttime = Calendar.getInstance().getTimeInMillis();
-            Toast.makeText(getActivity(), "GPS provider started running", Toast.LENGTH_SHORT).show();
-            Log.i(TAG, "Start time = " + starttime/1000);
+
+            Toast.makeText(getActivity(), "Run started", Toast.LENGTH_SHORT).show();
+            Log.i(TAG, "Start time = " + starttime);
+
             runButton.setText(R.string.endrun_text);
         }
     }

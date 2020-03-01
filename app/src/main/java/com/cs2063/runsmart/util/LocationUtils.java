@@ -35,7 +35,7 @@ public class LocationUtils {
         // This statement is already being checked before calling the turnon method. No operations are needed here.
         if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1 * 1000, 0, locationListenerGPS);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5 * 1000, 0, locationListenerGPS);
     }
 
     private final LocationListener locationListenerGPS = new LocationListener() {

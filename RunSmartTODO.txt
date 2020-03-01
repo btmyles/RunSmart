@@ -1,9 +1,5 @@
 Tasks for RunSmart
 
-Location
-- Integrate location
-- save location to json
-
 History
 - Create recyclerview to show json data
 - create detail activity showing JSON data, derived values, notes, button to view map of coordinates (or image of the map)
@@ -18,3 +14,24 @@ JSON
 Articles
 - Create recyclerview
 - Find articles to display
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+DONE
+
+Location
+- Integrate location
+- save location to json
