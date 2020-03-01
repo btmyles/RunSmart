@@ -17,7 +17,7 @@
         android:id="@+id/navigation_history"
         android:name="com.cs2063.runsmart.ui.history.HistoryFragment"
         android:label="@string/title_history"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/geodata_list" />
 
     <fragment
         android:id="@+id/navigation_articles"

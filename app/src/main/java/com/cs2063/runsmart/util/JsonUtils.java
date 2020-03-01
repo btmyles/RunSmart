@@ -44,34 +44,36 @@ public class JsonUtils {
 
         try {
             // Create a JSON Object from file contents String
-            JSONObject jsonObject = new JSONObject(loadJSONFromAssets(context));
+            if(loadJSONFromAssets(context) != null) {
+                JSONObject jsonObject = new JSONObject(loadJSONFromAssets(context));
 
-            // Create a JSON Array from the JSON Object
-            // This array is the "courses" array mentioned in the lab write-up
-            JSONArray jsonArray = jsonObject.getJSONArray(KEY_HISTORY);
+                // Create a JSON Array from the JSON Object
+                // This array is the "courses" array mentioned in the lab write-up
+                JSONArray jsonArray = jsonObject.getJSONArray(KEY_HISTORY);
 
-            for (int i=0; i < jsonArray.length(); i++) {
-                // Create a JSON Object from individual JSON Array element
-                JSONObject elementObject = jsonArray.getJSONObject(i);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    // Create a JSON Object from individual JSON Array element
+                    JSONObject elementObject = jsonArray.getJSONObject(i);
 
-                JSONArray Jsonlatitude = elementObject.getJSONArray(KEY_LATITUDE).getJSONArray(0);
-                JSONArray Jsonlongitude = elementObject.getJSONArray(KEY_LONGITUDE).getJSONArray(0);
-                double[] latitude = new double[Jsonlatitude.length()];
-                double[] longitude = new double[Jsonlongitude.length()];
+                    JSONArray Jsonlatitude = elementObject.getJSONArray(KEY_LATITUDE).getJSONArray(0);
+                    JSONArray Jsonlongitude = elementObject.getJSONArray(KEY_LONGITUDE).getJSONArray(0);
+                    double[] latitude = new double[Jsonlatitude.length()];
+                    double[] longitude = new double[Jsonlongitude.length()];
 
-                for (int j=0; j<Jsonlatitude.length(); j++) {
-                    latitude[j] = Jsonlatitude.getDouble(j);
-                    longitude[j] = Jsonlongitude.getDouble(j);
+                    for (int j = 0; j < Jsonlatitude.length(); j++) {
+                        latitude[j] = Jsonlatitude.getDouble(j);
+                        longitude[j] = Jsonlongitude.getDouble(j);
+                    }
+
+                    // Get data from individual JSON Object
+                    HistoryData historyData = new HistoryData.Builder(elementObject.getLong(KEY_START_TIME),
+                            elementObject.getLong(KEY_END_TIME),
+                            latitude, longitude)
+                            .build();
+
+                    // Add new Course to courses ArrayList
+                    historyArray.add(historyData);
                 }
-
-                // Get data from individual JSON Object
-                HistoryData historyData = new HistoryData.Builder(elementObject.getLong(KEY_START_TIME),
-                        elementObject.getLong(KEY_END_TIME),
-                        latitude,longitude)
-                        .build();
-
-                // Add new Course to courses ArrayList
-                historyArray.add(historyData);
             }
         } catch (JSONException e) {
             e.printStackTrace();
