@@ -1,11 +1,14 @@
 package com.cs2063.runsmart;
 
 import android.content.Context;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.cs2063.runsmart.util.LocationUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
         createHistoryDirectory("history");
+
     }
 
     private void createHistoryDirectory(String filename) {
@@ -98,6 +102,5 @@ public class MainActivity extends AppCompatActivity {
         //make read operation very efficient
 
     }
-
 
 }
