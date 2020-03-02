@@ -101,6 +101,7 @@ public class RunFragment extends Fragment {
             MainActivity.jsonUtils.toJSon(getActivity(), historyData);
 
             runButton.setText(R.string.startrun_text);
+            runButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_bg_round));
             Log.i(TAG, "End time = " + endtime);
 
             // Start map activity
@@ -131,6 +132,7 @@ public class RunFragment extends Fragment {
             Log.i(TAG, "Start time = " + starttime);
 
             runButton.setText(R.string.endrun_text);
+            runButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_bg_round_2));
         }
     }
 
