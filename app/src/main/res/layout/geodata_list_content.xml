@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/history_item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeightLarge">
 
-<TextView android:id="@+id/history_textview"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/text_margin"
-    android:textAppearance="?attr/textAppearanceListItem"
-    android:textColor="@color/colorAccent"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
-    </TextView>
+    <TextView
+        android:id="@+id/history_item_start"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textColor="@color/colorAccent"
+        android:gravity="center_vertical"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/history_item_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/history_item_start"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textColor="@color/colorAccent"
+        android:gravity="center_vertical"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/history_item_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textColor="@color/colorAccent"
+        android:gravity="center_vertical"
+        android:textSize="16sp"/>
+
+
+</RelativeLayout>

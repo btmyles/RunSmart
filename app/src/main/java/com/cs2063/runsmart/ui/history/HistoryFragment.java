@@ -28,7 +28,11 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -61,6 +65,7 @@ public class HistoryFragment extends Fragment {
 
     public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         private final ArrayList<HistoryData> mDataset;
+        private final Date date = new Date();
 
         private MyAdapter(ArrayList<HistoryData> myDataset) {
             mDataset = myDataset;
@@ -71,10 +76,17 @@ public class HistoryFragment extends Fragment {
         // but RecyclerView gives us the flexibility to do more complex things
         // (e.g., display an image and some text).
         private class ViewHolder extends RecyclerView.ViewHolder {
-            private TextView mTextView;
-            private ViewHolder(TextView v) {
+            private RelativeLayout relativeLayout;
+            private TextView start;
+            private TextView distance;
+            private TextView duration;
+            private ViewHolder(View v) {
                 super(v);
-                mTextView = v;
+                start = v.findViewById(R.id.history_item_start);
+                distance = v.findViewById(R.id.history_item_distance);
+                duration = v.findViewById(R.id.history_item_duration);
+
+                relativeLayout = v.findViewById(R.id.history_item_layout);
             }
         }
 
@@ -85,7 +97,7 @@ public class HistoryFragment extends Fragment {
         @Override
         public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                        int viewType) {
-            TextView v = (TextView) LayoutInflater.from(parent.getContext())
+            View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.geodata_list_content, parent, false);
 
             return new ViewHolder(v);
@@ -100,14 +112,26 @@ public class HistoryFragment extends Fragment {
             //  (Hint: you might need to declare this variable as final.)
             final HistoryData currentHistory = mDataset.get(position);
 
+            date.setTime(currentHistory.getStartTime());
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String dateFormatted = formatter.format(date);
+
+            long durationInMillis = currentHistory.getDuration();
+            long second = (durationInMillis / 1000) % 60;
+            long minute = (durationInMillis / (1000 * 60)) % 60;
+            long hour = (durationInMillis / (1000 * 60 * 60)) % 24;
+            String durationFormatted = String.format("%02d:%02d:%02d", hour, minute, second);
+
             //  Set the TextView in the ViewHolder (holder) to be the title
-            holder.mTextView.setText(Long.toString(currentHistory.getStartTime()));
+            holder.start.setText(dateFormatted);
+            holder.distance.setText(Double.toString(currentHistory.getDistance()));
+            holder.duration.setText(durationFormatted);
 
             //  Set the onClickListener for the TextView in the ViewHolder (holder) such
             //  that when it is clicked, it creates an explicit intent to launch DetailActivity
             //  HINT: You will need to put two extra pieces of information in this intent:
             //      The Course title and it's description
-            holder.mTextView.setOnClickListener(new View.OnClickListener() {
+            holder.start.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v){
                     // We should send every part of the historydata object
