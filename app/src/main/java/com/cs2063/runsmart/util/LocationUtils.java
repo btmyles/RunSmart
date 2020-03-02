@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.cs2063.runsmart.R;
 import com.cs2063.runsmart.ui.run.RunFragment;
 
 public class LocationUtils {

@@ -23,7 +23,7 @@
         android:id="@+id/start_run"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:background="@drawable/button_bg_round"
+        android:background="@drawable/button_bg_round_blue"
         android:fontFamily="@font/opensans_extrabolditalic"
         android:text="@string/startrun_text"
         android:textSize="25sp"
@@ -34,11 +34,16 @@
         app:layout_constraintTop_toBottomOf="@+id/text_run"
         app:layout_constraintVertical_bias="0.194" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="82dp"
-        android:layout_height="15dp"
-        tools:layout_editor_absoluteX="164dp"
-        tools:layout_editor_absoluteY="358dp" />
+    <Chronometer
+        android:id="@+id/chronometer"
+        android:layout_width="152dp"
+        android:layout_height="112dp"
+        android:layout_marginTop="16dp"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/start_run"
+        app:layout_constraintStart_toStartOf="@+id/start_run"
+        app:layout_constraintTop_toBottomOf="@+id/start_run" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

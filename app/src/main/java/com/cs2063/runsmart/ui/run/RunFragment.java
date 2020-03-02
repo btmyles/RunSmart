@@ -5,15 +5,18 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.provider.Settings;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,23 +27,29 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.cs2063.runsmart.LineLayerActivity;
 import com.cs2063.runsmart.MainActivity;
 import com.cs2063.runsmart.R;
 import com.cs2063.runsmart.model.HistoryData;
 import com.cs2063.runsmart.ui.history.HistoryActivity;
 import com.cs2063.runsmart.util.LocationUtils;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class RunFragment extends Fragment {
 
     private final String TAG = "RunFragment";
 
     private RunViewModel runViewModel;
-    private Button runButton;
+
+    private static Button runButton;
+    private static int ctr =0;
+    private int seconds = 0;
+    private boolean wasRunning;
+    private Chronometer chronometer;
+    private long pauseOffset;
+    private boolean running;
 
     private LocationManager locationManager;
     private LocationUtils locationUtils;
@@ -67,7 +76,6 @@ public class RunFragment extends Fragment {
             }
         });
 
-
         runButton = root.findViewById(R.id.start_run);
         runButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,8 +87,28 @@ public class RunFragment extends Fragment {
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locationUtils = new LocationUtils(locationManager);
 
+
+        chronometer = root.findViewById(R.id.chronometer);
+        chronometer.setFormat("00:%s");
+        chronometer.setBase(SystemClock.elapsedRealtime());
+
+        chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            @Override
+            public void onChronometerTick(Chronometer chronometer) {
+                    long time = SystemClock.elapsedRealtime() - chronometer.getBase();
+                    int h   = (int)(time /3600000);
+                    int m = (int)(time - h*3600000)/60000;
+                    int s= (int)(time - h*3600000- m*60000)/1000 ;
+                    String hh = h < 10 ? "0"+h: h+"";
+                    String mm = m < 10 ? "0"+m: m+"";
+                    String ss = s < 10 ? "0"+s: s+"";
+                    chronometer.setText(hh+":"+mm+":"+ss);
+            }
+        });
+
         return root;
     }
+
 
     private void startRun() {
         // Check if location is enabled
@@ -102,10 +130,17 @@ public class RunFragment extends Fragment {
             MainActivity.jsonUtils.toJSon(getActivity(), historyData);
 
             runButton.setText(R.string.startrun_text);
-            runButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_bg_round));
+            runButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_bg_round_blue));
+
+            chronometer.setBase(SystemClock.elapsedRealtime());
+            running=false;
+            pauseOffset = 0;
+            chronometer.stop();
+
             Log.i(TAG, "End time = " + endtime);
 
             // Start map activity
+            ctr=0;
             Intent intent = new Intent(getActivity().getApplicationContext(), HistoryActivity.class);
             intent.putExtra("START_TIME", historyData.getStartTime());
             intent.putExtra("END_TIME", historyData.getEndTime());
@@ -137,8 +172,16 @@ public class RunFragment extends Fragment {
             Toast.makeText(getActivity(), "Run started", Toast.LENGTH_SHORT).show();
             Log.i(TAG, "Start time = " + starttime);
 
+            //Turn Yellow
             runButton.setText(R.string.endrun_text);
-            runButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_bg_round_2));
+            runButton.setBackgroundResource((R.drawable.button_bg_round_yellow));
+
+            //Start Chronometer
+            if (!running) {
+                chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+                chronometer.start();
+                running = true;
+            }
         }
     }
 
@@ -176,13 +219,18 @@ public class RunFragment extends Fragment {
     public static void addCoordinates(double latitude, double longitude) {
         latitudeList.add(latitude);
         longitudeList.add(longitude);
+
+        //Turn Red
+        ctr++;
+        if(ctr==1)
+            runButton.setBackgroundResource((R.drawable.button_bg_round_red));
     }
 
     private double[] list2double(ArrayList<Double> list) {
         Double[] array = new Double[list.size()];
         double[] array2 = new double[list.size()];
         list.toArray(array);
-        for (int i=0; i<list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             array2[i] = array[i];
         }
         return array2;
