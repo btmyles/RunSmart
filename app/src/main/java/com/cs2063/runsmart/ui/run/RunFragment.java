@@ -47,9 +47,9 @@ public class RunFragment extends Fragment {
     private static int ctr =0;
     private int seconds = 0;
     private boolean wasRunning;
-    private Chronometer chronometer;
-    private long pauseOffset;
-    private boolean running;
+    private static Chronometer chronometer;
+    private static long pauseOffset;
+    private static boolean running;
 
     private LocationManager locationManager;
     private LocationUtils locationUtils;
@@ -172,15 +172,8 @@ public class RunFragment extends Fragment {
             Log.i(TAG, "Start time = " + starttime);
 
             //Turn Yellow
-            runButton.setText(R.string.endrun_text);
+            runButton.setText(R.string.loadingrun_text);
             runButton.setBackgroundResource((R.drawable.button_bg_round_yellow));
-
-            //Start Chronometer
-            if (!running) {
-                chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
-                chronometer.start();
-                running = true;
-            }
         }
     }
 
@@ -221,8 +214,17 @@ public class RunFragment extends Fragment {
 
         //Turn Red
         ctr++;
-        if(ctr==1)
+        if(ctr==1) {
+            runButton.setText(R.string.endrun_text);
             runButton.setBackgroundResource((R.drawable.button_bg_round_red));
+
+            //Start Chronometer
+            if (!running) {
+                chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+                chronometer.start();
+                running = true;
+            }
+        }
     }
 
     private double[] list2double(ArrayList<Double> list) {

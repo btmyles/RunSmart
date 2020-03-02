@@ -4,6 +4,7 @@
     <string name="title_history">History</string>
     <string name="title_articles">Articles</string>
     <string name="startrun_text">Start</string>
+    <string name="loadingrun_text">...</string>
     <string name="endrun_text">Finish</string>
     <string name="access_token">pk.eyJ1IjoiYmVuamlzdGFpbiIsImEiOiJjazc5N3V5b2wwZ2d5M2ZxeHBtejI0ZGZwIn0.878nopmDmYrQUeghnJTdkA</string>
 </resources>
