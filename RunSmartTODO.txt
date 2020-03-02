@@ -1,13 +1,19 @@
 Tasks for RunSmart
 
-History
-- Create recyclerview to show json data
-- create detail activity showing JSON data, derived values, notes, button to view map of coordinates (or image of the map)
+Run UI
+- go to history detail after run
+- Change button while running
+- show timer while running
 
-Map
-- Show path of run by plotting coordinates on a map
-- Save image of map (not needed if we dont decide to use images)
-	
+History
+- Improve recyclerview to show json data
+- improve detail activity showing JSON data, derived values, notes, button to view map of coordinates (or image of the map)
+- Notes section
+
+Performance
+- resource consumption considerations
+- background location processes
+
 JSON
 - calculate derived values
 
@@ -23,15 +29,11 @@ Articles
 
 
 
-
-
-
-
-
-
-
 DONE
 
 Location
 - Integrate location
 - save location to json
+
+Map
+- Show path of run by plotting coordinates on a map

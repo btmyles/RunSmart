@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.cs2063.runsmart.model.HistoryData;
 import com.cs2063.runsmart.util.JsonUtils;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,6 +52,7 @@ public class HistoryFragment extends Fragment {
         MyAdapter mAdapter = new MyAdapter(mHistoryDataList);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
         Log.i(TAG, "finishing onCreateView()");
 
