@@ -67,10 +67,10 @@ public class JsonUtils {
 
                     // Get data from individual JSON Object
                     HistoryData historyData = new HistoryData.Builder(elementObject.getLong(KEY_START_TIME),
-                            elementObject.getLong(KEY_END_TIME),
-                            latitude, longitude)
+                            elementObject.getLong(KEY_END_TIME), latitude, longitude)
                             .build();
 
+                    historyData.deriveAttributes();
                     // Add new Course to courses ArrayList
                     historyArray.add(historyData);
                 }
@@ -98,6 +98,8 @@ public class JsonUtils {
 
     public String toJSon(Context context, HistoryData history) {
         try {
+            history.deriveAttributes();
+
             // Convert HistoryData Java Object to JSON
             JSONObject mainObject = new JSONObject();
             JSONArray list = new JSONArray();

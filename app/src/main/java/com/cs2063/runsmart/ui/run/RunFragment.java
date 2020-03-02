@@ -95,7 +95,6 @@ public class RunFragment extends Fragment {
             latitudeArray = list2double(latitudeList);
             longitudeArray = list2double(longitudeList);
             historyData = new HistoryData.Builder(starttime, endtime, latitudeArray, longitudeArray).build();
-            historyData.deriveAttributes();
 
             // add this data to the JSON file
             MainActivity.jsonUtils.toJSon(getActivity(), historyData);
