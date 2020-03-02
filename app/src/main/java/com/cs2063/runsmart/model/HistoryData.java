@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 
 public class HistoryData {
 
-
     private long startTime;   // in ms
     private long endTime;
     private long duration;

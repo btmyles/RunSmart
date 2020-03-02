@@ -33,13 +33,6 @@ import java.util.Random;
 public class HistoryFragment extends Fragment {
 
     private static final String TAG = "HistoryFragment.java";
-    private HistoryViewModel historyViewModel;
-
-    private ArrayList<HistoryData> mHistoryDataList;
-    private JsonUtils jutils;
-    private RecyclerView.LayoutManager layoutManager;
-    private MyAdapter mAdapter;
-    private RecyclerView recyclerView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -47,14 +40,14 @@ public class HistoryFragment extends Fragment {
         Log.i(TAG, "running onCreateView()");
         View root = inflater.inflate(R.layout.fragment_history, container, false);
 
-        jutils = MainActivity.jsonUtils;
-        mHistoryDataList = jutils.getHistoryData();
+        JsonUtils jutils = MainActivity.jsonUtils;
+        ArrayList<HistoryData> mHistoryDataList = jutils.getHistoryData();
 
         // RecyclerView setup
-        recyclerView = root.findViewById(R.id.recycler_view);
-        layoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        mAdapter = new MyAdapter(mHistoryDataList);
+        MyAdapter mAdapter = new MyAdapter(mHistoryDataList);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -66,7 +59,7 @@ public class HistoryFragment extends Fragment {
     public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         private final ArrayList<HistoryData> mDataset;
 
-        public MyAdapter(ArrayList<HistoryData> myDataset) {
+        private MyAdapter(ArrayList<HistoryData> myDataset) {
             mDataset = myDataset;
         }
 
@@ -74,9 +67,9 @@ public class HistoryFragment extends Fragment {
         // it will just be a single TextView (displaying the title of a course)
         // but RecyclerView gives us the flexibility to do more complex things
         // (e.g., display an image and some text).
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            public TextView mTextView;
-            public ViewHolder(TextView v) {
+        private class ViewHolder extends RecyclerView.ViewHolder {
+            private TextView mTextView;
+            private ViewHolder(TextView v) {
                 super(v);
                 mTextView = v;
             }
@@ -104,8 +97,8 @@ public class HistoryFragment extends Fragment {
             //  (Hint: you might need to declare this variable as final.)
             final HistoryData currentHistory = mDataset.get(position);
 
-            //  Set the TextView in the ViewHolder (holder) to be the title for this Course
-            holder.mTextView.setText(currentHistory.getStartTime() + "");
+            //  Set the TextView in the ViewHolder (holder) to be the title
+            holder.mTextView.setText(Long.toString(currentHistory.getStartTime()));
 
             //  Set the onClickListener for the TextView in the ViewHolder (holder) such
             //  that when it is clicked, it creates an explicit intent to launch DetailActivity
@@ -118,8 +111,11 @@ public class HistoryFragment extends Fragment {
                     Intent intent = new Intent(getActivity().getApplicationContext(), HistoryActivity.class);
                     intent.putExtra("START_TIME", currentHistory.getStartTime());
                     intent.putExtra("END_TIME", currentHistory.getEndTime());
+                    intent.putExtra("DURATION", currentHistory.getDuration());
+                    intent.putExtra("DISTANCE", currentHistory.getDistance());
                     intent.putExtra("LONGITUDE", currentHistory.getLongitude());
                     intent.putExtra("LATITUDE", currentHistory.getLatitude());
+                    intent.putExtra("AVG_PACE", currentHistory.getAvgPace());
                     startActivity(intent);
                 }
             });

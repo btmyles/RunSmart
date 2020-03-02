@@ -4,8 +4,38 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/test_textview"
+        android:id="@+id/text_start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TestingText" />
+
+    <TextView
+        android:id="@+id/text_end"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/text_duration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/text_distance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/text_avg_pace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <Button
+        android:id="@+id/button_map"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Open Map" />
 </LinearLayout>
