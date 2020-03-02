@@ -30,6 +30,7 @@ import java.util.ArrayList;
 public class ArticlesFragment extends Fragment {
     private String TAG = "ArticlesFragment.java";
     private URL[] links = new URL[6];
+    private String[] titles = new String[6];
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -40,11 +41,17 @@ public class ArticlesFragment extends Fragment {
         try{
             Log.i(TAG, "In Try Statement");
             links[0] = new URL(getString(R.string.url_run1));
+            titles[0] = getString(R.string.url1);
             links[1] = new URL(getString(R.string.url_run2));
+            titles[1] = getString(R.string.url2);
             links[2] = new URL(getString(R.string.url_fitness1));
+            titles[2] = getString(R.string.url3);
             links[3] = new URL(getString(R.string.url_fitness2));
+            titles[3] = getString(R.string.url4);
             links[4] = new URL(getString(R.string.url_food1));
+            titles[4] = getString(R.string.url5);
             links[5] = new URL(getString(R.string.url_food2));
+            titles[5] = getString(R.string.url6);
             Log.i(TAG, "In End Of Try Statement");
         }
         catch(Exception e)
@@ -61,7 +68,7 @@ public class ArticlesFragment extends Fragment {
         Log.i(TAG, "Setting Layout Manager");
         recyclerView.setLayoutManager(layoutManager);
         Log.i(TAG, "Passing links to new ArticlesFragment.MyAdapter");
-        ArticlesFragment.MyAdapter mAdapter = new ArticlesFragment.MyAdapter(links);
+        ArticlesFragment.MyAdapter mAdapter = new ArticlesFragment.MyAdapter(links, titles);
         Log.i(TAG, "Setting Adapter");
         recyclerView.setAdapter(mAdapter);
         Log.i(TAG, "Setting Animator");
@@ -82,10 +89,12 @@ public class ArticlesFragment extends Fragment {
 
     public class MyAdapter extends RecyclerView.Adapter<ArticlesFragment.MyAdapter.ViewHolder> {
         private final URL[] mDataset;
+        private final String[] mTitles;
 
-        private MyAdapter(URL[] urls) {
+        private MyAdapter(URL[] urls, String[] titles) {
             Log.i(TAG, "Creating mDataset in MyAdapter");
             mDataset = urls;
+            mTitles = titles;
         }
 
         // ViewHolder represents an individual item to display. In this case
@@ -125,7 +134,7 @@ public class ArticlesFragment extends Fragment {
             final URL currentURL = mDataset[position];
 
             //  Set the TextView in the ViewHolder (holder) to be the title
-            holder.mTextView.setText("URL HERE");
+            holder.mTextView.setText(mTitles[position]);
 
             //  Set the onClickListener for the TextView in the ViewHolder (holder) such
             //  that when it is clicked, it creates an explicit intent to launch DetailActivity
