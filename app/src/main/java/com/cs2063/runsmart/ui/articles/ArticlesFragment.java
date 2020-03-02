@@ -16,20 +16,10 @@ import com.cs2063.runsmart.R;
 
 public class ArticlesFragment extends Fragment {
 
-    private ArticlesViewModel articlesViewModel;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        articlesViewModel =
-                ViewModelProviders.of(this).get(ArticlesViewModel.class);
         View root = inflater.inflate(R.layout.fragment_articles, container, false);
         final TextView textView = root.findViewById(R.id.text_articles);
-        articlesViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         return root;
     }
 }

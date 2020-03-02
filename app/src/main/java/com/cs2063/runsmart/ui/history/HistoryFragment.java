@@ -39,46 +39,26 @@ public class HistoryFragment extends Fragment {
     private JsonUtils jutils;
     private RecyclerView.LayoutManager layoutManager;
     private MyAdapter mAdapter;
-    private RecyclerView view;
+    private RecyclerView recyclerView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        //historyViewModel =
-        //        ViewModelProviders.of(this).get(HistoryViewModel.class);
+
+        Log.i(TAG, "running onCreateView()");
         View root = inflater.inflate(R.layout.fragment_history, container, false);
+
         jutils = MainActivity.jsonUtils;
         mHistoryDataList = jutils.getHistoryData();
-        view = (RecyclerView) root.findViewById(R.id.geodata_list);
+
+        // RecyclerView setup
+        recyclerView = root.findViewById(R.id.recycler_view);
         layoutManager = new LinearLayoutManager(getActivity());
-        view.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);
         mAdapter = new MyAdapter(mHistoryDataList);
-        view.setAdapter(mAdapter);
-        view.setItemAnimator(new DefaultItemAnimator());
-        //setupRecyclerView(view);
-        //final TextView textView = root.findViewById(R.id.text_history);
-        /*
-        historyViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        // Is this the right way to get context to be used for application storage??
-        //final Context context = getContext();
-
-        // This should read the Json file in assets directory, copy it to
-        // local storage, and parse the data into the historyList variable within jsonUtils
-
-        //ArrayList<HistoryData> mDataset = MainActivity.jsonUtils.getHistoryData();
-
-        // This is what should happen at the end of a run:
-        // A new HistoryData object is initialized with the data from the run
-        // The new HistoryData object should have its attributes calculated
-        // At some point the new HistoryData should be written to local storage in History.json
-
-
-
+        Log.i(TAG, "finishing onCreateView()");
 
         return root;
     }
@@ -104,7 +84,7 @@ public class HistoryFragment extends Fragment {
 
         // The inflate method of the LayoutInflater class can be used to obtain the
         // View object corresponding to an XML layout resource file. Here
-        // onCreateViewHolder inflates the TextView corresponding to item_layout.xml
+        // onCreateViewHolder inflates the TextView corresponding to geodata_list_content.xml
         // and uses it to instantiate a ViewHolder.
         @Override
         public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
@@ -115,19 +95,18 @@ public class HistoryFragment extends Fragment {
             return new ViewHolder(v);
         }
 
-
         // onBindViewHolder binds a ViewHolder to the data at the specified
         // position in mDataset
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            // TODO 3
+
             //  Get the Course at index position in mDataSet
             //  (Hint: you might need to declare this variable as final.)
             final HistoryData currentHistory = mDataset.get(position);
-            // TODO 4
+
             //  Set the TextView in the ViewHolder (holder) to be the title for this Course
             holder.mTextView.setText(currentHistory.getStartTime() + "");
-            // TODO 5
+
             //  Set the onClickListener for the TextView in the ViewHolder (holder) such
             //  that when it is clicked, it creates an explicit intent to launch DetailActivity
             //  HINT: You will need to put two extra pieces of information in this intent:
@@ -135,13 +114,12 @@ public class HistoryFragment extends Fragment {
             holder.mTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v){
+                    // We should send every part of the historydata object
                     Intent intent = new Intent(getActivity().getApplicationContext(), HistoryActivity.class);
-                    String hisStart = currentHistory.getStartTime() + "";
-                    String hisLong = currentHistory.getLongitude() + "";
-                    String hisLat = currentHistory.getLatitude() + "";
-                    intent.putExtra("START_TIME", hisStart);
-                    intent.putExtra("LONGITUDE", hisLong);
-                    intent.putExtra("LATITUDE", hisLat);
+                    intent.putExtra("START_TIME", currentHistory.getStartTime());
+                    intent.putExtra("END_TIME", currentHistory.getEndTime());
+                    intent.putExtra("LONGITUDE", currentHistory.getLongitude());
+                    intent.putExtra("LATITUDE", currentHistory.getLatitude());
                     startActivity(intent);
                 }
             });
@@ -152,85 +130,4 @@ public class HistoryFragment extends Fragment {
             return mDataset.size();
         }
     }
-    /*
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(mHistoryDataList));
-    }
-    */
-
-
-    /*
-    private class SimpleItemRecyclerViewAdapter
-            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
-
-        private final List<HistoryData> mValues;
-
-        public SimpleItemRecyclerViewAdapter(List<HistoryData> data) {
-            mValues = data;
-        }
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.geodata_list_content, parent, false);
-            return new ViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mHistoryData = mValues.get(position);
-            holder.mIdView.setText(mValues.get(position).getLongitude().toString());
-
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    /**
-                     * Setting the data to be sent to the Detail portion of the template.
-                     * Here, we send the title, longitude, and latitude of the Earthquake
-                     * that was clicked in the RecyclerView. The Detail Activity/Fragment
-                     * will then display this information. Condition check is whether we
-                     * are twoPane on a Tablet, which varies how we pass arguments to the
-                     * participating activity/fragment.
-
-                    long startTimeLong = holder.mHistoryData.getStartTime();
-                    String lng = holder.mHistoryData.getLongitude().toString();
-                    String lat = holder.mHistoryData.getLatitude().toString();
-
-                    //is this context fine?
-                    Intent intent = new Intent(getContext(), HistoryActivity.class);
-                    //set the intent's key value pairs
-                    intent.putExtra(startTime, startTimeLong);
-                    intent.putExtra(GeoDataDetailFragment.LNG, lng);
-                    intent.putExtra(GeoDataDetailFragment.LAT, lat);
-                    startActivity(intent);
-
-
-                }
-            });
-        }
-        @Override
-        public int getItemCount() {
-            return mValues.size();
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            public final View mView;
-            public final TextView mIdView;
-            public final TextView mContentView;
-            public HistoryData mHistoryData;
-
-            public ViewHolder(View view) {
-                super(view);
-                mView = view;
-                mIdView = view.findViewById(R.id.id);
-                mContentView = view.findViewById(R.id.content);
-            }
-
-            @Override
-            public String toString() {
-                return super.toString() + " '" + mContentView.getText() + "'";
-            }
-        }
-    }
-    */
 }

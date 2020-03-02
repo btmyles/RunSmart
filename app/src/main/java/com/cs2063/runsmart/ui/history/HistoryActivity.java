@@ -18,13 +18,14 @@ public class HistoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_history);
+        setContentView(R.layout.history_item_detail);
         json = MainActivity.jsonUtils;
         json.getHistoryData(); //change this, need to get specific part of arraylist
         Intent intent = getIntent();
-        String startTime = intent.getStringExtra("START_TIME");
-        String longitude = intent.getStringExtra("LONGITUTDE");
-        String latitude = intent.getStringExtra("LATITUDE");
+        long startTime = intent.getLongExtra("START_TIME", 0);
+        long endTime = intent.getLongExtra("END_TIME", 0);
+        double[] longitude = intent.getDoubleArrayExtra("LONGITUDE");
+        double[] latitude = intent.getDoubleArrayExtra("LATITUDE");
         /*
         TextView textView =findViewById(R.id.text_start);
         textView.setText("Longitute: " + longitude + "\nLatitude: " + latitude);
@@ -32,7 +33,7 @@ public class HistoryActivity extends AppCompatActivity {
 
          */
 
-        getSupportActionBar().setTitle(startTime);
+        getSupportActionBar().setTitle(Long.toString(startTime));
     }
 
 }
