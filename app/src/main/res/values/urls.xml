@@ -1,8 +1,14 @@
 <resources>
     <string name="url_run1">https://www.runnersradar.com/</string>
+    <string name="url1">Runner\'s Radar Articles</string>
     <string name="url_run2">https://www.webmd.com/fitness-exercise/news/20191105/run-for-your-life-new-study-recommends</string>
+    <string name="url2">WebMD - Run For Your Life</string>
     <string name="url_fitness1">https://www.health.com/fitness</string>
+    <string name="url3">Health and Fitness</string>
     <string name="url_fitness2">https://www.medicalnewstoday.com/categories/sports_medicine</string>
+    <string name="url4">Sports Medicine</string>
     <string name="url_food1">https://www.allrecipes.com/recipes/84/healthy-recipes/</string>
+    <string name="url5">Healthy Recipes</string>
     <string name="url_food2">https://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/healthy-recipes/art-20047004</string>
+    <string name="url6">Transform Your Favourite Recipes</string>
 </resources>

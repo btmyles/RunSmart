@@ -5,44 +5,44 @@
     android:background="@color/colorPrimary">
 
     <TextView
-        android:id="@+id/text_start"
+        android:id="@+id/article1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorAccent"
-        android:text="TestingText" />
+        android:text="@string/url1" />
 
     <TextView
-        android:id="@+id/text_end"
+        android:id="@+id/article2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorAccent"
-        android:text="TextView" />
+        android:text="@string/url2" />
 
     <TextView
-        android:id="@+id/text_duration"
+        android:id="@+id/article3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorAccent"
-        android:text="TextView" />
+        android:text="@string/url3" />
 
     <TextView
-        android:id="@+id/text_distance"
+        android:id="@+id/article4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorAccent"
-        android:text="TextView" />
+        android:text="@string/url4" />
 
     <TextView
-        android:id="@+id/text_avg_pace"
+        android:id="@+id/article5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorAccent"
-        android:text="TextView" />
+        android:text="@string/url5" />
 
-    <Button
-        android:id="@+id/button_map"
+    <TextView
+        android:id="@+id/article6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
-        android:text="Open Map" />
+        android:textColor="@color/colorAccent"
+        android:text="@string/url6" />
 </LinearLayout>

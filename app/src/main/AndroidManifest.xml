@@ -28,6 +28,12 @@
             android:name=".ui.history.HistoryActivity"
             android:label="@string/app_name">
         </activity>
+        <activity
+            android:name=".ui.articles.ArticlesFragment"
+            android:label="RunSmart"
+            >
+
+        </activity>
     </application>
 
 </manifest>
