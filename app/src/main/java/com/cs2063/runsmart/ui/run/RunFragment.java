@@ -28,6 +28,7 @@ import com.cs2063.runsmart.LineLayerActivity;
 import com.cs2063.runsmart.MainActivity;
 import com.cs2063.runsmart.R;
 import com.cs2063.runsmart.model.HistoryData;
+import com.cs2063.runsmart.ui.history.HistoryActivity;
 import com.cs2063.runsmart.util.LocationUtils;
 
 import java.lang.reflect.Array;
@@ -104,9 +105,14 @@ public class RunFragment extends Fragment {
             Log.i(TAG, "End time = " + endtime);
 
             // Start map activity
-            Intent intent = new Intent(getActivity().getApplicationContext(), LineLayerActivity.class);
-            intent.putExtra("LATITUDE", historyData.getLatitude());
+            Intent intent = new Intent(getActivity().getApplicationContext(), HistoryActivity.class);
+            intent.putExtra("START_TIME", historyData.getStartTime());
+            intent.putExtra("END_TIME", historyData.getEndTime());
+            intent.putExtra("DURATION", historyData.getDuration());
+            intent.putExtra("DISTANCE", historyData.getDistance());
             intent.putExtra("LONGITUDE", historyData.getLongitude());
+            intent.putExtra("LATITUDE", historyData.getLatitude());
+            intent.putExtra("AVG_PACE", historyData.getAvgPace());
             startActivity(intent);
         } else {
             if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
