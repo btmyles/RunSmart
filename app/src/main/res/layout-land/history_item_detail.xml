@@ -168,7 +168,7 @@
         android:layout_height="43dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/EditText1"
+        app:layout_constraintEnd_toEndOf="@+id/edit_text"
         app:layout_constraintStart_toStartOf="@+id/text_notes"
         app:srcCompat="@android:drawable/ic_menu_delete" />
 
@@ -184,7 +184,7 @@
         app:layout_constraintStart_toStartOf="@+id/button_map" />
 
     <EditText
-        android:id="@+id/EditText1"
+        android:id="@+id/edit_text"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -192,8 +192,9 @@
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/opensans_light"
         android:gravity="top"
-        android:hint=" Type here..."
+        android:hint=" Type Here..."
         android:textColor="#8DFFFFFF"
+        android:textColorHint="#8DFFFFFF"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/button_delete"
         app:layout_constraintEnd_toEndOf="parent"
