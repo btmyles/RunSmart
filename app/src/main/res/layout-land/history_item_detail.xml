@@ -10,7 +10,8 @@
         android:id="@+id/text_notes"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="16dp"
         android:autoSizeMaxTextSize="100sp"
         android:autoSizeMinTextSize="12sp"
         android:autoSizeTextType="uniform"
@@ -18,20 +19,17 @@
         android:text="Notes:"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/text_distance"
-        app:layout_constraintTop_toBottomOf="@+id/text_avg_pace" />
+        app:layout_constraintStart_toEndOf="@+id/button_map"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/button_map"
         android:layout_width="0dp"
-        android:layout_height="122dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_height="119dp"
         android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/value_start"
-        app:layout_constraintTop_toTopOf="@+id/text_duration"
+        app:layout_constraintBottom_toBottomOf="@+id/button_delete"
+        app:layout_constraintEnd_toEndOf="@+id/value_avg_pace"
+        app:layout_constraintStart_toStartOf="@+id/text_avg_pace"
         app:srcCompat="@drawable/mapicon5small" />
 
     <TextView
@@ -66,7 +64,6 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
         android:autoSizeMaxTextSize="100sp"
         android:autoSizeMinTextSize="12sp"
         android:fontFamily="@font/opensans_extrabold"
@@ -74,7 +71,7 @@
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/text_notes" />
 
     <TextView
         android:id="@+id/value_duration"
@@ -147,11 +144,10 @@
         android:layout_marginTop="8dp"
         android:autoSizeMaxTextSize="100sp"
         android:autoSizeMinTextSize="12sp"
-        android:fontFamily="@font/opensans_bold"
+        android:fontFamily="@font/opensans_extrabold"
         android:text="Average Pace: "
         android:textColor="#FFFFFF"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/text_start"
+        app:layout_constraintStart_toStartOf="@+id/text_duration"
         app:layout_constraintTop_toBottomOf="@+id/text_distance" />
 
     <TextView
@@ -169,39 +165,36 @@
     <ImageButton
         android:id="@+id/button_delete"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
+        android:layout_height="43dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/text_open_routes"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/EditText1"
+        app:layout_constraintStart_toStartOf="@+id/text_notes"
         app:srcCompat="@android:drawable/ic_menu_delete" />
 
     <TextView
         android:id="@+id/text_open_routes"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
         android:fontFamily="@font/opensans_lightitalic"
         android:text="Open Route"
-        android:textAlignment="center"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/value_avg_pace"
+        app:layout_constraintBottom_toTopOf="@+id/button_map"
         app:layout_constraintEnd_toEndOf="@+id/button_map"
         app:layout_constraintStart_toStartOf="@+id/button_map" />
 
     <EditText
         android:id="@+id/EditText1"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:gravity="top"
-        android:hint="Type here..."
+        android:hint=" Type here..."
         app:layout_constraintBottom_toTopOf="@+id/button_delete"
-        app:layout_constraintTop_toBottomOf="@+id/text_notes"
-        tools:layout_editor_absoluteX="34dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/text_notes"
+        app:layout_constraintTop_toBottomOf="@+id/text_notes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
