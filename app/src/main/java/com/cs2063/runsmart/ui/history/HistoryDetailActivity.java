@@ -14,8 +14,8 @@ import com.cs2063.runsmart.MainActivity;
 import com.cs2063.runsmart.R;
 import com.cs2063.runsmart.util.JsonUtils;
 
-public class HistoryActivity extends AppCompatActivity {
-    private final String TAG = "HistoryActivity.java";
+public class HistoryDetailActivity extends AppCompatActivity {
+    private final String TAG = "HistoryDetailActivity.java";
     private JsonUtils json;
 
     @Override

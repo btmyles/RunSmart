@@ -135,7 +135,7 @@ public class HistoryFragment extends Fragment {
                 @Override
                 public void onClick(View v){
                     // We should send every part of the historydata object
-                    Intent intent = new Intent(getActivity().getApplicationContext(), HistoryActivity.class);
+                    Intent intent = new Intent(getActivity().getApplicationContext(), HistoryDetailActivity.class);
                     intent.putExtra("START_TIME", currentHistory.getStartTime());
                     intent.putExtra("END_TIME", currentHistory.getEndTime());
                     intent.putExtra("DURATION", currentHistory.getDuration());
