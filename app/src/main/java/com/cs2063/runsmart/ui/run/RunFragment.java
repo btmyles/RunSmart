@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -75,7 +76,8 @@ public class RunFragment extends Fragment {
                 textView.setText(s);
             }
         });
-
+        getActivity().setRequestedOrientation(
+                ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         runButton = root.findViewById(R.id.start_run);
         runButton.setOnClickListener(new View.OnClickListener() {
             @Override

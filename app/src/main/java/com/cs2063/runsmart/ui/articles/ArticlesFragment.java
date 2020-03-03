@@ -1,6 +1,7 @@
 package com.cs2063.runsmart.ui.articles;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +36,8 @@ public class ArticlesFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(
+                ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         Log.i(TAG, "running ArticlesFragment onCreateView");
         View root = inflater.inflate(R.layout.fragment_articles, container, false);
         //we can get rid of the textview once we implement articles
