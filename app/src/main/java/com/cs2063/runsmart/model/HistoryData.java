@@ -81,6 +81,7 @@ public class HistoryData {
                 this.distance += TurfMeasurement.distance(p1, p2, UNIT_KILOMETERS);
             }
         }
-        this.avgPace = this.distance/this.duration;
+        // millis is converted to hrs
+        this.avgPace = this.distance/(this.duration / 1000 / 3600);
     }
 }
