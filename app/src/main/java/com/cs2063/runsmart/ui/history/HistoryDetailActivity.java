@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,7 +45,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
         textAvgPace.setText(Double.toString(avg_pace));
         // Eventually the notes section will be added here
 
-        Button mapButton = findViewById(R.id.button_map);
+        ImageButton mapButton = findViewById(R.id.button_map);
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
