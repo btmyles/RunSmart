@@ -55,7 +55,7 @@
         android:autoSizeMinTextSize="12sp"
         android:fontFamily="@font/opensans_light"
         android:text="TextView"
-        android:textColor="#FFFFFF"
+        android:textColor="#FF0000"
         app:layout_constraintBottom_toBottomOf="@+id/text_distance"
         app:layout_constraintStart_toStartOf="@+id/value_duration" />
 
@@ -82,7 +82,7 @@
         android:autoSizeMinTextSize="12sp"
         android:fontFamily="@font/opensans_light"
         android:text="TextView"
-        android:textColor="#FFFFFF"
+        android:textColor="#FF0000"
         app:layout_constraintBottom_toBottomOf="@+id/text_duration"
         app:layout_constraintStart_toEndOf="@+id/text_avg_pace" />
 
@@ -190,8 +190,11 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:fontFamily="@font/opensans_light"
         android:gravity="top"
         android:hint=" Type here..."
+        android:textColor="#8DFFFFFF"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/button_delete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/text_notes"
