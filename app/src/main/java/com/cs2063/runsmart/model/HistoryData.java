@@ -1,6 +1,9 @@
 package com.cs2063.runsmart.model;
 
 import androidx.annotation.NonNull;
+import com.mapbox.turf.TurfMeasurement;
+import com.mapbox.geojson.Point;
+import static com.mapbox.turf.TurfConstants.UNIT_KILOMETERS;
 
 public class HistoryData {
 
@@ -66,8 +69,17 @@ public class HistoryData {
         // Calculate duration, distance, avg pace
         this.duration = endTime-startTime;
         this.distance=0;
-        for(int i=0; i<this.latitude.length-1;i++){
-            this.distance+=39963.0*Math.acos(Math.sin(latitude[i])*Math.sin(latitude[i+1])+Math.cos(latitude[i])*Math.cos(latitude[i+1])*Math.cos(longitude[i+1]-longitude[i]));
+        Point p1, p2;
+
+        if (this.latitude.length > 0) {
+            p2 = Point.fromLngLat(longitude[0], latitude[0]);
+
+            for (int i = 0; i < this.latitude.length - 1; i++) {
+                p1 = p2;
+                p2 = Point.fromLngLat(longitude[i + 1], latitude[i + 1]);
+
+                this.distance += TurfMeasurement.distance(p1, p2, UNIT_KILOMETERS);
+            }
         }
         this.avgPace = this.distance/this.duration;
     }
