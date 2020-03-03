@@ -2,7 +2,6 @@ package com.cs2063.runsmart.ui.history;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cs2063.runsmart.LineLayerActivity;
-import com.cs2063.runsmart.MainActivity;
 import com.cs2063.runsmart.R;
 import com.cs2063.runsmart.util.JsonUtils;
 
@@ -32,17 +30,17 @@ public class HistoryDetailActivity extends AppCompatActivity {
         final double[] latitude = intent.getDoubleArrayExtra("LATITUDE");
         long avg_pace = intent.getLongExtra("AVG_PACE", 0);
 
-        TextView textStart = findViewById(R.id.text_start);
+        TextView textStart = findViewById(R.id.value_start);
         textStart.setText(Long.toString(startTime));
         // This line was at the end of each section for the textviews. Might be necessary when we start scrolling
         //textStart.setMovementMethod(new ScrollingMovementMethod());
-        TextView textEnd = findViewById(R.id.text_end);
+        TextView textEnd = findViewById(R.id.value_end);
         textEnd.setText(Long.toString(endTime));
-        TextView textDuration = findViewById(R.id.text_duration);
+        TextView textDuration = findViewById(R.id.value_duration);
         textDuration.setText(Long.toString(duration));
-        TextView textDistance = findViewById(R.id.text_distance);
+        TextView textDistance = findViewById(R.id.value_distance);
         textDistance.setText(Double.toString(distance));
-        TextView textAvgPace = findViewById(R.id.text_avg_pace);
+        TextView textAvgPace = findViewById(R.id.value_avg_pace);
         textAvgPace.setText(Double.toString(avg_pace));
         // Eventually the notes section will be added here
 

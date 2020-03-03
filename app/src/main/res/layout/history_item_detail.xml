@@ -1,48 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
 
-    <TextView
-        android:id="@+id/text_start"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
-        android:text="TestingText" />
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/text_end"
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
-        android:text="TextView" />
+        android:layout_height="match_parent" >
 
-    <TextView
-        android:id="@+id/text_duration"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
-        android:text="TextView" />
+        <TextView
+            android:id="@+id/text_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Distance: " />
 
-    <TextView
-        android:id="@+id/text_distance"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
-        android:text="TextView" />
+        <TextView
+            android:id="@+id/value_distance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+    </TableRow>
 
-    <TextView
-        android:id="@+id/text_avg_pace"
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
-        android:text="TextView" />
+        android:layout_height="match_parent" >
 
-    <Button
-        android:id="@+id/button_map"
+        <TextView
+            android:id="@+id/text_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Duration: " />
+
+        <TextView
+            android:id="@+id/value_duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"/>
+    </TableRow>
+
+    <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
-        android:text="Open Map" />
-</LinearLayout>
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/text_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Time: " />
+
+        <TextView
+            android:id="@+id/value_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/text_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="End Time: " />
+
+        <TextView
+            android:id="@+id/value_end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/text_avg_pace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Average Pace: " />
+
+        <TextView
+            android:id="@+id/value_avg_pace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <Button
+            android:id="@+id/button_map"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Open Map"
+            android:textColor="@color/colorPrimaryDark" />
+    </TableRow>
+</TableLayout>
+
+
+
+
+
+
+
+
+
+
+
+

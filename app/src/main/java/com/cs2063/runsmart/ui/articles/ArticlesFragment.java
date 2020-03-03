@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cs2063.runsmart.R;
 import com.cs2063.runsmart.model.HistoryData;
-import com.cs2063.runsmart.ui.history.HistoryActivity;
+import com.cs2063.runsmart.ui.history.HistoryDetailActivity;
 import com.cs2063.runsmart.ui.history.HistoryFragment;
 
 import java.net.URL;

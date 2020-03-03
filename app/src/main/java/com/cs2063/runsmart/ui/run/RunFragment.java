@@ -30,7 +30,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.cs2063.runsmart.MainActivity;
 import com.cs2063.runsmart.R;
 import com.cs2063.runsmart.model.HistoryData;
-import com.cs2063.runsmart.ui.history.HistoryActivity;
+import com.cs2063.runsmart.ui.history.HistoryDetailActivity;
 import com.cs2063.runsmart.util.LocationUtils;
 
 import java.util.ArrayList;
@@ -140,7 +140,7 @@ public class RunFragment extends Fragment {
 
             // Start map activity
             ctr=0;
-            Intent intent = new Intent(getActivity().getApplicationContext(), HistoryActivity.class);
+            Intent intent = new Intent(getActivity().getApplicationContext(), HistoryDetailActivity.class);
             intent.putExtra("START_TIME", historyData.getStartTime());
             intent.putExtra("END_TIME", historyData.getEndTime());
             intent.putExtra("DURATION", historyData.getDuration());
