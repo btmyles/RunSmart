@@ -82,6 +82,6 @@ public class HistoryData {
             }
         }
         // millis is converted to hrs
-        this.avgPace = this.distance/(this.duration / 1000 / 3600);
+        this.avgPace = this.distance/(this.duration / 1000.0 / 3600);
     }
 }
