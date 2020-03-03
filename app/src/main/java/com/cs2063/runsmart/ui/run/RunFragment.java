@@ -54,7 +54,7 @@ public class RunFragment extends Fragment {
     private LocationManager locationManager;
     private LocationUtils locationUtils;
 
-    private long starttime;
+    private static long starttime;
     private long endtime;
     private static ArrayList<Double> latitudeList;
     private static ArrayList<Double> longitudeList;
@@ -166,7 +166,6 @@ public class RunFragment extends Fragment {
             // Initialize coordinate lists
             latitudeList = new ArrayList<Double>();
             longitudeList = new ArrayList<Double>();
-            starttime = Calendar.getInstance().getTimeInMillis();
 
             Toast.makeText(getActivity(), "Run started", Toast.LENGTH_SHORT).show();
             Log.i(TAG, "Start time = " + starttime);
@@ -220,6 +219,7 @@ public class RunFragment extends Fragment {
 
             //Start Chronometer
             if (!running) {
+                starttime = Calendar.getInstance().getTimeInMillis();
                 chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
                 chronometer.start();
                 running = true;
