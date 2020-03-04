@@ -55,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
         //LocationUtils
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        LocationUtils locationUtils = new LocationUtils(locationManager);
+        locationUtils = new LocationUtils(locationManager);
+        Log.i(TAG, "Location utils created : " + (locationUtils == null));
 
     }
 

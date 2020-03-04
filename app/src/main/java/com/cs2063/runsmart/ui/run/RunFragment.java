@@ -116,7 +116,7 @@ public class RunFragment extends Fragment {
 
     private void startRun() {
 
-
+        Log.i(TAG, "MainActivity.locationUtils == null : " + (MainActivity.locationUtils == null));
 
         // Check if location is enabled
         if (!MainActivity.locationUtils.isEnabled()) {
