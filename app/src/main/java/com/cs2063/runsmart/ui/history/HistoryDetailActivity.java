@@ -1,5 +1,6 @@
 package com.cs2063.runsmart.ui.history;
 
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.cs2063.runsmart.LineLayerActivity;
 import com.cs2063.runsmart.MainActivity;
@@ -78,6 +80,10 @@ public class HistoryDetailActivity extends AppCompatActivity {
                             switch (which){
                                 case DialogInterface.BUTTON_POSITIVE:
                                     //Yes button clicked
+                                    //HistoryFragment fragment = (HistoryFragment) getFragmentManager().findFragmentById(R.id.recycler_view);
+                                    //fragment.removeAt();
+
+                                    finish();
                                     break;
 
                                 case DialogInterface.BUTTON_NEGATIVE:
@@ -86,7 +92,6 @@ public class HistoryDetailActivity extends AppCompatActivity {
                             }
                         }
                     };
-
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                     builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
                             .setNegativeButton("No", dialogClickListener).show();

@@ -9,8 +9,7 @@
     <TextView
         android:id="@+id/history_item_start"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
         android:text="Textview"
         android:textAppearance="?attr/textAppearanceListItem"
         android:textColor="@color/colorAccent"
@@ -19,9 +18,12 @@
     <TextView
         android:id="@+id/history_item_distance"
         android:layout_width="wrap_content"
-        android:layout_height="20dip"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/history_item_start"
+        android:layout_alignStart="@+id/history_item_start"
+        android:layout_gravity="center"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="1dp"
         android:text="TextView"
         android:textAppearance="?attr/textAppearanceListItem"
         android:textColor="@color/colorAccent"
@@ -31,13 +33,23 @@
         android:id="@+id/history_item_duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/history_item_distance"
-        android:layout_alignParentRight="true"
-        android:text="Textview"
+        android:layout_below="@+id/history_item_distance"
+        android:layout_alignStart="@+id/history_item_distance"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:text="TextView"
         android:textAppearance="?attr/textAppearanceListItem"
         android:textColor="@color/colorAccent"
         android:textSize="16sp"
         android:visibility="visible" />
 
-
+    <ImageView
+        android:id="@+id/item_delete"
+        android:layout_width="43dp"
+        android:layout_height="46dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:src="@android:drawable/ic_menu_delete" />
 </RelativeLayout>

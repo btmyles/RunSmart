@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +41,7 @@ import java.util.Random;
 public class HistoryFragment extends Fragment {
 
     private static final String TAG = "HistoryFragment.java";
+    private ImageView deleteIcon;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -87,7 +89,7 @@ public class HistoryFragment extends Fragment {
                 start = v.findViewById(R.id.history_item_start);
                 distance = v.findViewById(R.id.history_item_distance);
                 duration = v.findViewById(R.id.history_item_duration);
-
+                deleteIcon=v.findViewById(R.id.item_delete);
                 relativeLayout = v.findViewById(R.id.history_item_layout);
             }
         }
@@ -108,7 +110,7 @@ public class HistoryFragment extends Fragment {
         // onBindViewHolder binds a ViewHolder to the data at the specified
         // position in mDataset
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(ViewHolder holder, final int position) {
 
             //  Get the Course at index position in mDataSet
             //  (Hint: you might need to declare this variable as final.)
@@ -131,8 +133,6 @@ public class HistoryFragment extends Fragment {
 
             //  Set the onClickListener for the TextView in the ViewHolder (holder) such
             //  that when it is clicked, it creates an explicit intent to launch DetailActivity
-            //  HINT: You will need to put two extra pieces of information in this intent:
-            //      The Course title and it's description
             holder.start.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v){
@@ -148,11 +148,28 @@ public class HistoryFragment extends Fragment {
                     startActivity(intent);
                 }
             });
+
+            // Set onClickListener so that when the delete button is clicked the row is removed
+            deleteIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    removeAt(position);
+                }
+            });
         }
 
         @Override
         public int getItemCount() {
             return mDataset.size();
         }
+
+        public void removeAt(int position) {
+            mDataset.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, mDataset.size());
+        }
+
+
+
     }
 }
