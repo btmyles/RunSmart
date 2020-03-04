@@ -43,19 +43,8 @@ public class LocationUtils {
         public void onLocationChanged(Location location) {
             double longitude = location.getLongitude();
             double latitude = location.getLatitude();
-            // TODO: return the location data to RunFragment or find another way to
-            //  incrementally store this data until the run is over.
             RunFragment.addCoordinates(latitude, longitude);
             Log.i(TAG, "Location updated: " + latitude + " : " + longitude);
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    //Here we just pass the data along to wherever it should be used.
-//                    longitudeValue.setText(longitude + "");
-//                    latitudeValue.setText(latitude + "");
-//                    Toast.makeText(MainActivity.this, "Network Provider update", Toast.LENGTH_SHORT).show();
-//                }
-//            });
         }
         @Override
         public void onStatusChanged(String s, int i, Bundle bundle) {

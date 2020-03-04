@@ -3,6 +3,7 @@
     package="com.cs2063.runsmart">
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:allowBackup="true"
@@ -30,10 +31,11 @@
         </activity>
         <activity
             android:name=".ui.articles.ArticlesFragment"
-            android:label="RunSmart"
-            >
-
+            android:label="RunSmart">
         </activity>
+        <service
+            android:name=".ForegroundService">
+        </service>
     </application>
 
 </manifest>

@@ -23,10 +23,12 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.cs2063.runsmart.ForegroundService;
 import com.cs2063.runsmart.MainActivity;
 import com.cs2063.runsmart.R;
 import com.cs2063.runsmart.model.HistoryData;
@@ -111,6 +113,9 @@ public class RunFragment extends Fragment {
 
 
     private void startRun() {
+
+
+
         // Check if location is enabled
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             showLocationAlert();
@@ -118,6 +123,10 @@ public class RunFragment extends Fragment {
         }
         if (runButton.getText().equals(getResources().getString(R.string.endrun_text))) {
             locationUtils.shutoff();
+
+            // In development: foreground service
+            Intent serviceIntent = new Intent(getActivity().getApplicationContext(), ForegroundService.class);
+            getActivity().getApplicationContext().stopService(serviceIntent);
 
             // Get data from run
             endtime = Calendar.getInstance().getTimeInMillis();
@@ -162,6 +171,11 @@ public class RunFragment extends Fragment {
                 return;
             }
             locationUtils.turnon(getActivity());
+
+            // in development: Foreground service
+            Intent serviceIntent = new Intent(getActivity().getApplicationContext(), ForegroundService.class);
+            serviceIntent.putExtra("inputExtra", "RunSmart foreground service");
+            ContextCompat.startForegroundService(getActivity().getApplicationContext(), serviceIntent);
 
             // Initialize coordinate lists
             latitudeList = new ArrayList<Double>();
