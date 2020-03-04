@@ -104,6 +104,7 @@ public class HistoryFragment extends Fragment {
                                 switch (which){
                                     case DialogInterface.BUTTON_POSITIVE:
                                         //Yes button clicked
+                                        final HistoryData currentHistory = mDataset.get(getAdapterPosition());
                                         removeAt(getAdapterPosition());
 
                                         break;
