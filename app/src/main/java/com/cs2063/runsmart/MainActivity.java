@@ -29,6 +29,7 @@ import java.util.Scanner;
 public class MainActivity extends AppCompatActivity {
 
     public static JsonUtils jsonUtils;
+    public static LocationUtils locationUtils;
     private final String TAG = "MainActivity.java";
 
 
@@ -51,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "Starting JSON Utils");
         jsonUtils = new JsonUtils(this);
         Log.i(TAG, "Done with JSON Utils");
+
+        //LocationUtils
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        LocationUtils locationUtils = new LocationUtils(locationManager);
 
     }
 

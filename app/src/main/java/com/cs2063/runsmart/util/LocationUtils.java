@@ -56,4 +56,8 @@ public class LocationUtils {
         public void onProviderDisabled(String s) {
         }
     };
+
+    public Boolean isEnabled() {
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
 }

@@ -119,12 +119,12 @@ public class RunFragment extends Fragment {
 
 
         // Check if location is enabled
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+        if (!MainActivity.locationUtils.isEnabled()) {
             showLocationAlert();
             return;
         }
         if (runButton.getText().equals(getResources().getString(R.string.endrun_text))) {
-            locationUtils.shutoff();
+            MainActivity.locationUtils.shutoff();
 
             // In development: foreground service
             Intent serviceIntent = new Intent(getActivity().getApplicationContext(), ForegroundService.class);
@@ -172,7 +172,7 @@ public class RunFragment extends Fragment {
                 showPermissionAlert();
                 return;
             }
-            locationUtils.turnon(getActivity());
+            MainActivity.locationUtils.turnon(getActivity());
 
             // in development: Foreground service
             Intent serviceIntent = new Intent(getActivity().getApplicationContext(), ForegroundService.class);
