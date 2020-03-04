@@ -1,6 +1,7 @@
 package com.cs2063.runsmart.ui.history;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -85,6 +87,7 @@ public class HistoryFragment extends Fragment {
             private TextView start;
             private TextView distance;
             private TextView duration;
+
             private ViewHolder(View v) {
                 super(v);
                 start = v.findViewById(R.id.history_item_start);
@@ -92,6 +95,30 @@ public class HistoryFragment extends Fragment {
                 duration = v.findViewById(R.id.history_item_duration);
                 deleteIcon=v.findViewById(R.id.item_delete);
                 relativeLayout = v.findViewById(R.id.history_item_layout);
+                deleteIcon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which){
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        //Yes button clicked
+                                        removeAt(getAdapterPosition());
+
+                                        break;
+
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        //No button clicked
+                                        break;
+                                }
+                            }
+                        };
+                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                        builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                                .setNegativeButton("No", dialogClickListener).show();
+                    }
+                });
             }
         }
 
@@ -99,22 +126,20 @@ public class HistoryFragment extends Fragment {
         // View object corresponding to an XML layout resource file. Here
         // onCreateViewHolder inflates the TextView corresponding to geodata_list_content.xml
         // and uses it to instantiate a ViewHolder.
+
         @Override
-        public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                       int viewType) {
+        public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.geodata_list_content, parent, false);
-
             return new ViewHolder(v);
         }
 
-        // onBindViewHolder binds a ViewHolder to the data at the specified
-        // position in mDataset
+
+        // onBindViewHolder binds a ViewHolder to the data at the specified position in mDataset
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
 
             //  Get the Course at index position in mDataSet
-            //  (Hint: you might need to declare this variable as final.)
             final HistoryData currentHistory = mDataset.get(position);
 
             //  Set the TextView in the ViewHolder (holder) to be the title
@@ -122,29 +147,35 @@ public class HistoryFragment extends Fragment {
             holder.distance.setText(Double.toString(currentHistory.getDistance()));
             holder.duration.setText(formatDuration(currentHistory.getDuration()));
 
-            //  Set the onClickListener for the TextView in the ViewHolder (holder) such
-            //  that when it is clicked, it creates an explicit intent to launch DetailActivity
+            final Intent intent = new Intent(getActivity().getApplicationContext(), HistoryDetailActivity.class);
+            intent.putExtra("START_TIME", currentHistory.getStartTime());
+            intent.putExtra("END_TIME", currentHistory.getEndTime());
+            intent.putExtra("DURATION", currentHistory.getDuration());
+            intent.putExtra("DISTANCE", currentHistory.getDistance());
+            intent.putExtra("LONGITUDE", currentHistory.getLongitude());
+            intent.putExtra("LATITUDE", currentHistory.getLatitude());
+            intent.putExtra("AVG_PACE", currentHistory.getAvgPace());
+
+            //  Set the onClickListener for the TextView in the ViewHolder (holder) such that when it is clicked, it creates an explicit intent to launch DetailActivity
             holder.start.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v){
-                    // We should send every part of the historydata object
-                    Intent intent = new Intent(getActivity().getApplicationContext(), HistoryDetailActivity.class);
-                    intent.putExtra("START_TIME", currentHistory.getStartTime());
-                    intent.putExtra("END_TIME", currentHistory.getEndTime());
-                    intent.putExtra("DURATION", currentHistory.getDuration());
-                    intent.putExtra("DISTANCE", currentHistory.getDistance());
-                    intent.putExtra("LONGITUDE", currentHistory.getLongitude());
-                    intent.putExtra("LATITUDE", currentHistory.getLatitude());
-                    intent.putExtra("AVG_PACE", currentHistory.getAvgPace());
+
                     startActivity(intent);
                 }
             });
-
-            // Set onClickListener so that when the delete button is clicked the row is removed
-            deleteIcon.setOnClickListener(new View.OnClickListener() {
+            holder.duration.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    removeAt(position);
+                public void onClick(View v){
+
+                    startActivity(intent);
+                }
+            });
+            holder.distance.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v){
+
+                    startActivity(intent);
                 }
             });
         }
@@ -159,8 +190,6 @@ public class HistoryFragment extends Fragment {
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, mDataset.size());
         }
-
-
 
     }
     String formatDuration(long duration) {

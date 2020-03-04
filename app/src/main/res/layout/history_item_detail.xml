@@ -169,7 +169,7 @@
         app:layout_constraintStart_toStartOf="@+id/value_end" />
 
     <ImageButton
-        android:id="@+id/button_delete"
+        android:id="@+id/button_prev"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="4dp"
@@ -179,7 +179,7 @@
         app:layout_constraintEnd_toEndOf="@+id/text_open_routes"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_delete" />
+        app:srcCompat="@android:drawable/ic_media_previous" />
 
     <TextView
         android:id="@+id/text_open_routes"
@@ -204,7 +204,7 @@
         android:hint="  Type Here..."
         android:textColor="#8DFFFFFF"
         android:textColorHint="#8DFFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/button_delete"
+        app:layout_constraintBottom_toTopOf="@+id/button_prev"
         app:layout_constraintTop_toBottomOf="@+id/text_notes"
         tools:layout_editor_absoluteX="34dp" />
 
