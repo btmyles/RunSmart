@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -116,20 +117,10 @@ public class HistoryFragment extends Fragment {
             //  (Hint: you might need to declare this variable as final.)
             final HistoryData currentHistory = mDataset.get(position);
 
-            date.setTime(currentHistory.getStartTime());
-            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            String dateFormatted = formatter.format(date);
-
-            long durationInMillis = currentHistory.getDuration();
-            long second = (durationInMillis / 1000) % 60;
-            long minute = (durationInMillis / (1000 * 60)) % 60;
-            long hour = (durationInMillis / (1000 * 60 * 60)) % 24;
-            String durationFormatted = String.format("%02d:%02d:%02d", hour, minute, second);
-
             //  Set the TextView in the ViewHolder (holder) to be the title
-            holder.start.setText(dateFormatted);
+            holder.start.setText(formatTime(currentHistory.getStartTime()));
             holder.distance.setText(Double.toString(currentHistory.getDistance()));
-            holder.duration.setText(durationFormatted);
+            holder.duration.setText(formatDuration(currentHistory.getDuration()));
 
             //  Set the onClickListener for the TextView in the ViewHolder (holder) such
             //  that when it is clicked, it creates an explicit intent to launch DetailActivity
@@ -171,5 +162,37 @@ public class HistoryFragment extends Fragment {
 
 
 
+    }
+    String formatDuration(long duration) {
+        long second = (duration / 1000) % 60;
+        long minute = (duration / (1000 * 60)) % 60;
+        long hour = ((duration / (1000 * 60 * 60)) % 24);
+        //long hour= TimeUnit.MILLISECONDS.toSeconds(duration)%24;
+        return String.format("%02d:%02d:%02d", hour, minute, second);
+    }
+
+    String formatTime(long duration) {
+        long second = (duration / 1000) % 60;
+        long minute = (duration / (1000 * 60)) % 60;
+        long hour = ((duration / (1000 * 60 * 60)) % 24 - 4) % 24;
+
+        return stdFmt(String.format("%02d:%02d:%02d", hour, minute, second));
+    }
+    String stdFmt(String militaryFmt){
+        DateFormat df = new SimpleDateFormat("HH:mm:ss");
+        //Date/time pattern of desired output date
+        DateFormat outputformat = new SimpleDateFormat("hh:mm:ss aa");
+        Date date = null;
+        String output = null;
+        try{
+            //Conversion of input String to date
+            date= df.parse(militaryFmt);
+            //old date format to new date format
+            output = outputformat.format(date);
+            System.out.println(output);
+        }catch(ParseException pe){
+            pe.printStackTrace();
+        }
+        return output;
     }
 }
