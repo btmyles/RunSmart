@@ -38,7 +38,7 @@
         android:id="@+id/text_distance"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:autoSizeMaxTextSize="100sp"
         android:autoSizeMinTextSize="12sp"
         android:autoSizeTextType="uniform"
@@ -47,7 +47,7 @@
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/text_duration"
-        app:layout_constraintTop_toBottomOf="@+id/text_start" />
+        app:layout_constraintTop_toBottomOf="@+id/text_end" />
 
     <TextView
         android:id="@+id/value_distance"
@@ -93,52 +93,54 @@
         android:id="@+id/text_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:autoSizeMaxTextSize="100sp"
         android:autoSizeMinTextSize="12sp"
         android:fontFamily="@font/opensans_bold"
         android:text="Start Time: "
         android:textColor="#FFFFFF"
-        app:layout_constraintStart_toStartOf="@+id/text_end"
-        app:layout_constraintTop_toBottomOf="@+id/text_end" />
+        app:layout_constraintStart_toStartOf="@+id/text_duration"
+        app:layout_constraintTop_toBottomOf="@+id/text_duration" />
 
     <TextView
         android:id="@+id/value_start"
         android:layout_width="100dp"
         android:layout_height="20dp"
+        android:layout_marginStart="8dp"
         android:autoSizeMaxTextSize="100sp"
         android:autoSizeMinTextSize="12sp"
         android:fontFamily="@font/opensans_lightitalic"
         android:text="TextView"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/text_start"
-        app:layout_constraintStart_toStartOf="@+id/value_end" />
+        app:layout_constraintStart_toStartOf="@+id/value_duration" />
 
     <TextView
         android:id="@+id/text_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:autoSizeMaxTextSize="100sp"
         android:autoSizeMinTextSize="12sp"
         android:fontFamily="@font/opensans_bold"
         android:text="End Time: "
         android:textColor="#FFFFFF"
-        app:layout_constraintStart_toStartOf="@+id/text_duration"
-        app:layout_constraintTop_toBottomOf="@+id/text_duration" />
+        app:layout_constraintStart_toStartOf="@+id/text_start"
+        app:layout_constraintTop_toBottomOf="@+id/text_start" />
 
     <TextView
         android:id="@+id/value_end"
         android:layout_width="100dp"
         android:layout_height="20dp"
+        android:layout_marginBottom="2dp"
         android:autoSizeMaxTextSize="100sp"
         android:autoSizeMinTextSize="12sp"
         android:fontFamily="@font/opensans_lightitalic"
         android:text="TextView"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/text_end"
-        app:layout_constraintStart_toStartOf="@+id/value_duration" />
+        app:layout_constraintStart_toStartOf="@+id/value_start" />
 
     <TextView
         android:id="@+id/text_avg_pace"
@@ -160,11 +162,11 @@
         android:layout_height="20dp"
         android:autoSizeMaxTextSize="100sp"
         android:autoSizeMinTextSize="12sp"
-        android:fontFamily="@font/opensans_light"
+        android:fontFamily="@font/opensans_lightitalic"
         android:text="TextView"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/text_avg_pace"
-        app:layout_constraintStart_toStartOf="@+id/value_distance" />
+        app:layout_constraintStart_toStartOf="@+id/value_end" />
 
     <ImageButton
         android:id="@+id/button_delete"

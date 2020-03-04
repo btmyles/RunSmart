@@ -13,6 +13,12 @@ import com.cs2063.runsmart.LineLayerActivity;
 import com.cs2063.runsmart.R;
 import com.cs2063.runsmart.util.JsonUtils;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 public class HistoryDetailActivity extends AppCompatActivity {
     private final String TAG = "HistoryDetailActivity.java";
     private JsonUtils json;
@@ -31,14 +37,15 @@ public class HistoryDetailActivity extends AppCompatActivity {
         final double[] latitude = intent.getDoubleArrayExtra("LATITUDE");
         long avg_pace = intent.getLongExtra("AVG_PACE", 0);
 
+
         TextView textStart = findViewById(R.id.value_start);
-        textStart.setText(Long.toString(startTime));
+        textStart.setText((formatTime(startTime)));
         // This line was at the end of each section for the textviews. Might be necessary when we start scrolling
         //textStart.setMovementMethod(new ScrollingMovementMethod());
         TextView textEnd = findViewById(R.id.value_end);
-        textEnd.setText(Long.toString(endTime));
+        textEnd.setText(formatTime(endTime));
         TextView textDuration = findViewById(R.id.value_duration);
-        textDuration.setText(Long.toString(duration));
+        textDuration.setText(formatDuration(duration));
         TextView textDistance = findViewById(R.id.value_distance);
         textDistance.setText(Double.toString(distance));
         TextView textAvgPace = findViewById(R.id.value_avg_pace);
@@ -59,6 +66,38 @@ public class HistoryDetailActivity extends AppCompatActivity {
 
         // This should be
         getSupportActionBar().setTitle(Long.toString(startTime));
+    }
+    String formatDuration(long duration) {
+        long second = (duration / 1000) % 60;
+        long minute = (duration / (1000 * 60)) % 60;
+        long hour = ((duration / (1000 * 60 * 60)) % 24);
+        //long hour= TimeUnit.MILLISECONDS.toSeconds(duration)%24;
+        return String.format("%02d:%02d:%02d", hour, minute, second);
+    }
+    String formatTime(long duration) {
+        long second = (duration / 1000) % 60;
+        long minute = (duration / (1000 * 60)) % 60;
+        long hour = ((duration / (1000 * 60 * 60)) % 24 - 4) % 24;
+
+        return stdFmt(String.format("%02d:%02d:%02d", hour, minute, second));
+    }
+
+    String stdFmt(String militaryFmt){
+        DateFormat df = new SimpleDateFormat("HH:mm:ss");
+        //Date/time pattern of desired output date
+        DateFormat outputformat = new SimpleDateFormat("hh:mm:ss aa");
+        Date date = null;
+        String output = null;
+        try{
+            //Conversion of input String to date
+            date= df.parse(militaryFmt);
+            //old date format to new date format
+            output = outputformat.format(date);
+            System.out.println(output);
+        }catch(ParseException pe){
+            pe.printStackTrace();
+        }
+        return output;
     }
 
 }
