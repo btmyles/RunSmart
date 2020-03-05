@@ -33,6 +33,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,6 +46,8 @@ public class HistoryFragment extends Fragment {
 
     private static final String TAG = "HistoryFragment.java";
     private ImageView deleteIcon;
+    private static DecimalFormat fmt= new DecimalFormat("######.##");
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -149,7 +152,7 @@ public class HistoryFragment extends Fragment {
 
             //  Set the TextView in the ViewHolder (holder) to be the title
             holder.start.setText(formatTime(currentHistory.getStartTime()));
-            holder.distance.setText(Double.toString(currentHistory.getDistance()));
+            holder.distance.setText(fmt.format(currentHistory.getDistance())+"km");
             holder.duration.setText(formatDuration(currentHistory.getDuration()));
 
             final Intent intent = new Intent(getActivity().getApplicationContext(), HistoryDetailActivity.class);

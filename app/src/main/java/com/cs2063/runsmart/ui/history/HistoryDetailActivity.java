@@ -15,6 +15,7 @@ import com.cs2063.runsmart.R;
 import com.cs2063.runsmart.util.JsonUtils;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,6 +23,7 @@ import java.util.Date;
 public class HistoryDetailActivity extends AppCompatActivity {
     private final String TAG = "HistoryDetailActivity.java";
     private JsonUtils json;
+    private static DecimalFormat fmt= new DecimalFormat("######.##");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +49,9 @@ public class HistoryDetailActivity extends AppCompatActivity {
         TextView textDuration = findViewById(R.id.value_duration);
         textDuration.setText(formatDuration(duration));
         TextView textDistance = findViewById(R.id.value_distance);
-        textDistance.setText(Double.toString(distance));
+        textDistance.setText(fmt.format(distance)+"km");
         TextView textAvgPace = findViewById(R.id.value_avg_pace);
-        textAvgPace.setText(Double.toString(avg_pace));
+        textAvgPace.setText(fmt.format((avg_pace/3.6))+"m/s");
         // Eventually the notes section will be added here
 
         ImageButton mapButton = findViewById(R.id.button_map);
