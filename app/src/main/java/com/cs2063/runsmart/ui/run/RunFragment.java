@@ -10,6 +10,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -30,6 +31,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.cs2063.runsmart.ForegroundService;
+import com.cs2063.runsmart.LocationService;
 import com.cs2063.runsmart.MainActivity;
 import com.cs2063.runsmart.R;
 import com.cs2063.runsmart.model.HistoryData;
@@ -55,7 +57,8 @@ public class RunFragment extends Fragment {
     private static boolean running;
 
     private LocationManager locationManager;
-    private LocationUtils locationUtils;
+    private ForegroundService mService = null;
+
 
     private static long starttime;
     private long endtime;
@@ -88,10 +91,6 @@ public class RunFragment extends Fragment {
             }
         });
 
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        locationUtils = new LocationUtils(locationManager);
-
-
         chronometer = root.findViewById(R.id.chronometer);
         chronometer.setFormat("00:%s");
         chronometer.setBase(SystemClock.elapsedRealtime());
@@ -110,25 +109,34 @@ public class RunFragment extends Fragment {
             }
         });
 
+        // Restore the state of the buttons when the activity (re)launches.
+        //setButtonsState(Utils.requestingLocationUpdates(this));
+
+
+
         return root;
     }
 
 
     private void startRun() {
 
-        Log.i(TAG, "MainActivity.locationUtils == null : " + (MainActivity.locationUtils == null));
+        //Log.i(TAG, "ForegroundService.locationUtils == null : " + (ForegroundService.locationUtils == null));
 
         // Check if location is enabled
-        if (!MainActivity.locationUtils.isEnabled()) {
+        // Temporarily assuming location is enabled
+        /*
+        if (!ForegroundService.locationUtils.isEnabled()) {
             showLocationAlert();
             return;
-        }
+        }*/
         if (runButton.getText().equals(getResources().getString(R.string.endrun_text))) {
-            MainActivity.locationUtils.shutoff();
 
+            Intent locationIntent = new Intent(getActivity().getApplicationContext(), LocationService.class);
+            getActivity().getApplicationContext().stopService(locationIntent);
+            //MainActivity.mService.removeLocationUpdates();
             // In development: foreground service
-            Intent serviceIntent = new Intent(getActivity().getApplicationContext(), ForegroundService.class);
-            getActivity().getApplicationContext().stopService(serviceIntent);
+            //Intent serviceIntent = new Intent(getActivity().getApplicationContext(), ForegroundService.class);
+            //getActivity().getApplicationContext().stopService(serviceIntent);
 
             // Get data from run
             endtime = Calendar.getInstance().getTimeInMillis();
@@ -172,12 +180,16 @@ public class RunFragment extends Fragment {
                 showPermissionAlert();
                 return;
             }
-            MainActivity.locationUtils.turnon(getActivity());
 
             // in development: Foreground service
-            Intent serviceIntent = new Intent(getActivity().getApplicationContext(), ForegroundService.class);
-            serviceIntent.putExtra("inputExtra", "RunSmart foreground service");
-            ContextCompat.startForegroundService(getActivity().getApplicationContext(), serviceIntent);
+            Intent locationIntent = new Intent(getActivity().getApplicationContext(), LocationService.class);
+            getActivity().getApplicationContext().startService(locationIntent);
+
+            //MainActivity.mService.requestLocationUpdates();
+
+            //Intent serviceIntent = new Intent(getActivity().getApplicationContext(), ForegroundService.class);
+            //serviceIntent.putExtra("inputExtra", "RunSmart is running in the background");
+            //ContextCompat.startForegroundService(getActivity().getApplicationContext(), serviceIntent);
 
             // Initialize coordinate lists
             latitudeList = new ArrayList<Double>();

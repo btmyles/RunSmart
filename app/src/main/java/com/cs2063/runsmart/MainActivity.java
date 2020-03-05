@@ -1,10 +1,17 @@
 package com.cs2063.runsmart;
 
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -13,6 +20,7 @@ import com.cs2063.runsmart.util.LocationUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -29,8 +37,12 @@ import java.util.Scanner;
 public class MainActivity extends AppCompatActivity {
 
     public static JsonUtils jsonUtils;
-    public static LocationUtils locationUtils;
     private final String TAG = "MainActivity.java";
+
+    public static ForegroundService mService = null;
+    private boolean mBound = false;
+
+
 
 
     @Override
@@ -53,12 +65,30 @@ public class MainActivity extends AppCompatActivity {
         jsonUtils = new JsonUtils(this);
         Log.i(TAG, "Done with JSON Utils");
 
+
+
         //LocationUtils
-        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        locationUtils = new LocationUtils(locationManager);
-        Log.i(TAG, "Location utils created : " + (locationUtils == null));
+        //LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        //ForegroundService.locationUtils = new LocationUtils(locationManager);
+        //Log.i(TAG, "Location utils created : " + (ForegroundService.locationUtils == null));
+
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+    @Override
+    protected void onStop() {
+
+        super.onStop();
+    }
+
 
     private void createHistoryDirectory(String filename) {
         Context context = getApplicationContext();
@@ -118,4 +148,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
 }
+
+
