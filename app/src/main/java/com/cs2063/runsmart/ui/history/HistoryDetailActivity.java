@@ -24,6 +24,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
     private final String TAG = "HistoryDetailActivity.java";
     private JsonUtils json;
     private static DecimalFormat fmt= new DecimalFormat("######.##");
+    SimpleDateFormat dayFmt = new SimpleDateFormat("yyyy/MM/dd ");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,17 +42,15 @@ public class HistoryDetailActivity extends AppCompatActivity {
 
 
         TextView textStart = findViewById(R.id.value_start);
-        textStart.setText((formatTime(startTime)));
-        // This line was at the end of each section for the textviews. Might be necessary when we start scrolling
-        //textStart.setMovementMethod(new ScrollingMovementMethod());
+        textStart.setText((formatTime(startTime).replace("a.m", "AM").replace("p.m.","PM")));
         TextView textEnd = findViewById(R.id.value_end);
-        textEnd.setText(formatTime(endTime));
+        textEnd.setText(formatTime(endTime).replace("a.m", "AM").replace("p.m.","PM"));
         TextView textDuration = findViewById(R.id.value_duration);
         textDuration.setText(formatDuration(duration));
         TextView textDistance = findViewById(R.id.value_distance);
-        textDistance.setText(fmt.format(distance)+"km");
+        textDistance.setText(fmt.format(distance)+" km");
         TextView textAvgPace = findViewById(R.id.value_avg_pace);
-        textAvgPace.setText(fmt.format((avg_pace/3.6))+"m/s");
+        textAvgPace.setText(fmt.format((avg_pace/3.6))+" m/s");
         // Eventually the notes section will be added here
 
         ImageButton mapButton = findViewById(R.id.button_map);
@@ -76,13 +75,12 @@ public class HistoryDetailActivity extends AppCompatActivity {
 
 
         // This should be
-        getSupportActionBar().setTitle((formatTime(startTime)));
+        getSupportActionBar().setTitle((dayFmt.format(startTime)));
     }
     String formatDuration(long duration) {
         long second = (duration / 1000) % 60;
         long minute = (duration / (1000 * 60)) % 60;
         long hour = ((duration / (1000 * 60 * 60)) % 24);
-        //long hour= TimeUnit.MILLISECONDS.toSeconds(duration)%24;
         return String.format("%02d:%02d:%02d", hour, minute, second);
     }
     String formatTime(long duration) {
@@ -94,17 +92,13 @@ public class HistoryDetailActivity extends AppCompatActivity {
     }
 
     String stdFmt(String militaryFmt){
-        DateFormat df = new SimpleDateFormat("HH:mm:ss");
-        //Date/time pattern of desired output date
-        DateFormat outputformat = new SimpleDateFormat("hh:mm:ss aa");
         Date date = null;
         String output = null;
+        DateFormat df = new SimpleDateFormat("H:mm:ss");
+        DateFormat outputformat = new SimpleDateFormat("h:mm:ss aa");
         try{
-            //Conversion of input String to date
             date= df.parse(militaryFmt);
-            //old date format to new date format
             output = outputformat.format(date);
-            System.out.println(output);
         }catch(ParseException pe){
             pe.printStackTrace();
         }

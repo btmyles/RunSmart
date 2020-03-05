@@ -47,6 +47,8 @@ public class HistoryFragment extends Fragment {
     private static final String TAG = "HistoryFragment.java";
     private ImageView deleteIcon;
     private static DecimalFormat fmt= new DecimalFormat("######.##");
+    SimpleDateFormat dayFmt = new SimpleDateFormat("yyyy/MM/dd ");
+
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -151,8 +153,8 @@ public class HistoryFragment extends Fragment {
             final HistoryData currentHistory = mDataset.get(position);
 
             //  Set the TextView in the ViewHolder (holder) to be the title
-            holder.start.setText(formatTime(currentHistory.getStartTime()));
-            holder.distance.setText(fmt.format(currentHistory.getDistance())+"km");
+            holder.start.setText(dayFmt.format(currentHistory.getStartTime())+"- "+formatTime(currentHistory.getStartTime()).replace("a.m", "AM").replace("p.m.","PM"));
+            holder.distance.setText(fmt.format(currentHistory.getDistance())+" km");
             holder.duration.setText(formatDuration(currentHistory.getDuration()));
 
             final Intent intent = new Intent(getActivity().getApplicationContext(), HistoryDetailActivity.class);
@@ -216,9 +218,9 @@ public class HistoryFragment extends Fragment {
         return stdFmt(String.format("%02d:%02d:%02d", hour, minute, second));
     }
     String stdFmt(String militaryFmt){
-        DateFormat df = new SimpleDateFormat("HH:mm:ss");
+        DateFormat df = new SimpleDateFormat("H:mm:ss");
         //Date/time pattern of desired output date
-        DateFormat outputformat = new SimpleDateFormat("hh:mm:ss aa");
+        DateFormat outputformat = new SimpleDateFormat("h:mm:ss aa");
         Date date = null;
         String output = null;
         try{
