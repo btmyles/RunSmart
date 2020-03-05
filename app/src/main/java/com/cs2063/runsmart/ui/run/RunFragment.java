@@ -201,6 +201,8 @@ public class RunFragment extends Fragment {
             //Turn Yellow
             runButton.setText(R.string.loadingrun_text);
             runButton.setBackgroundResource((R.drawable.button_bg_round_yellow));
+            runButton.setEnabled(false);
+
         }
     }
 
@@ -244,6 +246,7 @@ public class RunFragment extends Fragment {
         if(ctr==1) {
             runButton.setText(R.string.endrun_text);
             runButton.setBackgroundResource((R.drawable.button_bg_round_red));
+            runButton.setEnabled(true);
 
             //Start Chronometer
             if (!running) {

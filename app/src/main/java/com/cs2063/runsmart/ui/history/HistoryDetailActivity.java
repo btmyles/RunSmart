@@ -1,12 +1,13 @@
 package com.cs2063.runsmart.ui.history;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cs2063.runsmart.LineLayerActivity;
@@ -17,7 +18,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 public class HistoryDetailActivity extends AppCompatActivity {
     private final String TAG = "HistoryDetailActivity.java";
@@ -64,8 +64,17 @@ public class HistoryDetailActivity extends AppCompatActivity {
             }
         });
 
+        ImageButton deleteButton = findViewById(R.id.button_prev);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+        });
+
+
         // This should be
-        getSupportActionBar().setTitle(Long.toString(startTime));
+        getSupportActionBar().setTitle((formatTime(startTime)));
     }
     String formatDuration(long duration) {
         long second = (duration / 1000) % 60;
