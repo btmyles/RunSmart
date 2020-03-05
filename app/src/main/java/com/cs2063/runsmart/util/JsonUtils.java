@@ -154,6 +154,54 @@ public class JsonUtils {
         return null;
     }
 
+    public Boolean delete(Context context, HistoryData history) {
+        try {
+            // Convert HistoryData Java Object to JSON
+            JSONObject mainObject = new JSONObject();
+            JSONArray list = new JSONArray();
+
+            JSONObject valuesObject = new JSONObject();
+            JSONArray jsonArrayLat;
+            JSONArray jsonArrayLon;
+
+            // convert the history array into JSON and place it in the JSON list, except for the data to be deleted
+            for (int i=0; i<historyArray.size(); i++) {
+                if (history.getStartTime() != historyArray.get(i).getStartTime()) {
+                    valuesObject = new JSONObject();
+
+                    valuesObject.put("start_time", historyArray.get(i).getStartTime());
+                    valuesObject.put("end_time", historyArray.get(i).getEndTime());
+                    valuesObject.put("duration", historyArray.get(i).getDuration());
+                    valuesObject.put("distance", historyArray.get(i).getDistance());
+                    valuesObject.put("avg_pace", historyArray.get(i).getAvgPace());
+                    jsonArrayLat = new JSONArray(Arrays.asList(historyArray.get(i).getLatitude()));
+                    jsonArrayLon = new JSONArray(Arrays.asList(historyArray.get(i).getLongitude()));
+                    valuesObject.put("latitude", jsonArrayLat);
+                    valuesObject.put("longitude", jsonArrayLon);
+
+                    list.put(valuesObject);
+                }
+            }
+
+            mainObject.accumulate("history", list);
+
+            Log.i(TAG, "Deleting run at start time: " + history.getStartTime());
+            Log.i(TAG, "New JSON data:");
+            Log.i(TAG, mainObject.toString());
+
+            // Overwrite History.json
+            writeToFile(mainObject.toString(), context);
+
+            // successful write
+            return true;
+
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
+    }
+
     private void writeToFile(String data,Context context) {
 
         // Open History.json to overwrite it

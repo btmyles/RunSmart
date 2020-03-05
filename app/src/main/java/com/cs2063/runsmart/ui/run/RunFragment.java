@@ -104,11 +104,6 @@ public class RunFragment extends Fragment {
             }
         });
 
-        // Restore the state of the buttons when the activity (re)launches.
-        //setButtonsState(Utils.requestingLocationUpdates(this));
-
-
-
         return root;
     }
 

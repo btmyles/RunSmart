@@ -30,6 +30,8 @@ public class LocationService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        // This idea comes from this site
+        // https://hackernoon.com/android-location-tracking-with-a-service-80940218f561
         startForeground(12345678, getNotification());
     }
 

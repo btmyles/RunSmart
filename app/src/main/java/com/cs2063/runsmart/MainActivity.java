@@ -111,12 +111,6 @@ public class MainActivity extends AppCompatActivity {
         catch (IOException e) {
             Log.i("Main", e.toString());
         }
-
-        // create dummy file and write to history folder
-        // history should show an empty list  if nothing is in the FS
-        // consider sqlite
-        //make read operation very efficient
-
     }
 
 

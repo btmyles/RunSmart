@@ -107,6 +107,10 @@ public class HistoryFragment extends Fragment {
                                         final HistoryData currentHistory = mDataset.get(getAdapterPosition());
                                         removeAt(getAdapterPosition());
 
+                                        // Delete from JSON
+                                        Boolean deleteSuccess = MainActivity.jsonUtils.delete(getActivity().getApplicationContext(), currentHistory);
+                                        Log.i(TAG, "Deletion successful : " + deleteSuccess);
+
                                         break;
 
                                     case DialogInterface.BUTTON_NEGATIVE:
