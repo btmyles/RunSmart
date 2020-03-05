@@ -35,10 +35,6 @@
             android:label="RunSmart">
         </activity>
         <service
-            android:name=".ForegroundService"
-            android:enabled="true">
-        </service>
-        <service
             android:name=".LocationService"
             android:enabled="true">
         </service>

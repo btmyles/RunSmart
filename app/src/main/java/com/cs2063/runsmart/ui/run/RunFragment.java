@@ -31,13 +31,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.cs2063.runsmart.ForegroundService;
 import com.cs2063.runsmart.LocationService;
 import com.cs2063.runsmart.MainActivity;
 import com.cs2063.runsmart.R;
 import com.cs2063.runsmart.model.HistoryData;
 import com.cs2063.runsmart.ui.history.HistoryDetailActivity;
-import com.cs2063.runsmart.util.LocationUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -56,10 +54,6 @@ public class RunFragment extends Fragment {
     private static Chronometer chronometer;
     private static long pauseOffset;
     private static boolean running;
-
-    private LocationManager locationManager;
-    private ForegroundService mService = null;
-
 
     private static long starttime;
     private long endtime;
@@ -125,12 +119,9 @@ public class RunFragment extends Fragment {
 
         if (runButton.getText().equals(getResources().getString(R.string.endrun_text))) {
 
+            // In development: foreground service
             Intent locationIntent = new Intent(getActivity().getApplicationContext(), LocationService.class);
             getActivity().getApplicationContext().stopService(locationIntent);
-            //MainActivity.mService.removeLocationUpdates();
-            // In development: foreground service
-            //Intent serviceIntent = new Intent(getActivity().getApplicationContext(), ForegroundService.class);
-            //getActivity().getApplicationContext().stopService(serviceIntent);
 
             // Get data from run
             endtime = Calendar.getInstance().getTimeInMillis();
@@ -185,12 +176,6 @@ public class RunFragment extends Fragment {
             // in development: Foreground service
             Intent locationIntent = new Intent(getActivity().getApplicationContext(), LocationService.class);
             getActivity().getApplicationContext().startService(locationIntent);
-
-            //MainActivity.mService.requestLocationUpdates();
-
-            //Intent serviceIntent = new Intent(getActivity().getApplicationContext(), ForegroundService.class);
-            //serviceIntent.putExtra("inputExtra", "RunSmart is running in the background");
-            //ContextCompat.startForegroundService(getActivity().getApplicationContext(), serviceIntent);
 
             // Initialize coordinate lists
             latitudeList = new ArrayList<Double>();
