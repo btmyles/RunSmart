@@ -23,17 +23,13 @@ import com.cs2063.runsmart.ui.run.RunFragment;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class LocationService extends Service {
-    public static final String BROADCAST_ACTION = "Hello World";
-    public LocationManager locationManager;
+    public static LocationManager locationManager;
     public MyLocationListener listener;
 
-    Intent intent;
-    int counter = 0;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        intent = new Intent(BROADCAST_ACTION);
         startForeground(12345678, getNotification());
     }
 
@@ -52,17 +48,6 @@ public class LocationService extends Service {
         return null;
     }
 
-    /**
-     * Checks whether two providers are the same
-     */
-    private boolean isSameProvider(String provider1, String provider2) {
-        if (provider1 == null) {
-            return provider2 == null;
-        }
-        return provider1.equals(provider2);
-    }
-
-
     @Override
     public void onDestroy() {
         // handler.removeCallbacks(sendUpdatesToUI);
@@ -70,7 +55,7 @@ public class LocationService extends Service {
         Log.v("STOP_SERVICE", "DONE");
         locationManager.removeUpdates(listener);
     }
-
+/* I dont think this is ever used, but leaving it here just in case - Ben
     public static Thread performOnBackgroundThread(final Runnable runnable) {
         final Thread t = new Thread() {
             @Override
@@ -85,7 +70,7 @@ public class LocationService extends Service {
         t.start();
         return t;
     }
-
+*/
     private Notification getNotification() {
         NotificationChannel channel = new NotificationChannel(
                 "channel_01",
@@ -104,13 +89,6 @@ public class LocationService extends Service {
     public class MyLocationListener implements LocationListener {
 
         public void onLocationChanged(final Location loc) {
-            /*
-            intent.putExtra("Latitude", loc.getLatitude());
-            intent.putExtra("Longitude", loc.getLongitude());
-            intent.putExtra("Provider", loc.getProvider());
-            sendBroadcast(intent);
-            */
-
             double longitude = loc.getLongitude();
             double latitude = loc.getLatitude();
             RunFragment.addCoordinates(latitude, longitude);
@@ -130,5 +108,10 @@ public class LocationService extends Service {
         public void onProviderEnabled(String provider) {
             Toast.makeText(getApplicationContext(), "Gps Enabled", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public static Boolean isEnabled(Context c) {
+        LocationManager testManager = (LocationManager) c.getSystemService(Context.LOCATION_SERVICE);
+        return testManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 }

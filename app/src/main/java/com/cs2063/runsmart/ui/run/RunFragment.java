@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -120,15 +121,8 @@ public class RunFragment extends Fragment {
 
     private void startRun() {
 
-        //Log.i(TAG, "ForegroundService.locationUtils == null : " + (ForegroundService.locationUtils == null));
+        Log.i(TAG, "Run button pressed");
 
-        // Check if location is enabled
-        // Temporarily assuming location is enabled
-        /*
-        if (!ForegroundService.locationUtils.isEnabled()) {
-            showLocationAlert();
-            return;
-        }*/
         if (runButton.getText().equals(getResources().getString(R.string.endrun_text))) {
 
             Intent locationIntent = new Intent(getActivity().getApplicationContext(), LocationService.class);
@@ -169,6 +163,9 @@ public class RunFragment extends Fragment {
             intent.putExtra("AVG_PACE", historyData.getAvgPace());
             startActivity(intent);
         } else {
+            // Why is it an else instead of this?
+            // else if (runButton.getText().equals(R.string.startrun_text))
+            Log.i(TAG, "Start button pressed");
             if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
                 //    Activity#requestPermissions
@@ -178,6 +175,10 @@ public class RunFragment extends Fragment {
                 // to handle the case where the user grants the permission. See the documentation
                 // for Activity#requestPermissions for more details.
                 showPermissionAlert();
+                return;
+            }
+            else if (!LocationService.isEnabled(getActivity().getApplicationContext())) {
+                showLocationAlert();
                 return;
             }
 
@@ -195,15 +196,15 @@ public class RunFragment extends Fragment {
             latitudeList = new ArrayList<Double>();
             longitudeList = new ArrayList<Double>();
 
-            Toast.makeText(getActivity(), "Run started", Toast.LENGTH_SHORT).show();
-            Log.i(TAG, "Start time = " + starttime);
+            Toast.makeText(getActivity(), "Setting up GPS", Toast.LENGTH_SHORT).show();
 
             //Turn Yellow
             runButton.setText(R.string.loadingrun_text);
             runButton.setBackgroundResource((R.drawable.button_bg_round_yellow));
             runButton.setEnabled(false);
-
+            return;
         }
+        Log.i(TAG, "Text neither equals Start nor Finish");
     }
 
     private void showPermissionAlert() {

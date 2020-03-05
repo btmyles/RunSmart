@@ -35,7 +35,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
         double distance = intent.getDoubleExtra("DISTANCE", 0);
         final double[] longitude = intent.getDoubleArrayExtra("LONGITUDE");
         final double[] latitude = intent.getDoubleArrayExtra("LATITUDE");
-        long avg_pace = intent.getLongExtra("AVG_PACE", 0);
+        double avg_pace = intent.getDoubleExtra("AVG_PACE", 0);
 
 
         TextView textStart = findViewById(R.id.value_start);
