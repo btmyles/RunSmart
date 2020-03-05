@@ -54,5 +54,5 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center"
-        android:src="@android:drawable/ic_menu_delete" />
+        android:src="@drawable/delete_std" />
 </RelativeLayout>
