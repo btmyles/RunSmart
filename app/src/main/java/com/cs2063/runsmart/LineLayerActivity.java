@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.mapbox.geojson.Feature;
@@ -11,6 +12,10 @@ import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.LineString;
 import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.camera.CameraPosition;
+import com.mapbox.mapboxsdk.camera.CameraUpdate;
+import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
+import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
@@ -51,7 +56,11 @@ public class LineLayerActivity extends AppCompatActivity {
                     @Override
                     public void onStyleLoaded(@NonNull Style style) {
 
-                        initRouteCoordinates();
+                        LatLng firstPoint = initRouteCoordinates();
+                        CameraPosition position = new CameraPosition.Builder()
+                                .target(firstPoint)
+                                .build();
+                        mapboxMap.moveCamera(CameraUpdateFactory.newCameraPosition(position));
 
 // Create the LineString from the list of coordinates and then make a GeoJSON
 // FeatureCollection so we can add the line to our map as a layer.
@@ -75,7 +84,7 @@ public class LineLayerActivity extends AppCompatActivity {
         });
     }
 
-    private void initRouteCoordinates() {
+    private LatLng initRouteCoordinates() {
 // Create a list to store our line coordinates.
         routeCoordinates = new ArrayList<>();
 
@@ -83,10 +92,13 @@ public class LineLayerActivity extends AppCompatActivity {
         double[] latitude = intent.getDoubleArrayExtra("LATITUDE");
         double[] longitude = intent.getDoubleArrayExtra("LONGITUDE");
 
+
         for (int i=0; i<latitude.length; i++) {
             routeCoordinates.add(Point.fromLngLat(longitude[i], latitude[i]));
         }
 
+        // return initial point
+        return new LatLng(latitude[0], longitude[0]);
     }
 
     @Override
