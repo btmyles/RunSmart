@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -44,7 +45,12 @@ import java.util.Locale;
 public class RunFragment extends Fragment {
 
     private final String TAG = "RunFragment";
-    
+    private static Context c;
+
+    SharedPreferences sharedPreferences;
+    private static final String MyPREFERENCES = "MyPrefs" ;
+    private static final String ButtonText = "buttonKey";
+
     private static Button runButton;
     private static int ctr =0;
     private int seconds = 0;
@@ -66,6 +72,7 @@ public class RunFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_run, container, false);
+        c = getActivity().getApplicationContext();
 
         getActivity().setRequestedOrientation(
                 ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -73,7 +80,7 @@ public class RunFragment extends Fragment {
         runButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startRun();
+                runButtonPressed();
             }
         });
 
@@ -95,87 +102,97 @@ public class RunFragment extends Fragment {
             }
         });
 
+        sharedPreferences = getActivity().getApplicationContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
+
         return root;
     }
 
 
-    private void startRun() {
+    private void runButtonPressed() {
 
         Log.i(TAG, "Run button pressed");
 
         if (runButton.getText().equals(getResources().getString(R.string.endrun_text))) {
-
-            // In development: foreground service
-            Intent locationIntent = new Intent(getActivity().getApplicationContext(), LocationService.class);
-            getActivity().getApplicationContext().stopService(locationIntent);
-
-            // Get data from run
-            endtime = Calendar.getInstance().getTimeInMillis();
-            latitudeArray = list2double(latitudeList);
-            longitudeArray = list2double(longitudeList);
-            historyData = new HistoryData.Builder(starttime, endtime, latitudeArray, longitudeArray).build();
-
-            // add this data to the JSON file
-            MainActivity.jsonUtils.toJSon(getActivity(), historyData);
-
-            runButton.setText(R.string.startrun_text);
-            runButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_bg_round_blue));
-
-            chronometer.setBase(SystemClock.elapsedRealtime());
-            running=false;
-            pauseOffset = 0;
-            chronometer.stop();
-
-            Log.i(TAG, "End time = " + endtime);
-
-            // Start map activity
-            ctr=0;
-            Intent intent = new Intent(getActivity().getApplicationContext(), HistoryDetailActivity.class);
-            intent.putExtra("START_TIME", historyData.getStartTime());
-            intent.putExtra("END_TIME", historyData.getEndTime());
-            intent.putExtra("DURATION", historyData.getDuration());
-            intent.putExtra("DISTANCE", historyData.getDistance());
-            intent.putExtra("LONGITUDE", historyData.getLongitude());
-            intent.putExtra("LATITUDE", historyData.getLatitude());
-            intent.putExtra("AVG_PACE", historyData.getAvgPace());
-            startActivity(intent);
-        } else {
+            endRun();
+        }
+        else {
             // Why is it an else instead of this?
             // else if (runButton.getText().equals(R.string.startrun_text))
-            Log.i(TAG, "Start button pressed");
-            if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    Activity#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for Activity#requestPermissions for more details.
-                showPermissionAlert();
-                return;
-            }
-            else if (!LocationService.isEnabled(getActivity().getApplicationContext())) {
-                showLocationAlert();
-                return;
-            }
+            startRun();
+        }
+    }
 
-            // in development: Foreground service
-            Intent locationIntent = new Intent(getActivity().getApplicationContext(), LocationService.class);
-            getActivity().getApplicationContext().startService(locationIntent);
-
-            // Initialize coordinate lists
-            latitudeList = new ArrayList<Double>();
-            longitudeList = new ArrayList<Double>();
-
-            Toast.makeText(getActivity(), "Setting up GPS", Toast.LENGTH_SHORT).show();
-
-            //Turn Yellow
-            runButton.setText(R.string.loadingrun_text);
-            runButton.setBackgroundResource((R.drawable.button_bg_round_yellow));
-            runButton.setEnabled(false);
+    private void startRun() {
+        Log.i(TAG, "Start run");
+        if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    Activity#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for Activity#requestPermissions for more details.
+            showPermissionAlert();
             return;
         }
-        Log.i(TAG, "Text neither equals Start nor Finish");
+        else if (!LocationService.isEnabled(getActivity().getApplicationContext())) {
+            showLocationAlert();
+            return;
+        }
+
+        // in development: Foreground service
+        Intent locationIntent = new Intent(getActivity().getApplicationContext(), LocationService.class);
+        getActivity().getApplicationContext().startService(locationIntent);
+
+        // Initialize coordinate lists
+        latitudeList = new ArrayList<Double>();
+        longitudeList = new ArrayList<Double>();
+
+        Toast.makeText(getActivity(), "Setting up GPS", Toast.LENGTH_SHORT).show();
+
+        //Turn Yellow
+        runButton.setText(R.string.loadingrun_text);
+        runButton.setBackgroundResource((R.drawable.button_bg_round_yellow));
+        runButton.setEnabled(false);
+    }
+
+
+    private void endRun() {
+        // In development: foreground service
+        Intent locationIntent = new Intent(getActivity().getApplicationContext(), LocationService.class);
+        getActivity().getApplicationContext().stopService(locationIntent);
+
+        // Get data from run
+        endtime = Calendar.getInstance().getTimeInMillis();
+        latitudeArray = list2double(latitudeList);
+        longitudeArray = list2double(longitudeList);
+        historyData = new HistoryData.Builder(starttime, endtime, latitudeArray, longitudeArray).build();
+
+        // add this data to the JSON file
+        MainActivity.jsonUtils.toJSon(getActivity(), historyData);
+
+        runButton.setText(R.string.startrun_text);
+        runButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_bg_round_blue));
+
+        chronometer.setBase(SystemClock.elapsedRealtime());
+        running=false;
+        pauseOffset = 0;
+        chronometer.stop();
+
+        Log.i(TAG, "End time = " + endtime);
+
+        // Start map activity
+        ctr=0;
+        Intent intent = new Intent(getActivity().getApplicationContext(), HistoryDetailActivity.class);
+        intent.putExtra("START_TIME", historyData.getStartTime());
+        intent.putExtra("END_TIME", historyData.getEndTime());
+        intent.putExtra("DURATION", historyData.getDuration());
+        intent.putExtra("DISTANCE", historyData.getDistance());
+        intent.putExtra("LONGITUDE", historyData.getLongitude());
+        intent.putExtra("LATITUDE", historyData.getLatitude());
+        intent.putExtra("AVG_PACE", historyData.getAvgPace());
+        startActivity(intent);
     }
 
     private void showPermissionAlert() {
@@ -188,6 +205,21 @@ public class RunFragment extends Fragment {
                     }
                 });
         dialog.show();
+    }
+
+    private void resumeRun(String buttonText) {
+        if (buttonText.equals(getString(R.string.endrun_text))) {
+            // Turn red
+            runButton.setText(R.string.endrun_text);
+            runButton.setBackgroundResource((R.drawable.button_bg_round_red));
+            runButton.setEnabled(true);
+        }
+        else {
+            //Turn Yellow
+            runButton.setText(R.string.loadingrun_text);
+            runButton.setBackgroundResource((R.drawable.button_bg_round_yellow));
+            runButton.setEnabled(false);
+        }
     }
 
     private void showLocationAlert() {
@@ -213,9 +245,12 @@ public class RunFragment extends Fragment {
         latitudeList.add(latitude);
         longitudeList.add(longitude);
 
+
+        if (runButton.getText().equals(c.getString(R.string.loadingrun_text))) {
+
         //Turn Red
-        ctr++;
-        if(ctr==1) {
+        //ctr++;
+        //if(ctr==1) {
             runButton.setText(R.string.endrun_text);
             runButton.setBackgroundResource((R.drawable.button_bg_round_red));
             runButton.setEnabled(true);
@@ -239,4 +274,42 @@ public class RunFragment extends Fragment {
         }
         return array2;
     }
+
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        // Do shared preferences here
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String text = runButton.getText().toString();
+        editor.putString(ButtonText, text);
+        editor.commit();
+        Log.i(TAG, "onPause");
+        Log.i(TAG, "\tbuttonText = " + text);
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i(TAG, "onStop");
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.i(TAG, "onStart");
+        String prefString = sharedPreferences.getString(ButtonText, "None");
+        if (prefString.equals(getString(R.string.endrun_text)) || prefString.equals(getString(R.string.loadingrun_text))) {
+            Log.i(TAG, "resuming run");
+            resumeRun(prefString);
+        }
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.commit();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume");
+    }
 }
+
