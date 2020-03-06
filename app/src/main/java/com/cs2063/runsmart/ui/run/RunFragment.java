@@ -44,9 +44,7 @@ import java.util.Locale;
 public class RunFragment extends Fragment {
 
     private final String TAG = "RunFragment";
-
-    private RunViewModel runViewModel;
-
+    
     private static Button runButton;
     private static int ctr =0;
     private int seconds = 0;
@@ -66,16 +64,9 @@ public class RunFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        runViewModel =
-                ViewModelProviders.of(this).get(RunViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_run, container, false);
-        final TextView textView = root.findViewById(R.id.text_run);
-        runViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+
         getActivity().setRequestedOrientation(
                 ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         runButton = root.findViewById(R.id.start_run);
