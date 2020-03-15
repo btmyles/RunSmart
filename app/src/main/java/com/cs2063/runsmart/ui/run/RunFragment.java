@@ -111,16 +111,28 @@ public class RunFragment extends Fragment {
 
     private void runButtonPressed() {
 
-        Log.i(TAG, "Run button pressed");
+        Log.i(TAG, "Run button pressed. Button text = " + runButton.getText());
 
         if (runButton.getText().equals(getResources().getString(R.string.endrun_text))) {
             endRun();
         }
+        else if(runButton.getText().equals(getResources().getString(R.string.loadingrun_text))) {
+            cancelRun();
+        }
         else {
-            // Why is it an else instead of this?
-            // else if (runButton.getText().equals(R.string.startrun_text))
             startRun();
         }
+    }
+
+    private void cancelRun() {
+        // In development: foreground service
+        Intent locationIntent = new Intent(getActivity().getApplicationContext(), LocationService.class);
+        getActivity().getApplicationContext().stopService(locationIntent);
+
+        runButton.setText(R.string.startrun_text);
+        runButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_bg_round_blue));
+
+        Log.i(TAG, "Cancel Run");
     }
 
     private void startRun() {
@@ -153,8 +165,7 @@ public class RunFragment extends Fragment {
 
         //Turn Yellow
         runButton.setText(R.string.loadingrun_text);
-        runButton.setBackgroundResource((R.drawable.button_bg_round_yellow));
-        runButton.setEnabled(false);
+        runButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_bg_round_yellow));
     }
 
 
@@ -208,17 +219,16 @@ public class RunFragment extends Fragment {
     }
 
     private void resumeRun(String buttonText) {
+        Log.i(TAG, "resumeRun");
         if (buttonText.equals(getString(R.string.endrun_text))) {
             // Turn red
             runButton.setText(R.string.endrun_text);
             runButton.setBackgroundResource((R.drawable.button_bg_round_red));
-            runButton.setEnabled(true);
         }
         else {
             //Turn Yellow
             runButton.setText(R.string.loadingrun_text);
             runButton.setBackgroundResource((R.drawable.button_bg_round_yellow));
-            runButton.setEnabled(false);
         }
     }
 
@@ -253,7 +263,6 @@ public class RunFragment extends Fragment {
         //if(ctr==1) {
             runButton.setText(R.string.endrun_text);
             runButton.setBackgroundResource((R.drawable.button_bg_round_red));
-            runButton.setEnabled(true);
 
             //Start Chronometer
             if (!running) {
@@ -286,7 +295,7 @@ public class RunFragment extends Fragment {
         editor.putString(ButtonText, text);
         editor.commit();
         Log.i(TAG, "onPause");
-        Log.i(TAG, "\tbuttonText = " + text);
+        Log.i(TAG, "buttonText = " + text);
     }
     @Override
     public void onStop() {
