@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 
 import com.cs2063.runsmart.ui.run.RunFragment;
 
@@ -57,22 +59,7 @@ public class LocationService extends Service {
         Log.v("STOP_SERVICE", "DONE");
         locationManager.removeUpdates(listener);
     }
-/* I dont think this is ever used, but leaving it here just in case - Ben
-    public static Thread performOnBackgroundThread(final Runnable runnable) {
-        final Thread t = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    runnable.run();
-                } finally {
 
-                }
-            }
-        };
-        t.start();
-        return t;
-    }
-*/
     private Notification getNotification() {
         NotificationChannel channel = new NotificationChannel(
                 "channel_01",
@@ -83,7 +70,15 @@ public class LocationService extends Service {
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
         notificationManager.createNotificationChannel(channel);
 
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent mainIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        //NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
         Notification.Builder builder = new Notification.Builder(getApplicationContext(), "channel_01");
+        builder.setSmallIcon(R.mipmap.panda_ic_launcher_round)
+                .setContentTitle("Run is Active")
+                .setContentText("Touch to open the app")
+                .setContentIntent(mainIntent);
 
         return builder.build();
     }
