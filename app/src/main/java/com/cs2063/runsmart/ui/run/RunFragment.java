@@ -27,6 +27,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -37,6 +38,7 @@ import com.cs2063.runsmart.MainActivity;
 import com.cs2063.runsmart.R;
 import com.cs2063.runsmart.model.HistoryData;
 import com.cs2063.runsmart.ui.history.HistoryDetailActivity;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,6 +52,7 @@ public class RunFragment extends Fragment {
     SharedPreferences sharedPreferences;
     private static final String MyPREFERENCES = "MyPrefs" ;
     private static final String ButtonText = "buttonKey";
+    private static final String ChronometerBase = "baseKey";
 
     private static Button runButton;
     private static int ctr =0;
@@ -85,22 +88,7 @@ public class RunFragment extends Fragment {
         });
 
         chronometer = root.findViewById(R.id.chronometer);
-        chronometer.setFormat("00:%s");
-        chronometer.setBase(SystemClock.elapsedRealtime());
-
-        chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-            @Override
-            public void onChronometerTick(Chronometer chronometer) {
-                    long time = SystemClock.elapsedRealtime() - chronometer.getBase();
-                    int h   = (int)(time /3600000);
-                    int m = (int)(time - h*3600000)/60000;
-                    int s= (int)(time - h*3600000- m*60000)/1000 ;
-                    String hh = h < 10 ? "0"+h: h+"";
-                    String mm = m < 10 ? "0"+m: m+"";
-                    String ss = s < 10 ? "0"+s: s+"";
-                    chronometer.setText(hh+":"+mm+":"+ss);
-            }
-        });
+        enableChronometer(SystemClock.elapsedRealtime());
 
         sharedPreferences = getActivity().getApplicationContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
@@ -108,6 +96,24 @@ public class RunFragment extends Fragment {
         return root;
     }
 
+    private void enableChronometer(long base) {
+        chronometer.setFormat("00:%s");
+        chronometer.setBase(base);
+
+        chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            @Override
+            public void onChronometerTick(Chronometer chronometer) {
+                long time = SystemClock.elapsedRealtime() - chronometer.getBase();
+                int h   = (int)(time /3600000);
+                int m = (int)(time - h*3600000)/60000;
+                int s= (int)(time - h*3600000- m*60000)/1000 ;
+                String hh = h < 10 ? "0"+h: h+"";
+                String mm = m < 10 ? "0"+m: m+"";
+                String ss = s < 10 ? "0"+s: s+"";
+                chronometer.setText(hh+":"+mm+":"+ss);
+            }
+        });
+    }
 
     private void runButtonPressed() {
 
@@ -145,7 +151,10 @@ public class RunFragment extends Fragment {
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for Activity#requestPermissions for more details.
-            showPermissionAlert();
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    1);
+            //showPermissionAlert();
             return;
         }
         else if (!LocationService.isEnabled(getActivity().getApplicationContext())) {
@@ -153,7 +162,7 @@ public class RunFragment extends Fragment {
             return;
         }
 
-        // in development: Foreground service
+        // Foreground service
         Intent locationIntent = new Intent(getActivity().getApplicationContext(), LocationService.class);
         getActivity().getApplicationContext().startService(locationIntent);
 
@@ -170,7 +179,7 @@ public class RunFragment extends Fragment {
 
 
     private void endRun() {
-        // In development: foreground service
+        // foreground service
         Intent locationIntent = new Intent(getActivity().getApplicationContext(), LocationService.class);
         getActivity().getApplicationContext().stopService(locationIntent);
 
@@ -187,7 +196,7 @@ public class RunFragment extends Fragment {
         runButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_bg_round_blue));
 
         chronometer.setBase(SystemClock.elapsedRealtime());
-        running=false;
+        //running=false;
         pauseOffset = 0;
         chronometer.stop();
 
@@ -205,6 +214,35 @@ public class RunFragment extends Fragment {
         intent.putExtra("AVG_PACE", historyData.getAvgPace());
         startActivity(intent);
     }
+/*
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if ((grantResults.length > 0) && (grantResults[0] +
+                        grantResults[1]) == PackageManager.PERMISSION_GRANTED) {
+                    //Call whatever you want
+                    myMethod();
+                } else {
+                    Snackbar.make(findViewById(android.R.id.content), "Enable Permissions from settings",
+                            Snackbar.LENGTH_INDEFINITE).setAction("ENABLE",
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent();
+                                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                    intent.addCategory(Intent.CATEGORY_DEFAULT);
+                                    intent.setData(Uri.parse("package:" + getPackageName()));
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                                    startActivity(intent);
+                                }
+                            }).show();
+                }
+                return;
+            }
+    }
 
     private void showPermissionAlert() {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
@@ -217,13 +255,16 @@ public class RunFragment extends Fragment {
                 });
         dialog.show();
     }
-
-    private void resumeRun(String buttonText) {
+*/
+    private void resumeRun(String buttonText, long chronometerBase) {
         Log.i(TAG, "resumeRun");
         if (buttonText.equals(getString(R.string.endrun_text))) {
             // Turn red
             runButton.setText(R.string.endrun_text);
             runButton.setBackgroundResource((R.drawable.button_bg_round_red));
+            // Resume chronometer
+            enableChronometer(chronometerBase);
+            chronometer.start();
         }
         else {
             //Turn Yellow
@@ -265,12 +306,12 @@ public class RunFragment extends Fragment {
             runButton.setBackgroundResource((R.drawable.button_bg_round_red));
 
             //Start Chronometer
-            if (!running) {
+            //if (!running) {
                 starttime = Calendar.getInstance().getTimeInMillis();
                 chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
                 chronometer.start();
-                running = true;
-            }
+                //running = true;
+            //}
         }
     }
 
@@ -289,13 +330,15 @@ public class RunFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        String text = runButton.getText().toString();
+        long base = chronometer.getBase();
+
         // Do shared preferences here
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        String text = runButton.getText().toString();
         editor.putString(ButtonText, text);
+        editor.putLong(ChronometerBase, base);
         editor.commit();
-        Log.i(TAG, "onPause");
-        Log.i(TAG, "buttonText = " + text);
+        Log.i(TAG, "onPause: buttonText = " + text);
     }
     @Override
     public void onStop() {
@@ -307,9 +350,10 @@ public class RunFragment extends Fragment {
         super.onStart();
         Log.i(TAG, "onStart");
         String prefString = sharedPreferences.getString(ButtonText, "None");
+        long prefBase = sharedPreferences.getLong(ChronometerBase, 0);
         if (prefString.equals(getString(R.string.endrun_text)) || prefString.equals(getString(R.string.loadingrun_text))) {
             Log.i(TAG, "resuming run");
-            resumeRun(prefString);
+            resumeRun(prefString, prefBase);
         }
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
