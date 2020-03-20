@@ -30,6 +30,7 @@ import java.util.List;
 
 /**
  * Add a GeoJSON line to a map.
+ * This is mostly taken from example projects on mapbox
  */
 public class LineLayerActivity extends AppCompatActivity {
 
@@ -40,11 +41,10 @@ public class LineLayerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-// Mapbox access token is configured here. This needs to be called either in your application
-// object or in the same activity which contains the mapview.
+        // Mapbox access token is configured here.
         Mapbox.getInstance(this, getString(R.string.access_token));
 
-// This contains the MapView in XML and needs to be called after the access token is configured.
+        // This contains the MapView in XML and needs to be called after the access token is configured.
         setContentView(R.layout.activity_style_line_layer);
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
@@ -62,15 +62,15 @@ public class LineLayerActivity extends AppCompatActivity {
                                 .build();
                         mapboxMap.moveCamera(CameraUpdateFactory.newCameraPosition(position));
 
-// Create the LineString from the list of coordinates and then make a GeoJSON
-// FeatureCollection so we can add the line to our map as a layer.
+                        // Create the LineString from the list of coordinates and then make a GeoJSON
+                        // FeatureCollection so we can add the line to our map as a layer.
                         style.addSource(new GeoJsonSource("line-source",
                                 FeatureCollection.fromFeatures(new Feature[] {Feature.fromGeometry(
                                         LineString.fromLngLats(routeCoordinates)
                                 )})));
 
-// The layer properties for our line. This is where we make the line dotted, set the
-// color, etc.
+                        // The layer properties for our line. This is where we make the line dotted, set the
+                        // color, etc.
                         style.addLayer(new LineLayer("linelayer", "line-source").withProperties(
                                 PropertyFactory.lineDasharray(new Float[] {0.01f, 2f}),
                                 PropertyFactory.lineCap(Property.LINE_CAP_ROUND),
@@ -85,7 +85,7 @@ public class LineLayerActivity extends AppCompatActivity {
     }
 
     private LatLng initRouteCoordinates() {
-// Create a list to store our line coordinates.
+        // Create a list to store our line coordinates.
         routeCoordinates = new ArrayList<>();
 
         Intent intent = getIntent();

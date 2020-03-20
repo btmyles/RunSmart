@@ -1,6 +1,5 @@
 package com.cs2063.runsmart.ui.history;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -9,18 +8,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.cs2063.runsmart.MainActivity;
 import com.cs2063.runsmart.R;
@@ -37,10 +30,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.Random;
 
 public class HistoryFragment extends Fragment {
 
@@ -51,10 +41,8 @@ public class HistoryFragment extends Fragment {
 
 
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        getActivity().setRequestedOrientation(
-                ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         Log.i(TAG, "running onCreateView()");
         View root = inflater.inflate(R.layout.fragment_history, container, false);
 
@@ -77,8 +65,6 @@ public class HistoryFragment extends Fragment {
 
     public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         private final ArrayList<HistoryData> mDataset;
-        private final Date date = new Date();
-
         private MyAdapter(ArrayList<HistoryData> myDataset) {
             mDataset = myDataset;
         }
@@ -88,7 +74,6 @@ public class HistoryFragment extends Fragment {
         // but RecyclerView gives us the flexibility to do more complex things
         // (e.g., display an image and some text).
         private class ViewHolder extends RecyclerView.ViewHolder {
-            private RelativeLayout relativeLayout;
             private TextView start;
             private TextView distance;
             private TextView duration;
@@ -99,7 +84,6 @@ public class HistoryFragment extends Fragment {
                 distance = v.findViewById(R.id.history_item_distance);
                 duration = v.findViewById(R.id.history_item_duration);
                 deleteIcon=v.findViewById(R.id.item_delete);
-                relativeLayout = v.findViewById(R.id.history_item_layout);
                 deleteIcon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -206,7 +190,6 @@ public class HistoryFragment extends Fragment {
         long second = (duration / 1000) % 60;
         long minute = (duration / (1000 * 60)) % 60;
         long hour = ((duration / (1000 * 60 * 60)) % 24);
-        //long hour= TimeUnit.MILLISECONDS.toSeconds(duration)%24;
         return String.format("%02d:%02d:%02d", hour, minute, second);
     }
 
@@ -221,7 +204,7 @@ public class HistoryFragment extends Fragment {
         DateFormat df = new SimpleDateFormat("H:mm:ss");
         //Date/time pattern of desired output date
         DateFormat outputformat = new SimpleDateFormat("h:mm:ss aa");
-        Date date = null;
+        Date date;
         String output = null;
         try{
             //Conversion of input String to date

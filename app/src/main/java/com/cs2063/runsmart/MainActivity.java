@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "Starting JSON Utils");
         jsonUtils = new JsonUtils(this);
         Log.i(TAG, "Done with JSON Utils");
-
     }
 
     @Override
@@ -60,11 +59,8 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
     }
 
-
     private void createHistoryDirectory(String filename) {
         Context context = getApplicationContext();
-
-        // This is not actually creating the required directory
 
         File folder = getFilesDir();
         File f = new File(folder, filename);
@@ -112,8 +108,6 @@ public class MainActivity extends AppCompatActivity {
             Log.i("Main", e.toString());
         }
     }
-
-
 }
 
 

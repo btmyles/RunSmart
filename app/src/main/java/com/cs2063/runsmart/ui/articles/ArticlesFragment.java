@@ -11,37 +11,26 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cs2063.runsmart.R;
-import com.cs2063.runsmart.model.HistoryData;
-import com.cs2063.runsmart.ui.history.HistoryDetailActivity;
-import com.cs2063.runsmart.ui.history.HistoryFragment;
 
 import java.net.URL;
-import java.util.ArrayList;
 
 public class ArticlesFragment extends Fragment {
     private String TAG = "ArticlesFragment.java";
     private URL[] links = new URL[6];
     private String[] titles = new String[6];
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        getActivity().setRequestedOrientation(
-                ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-        Log.i(TAG, "running ArticlesFragment onCreateView");
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        Log.i(TAG, "onCreateView");
         View root = inflater.inflate(R.layout.fragment_articles, container, false);
-        //we can get rid of the textview once we implement articles
-        final TextView textView = root.findViewById(R.id.text_articles);
         try{
             Log.i(TAG, "In Try Statement");
             links[0] = new URL(getString(R.string.url_run1));

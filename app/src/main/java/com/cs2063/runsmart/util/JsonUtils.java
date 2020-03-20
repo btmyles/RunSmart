@@ -21,8 +21,6 @@ public class JsonUtils {
 
     private static final String TAG = "JsonUtils.java";
 
-    private static final String HISTORY_JSON_FILE = "History.json";
-
     private static final String KEY_HISTORY = "history";
     private static final String KEY_LATITUDE = "latitude";
     private static final String KEY_LONGITUDE = "longitude";
@@ -44,8 +42,8 @@ public class JsonUtils {
 
         try {
             // Create a JSON Object from file contents String
-            if(loadJSONFromAssets(context) != null) {
-                JSONObject jsonObject = new JSONObject(loadJSONFromAssets(context));
+            if(loadJSONFromStorage(context) != null) {
+                JSONObject jsonObject = new JSONObject(loadJSONFromStorage(context));
 
                 // Create a JSON Array from the JSON Object
                 // This array is the "courses" array mentioned in the lab write-up
@@ -80,7 +78,7 @@ public class JsonUtils {
         }
     }
 
-    private String loadJSONFromAssets(Context context) {
+    private String loadJSONFromStorage(Context context) {
         try {
             // read file from local storage
             InputStream is = new FileInputStream(new File(context.getFilesDir(),"history/History.json"));
@@ -141,7 +139,6 @@ public class JsonUtils {
 
             Log.i(TAG, mainObject.toString());
 
-
             // Overwrite History.json
             writeToFile(mainObject.toString(), context);
 
@@ -160,7 +157,7 @@ public class JsonUtils {
             JSONObject mainObject = new JSONObject();
             JSONArray list = new JSONArray();
 
-            JSONObject valuesObject = new JSONObject();
+            JSONObject valuesObject;
             JSONArray jsonArrayLat;
             JSONArray jsonArrayLon;
 

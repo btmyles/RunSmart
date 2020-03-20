@@ -18,7 +18,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
 
 import com.cs2063.runsmart.ui.run.RunFragment;
 
@@ -73,7 +72,6 @@ public class LocationService extends Service {
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent mainIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
-        //NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
         Notification.Builder builder = new Notification.Builder(getApplicationContext(), "channel_01");
         builder.setSmallIcon(R.mipmap.panda_ic_launcher_round)
                 .setContentTitle("Run is Active")

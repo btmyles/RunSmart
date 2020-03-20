@@ -1,18 +1,15 @@
 package com.cs2063.runsmart.ui.history;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cs2063.runsmart.LineLayerActivity;
 import com.cs2063.runsmart.R;
-import com.cs2063.runsmart.util.JsonUtils;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -22,7 +19,6 @@ import java.util.Date;
 
 public class HistoryDetailActivity extends AppCompatActivity {
     private final String TAG = "HistoryDetailActivity.java";
-    private JsonUtils json;
     private static DecimalFormat fmt= new DecimalFormat("######.##");
     SimpleDateFormat dayFmt = new SimpleDateFormat("yyyy/MM/dd ");
 
@@ -92,7 +88,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
     }
 
     String stdFmt(String militaryFmt){
-        Date date = null;
+        Date date;
         String output = null;
         DateFormat df = new SimpleDateFormat("H:mm:ss");
         DateFormat outputformat = new SimpleDateFormat("h:mm:ss aa");
