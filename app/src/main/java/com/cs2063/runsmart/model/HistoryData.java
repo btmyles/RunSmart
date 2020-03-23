@@ -48,6 +48,8 @@ public class HistoryData {
 
     public String getNotes() { return notes; }
 
+    public void setNotes(String newNotes) { this.notes = newNotes; }
+
     public static class Builder {
         private long startTime;   // in ms
         private long endTime;

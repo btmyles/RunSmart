@@ -208,6 +208,73 @@ public class JsonUtils {
 
         return false;
     }
+    public Boolean updateNotes(Context context, HistoryData history, String notesIn) {
+        try {
+            // Convert HistoryData Java Object to JSON
+            JSONObject mainObject = new JSONObject();
+            JSONArray list = new JSONArray();
+
+            JSONObject valuesObject;
+            JSONArray jsonArrayLat;
+            JSONArray jsonArrayLon;
+
+            // convert the history array into JSON and place it in the JSON list, except for the data to be deleted
+            for (int i=0; i<historyArray.size(); i++) {
+                if (history.getStartTime() != historyArray.get(i).getStartTime()) {
+                    valuesObject = new JSONObject();
+
+                    valuesObject.put("start_time", historyArray.get(i).getStartTime());
+                    valuesObject.put("end_time", historyArray.get(i).getEndTime());
+                    valuesObject.put("duration", historyArray.get(i).getDuration());
+                    valuesObject.put("distance", historyArray.get(i).getDistance());
+                    valuesObject.put("avg_pace", historyArray.get(i).getAvgPace());
+                    jsonArrayLat = new JSONArray(Arrays.asList(historyArray.get(i).getLatitude()));
+                    jsonArrayLon = new JSONArray(Arrays.asList(historyArray.get(i).getLongitude()));
+                    valuesObject.put("latitude", jsonArrayLat);
+                    valuesObject.put("longitude", jsonArrayLon);
+                    Log.i("JsonUtils.java", "delete - copy notes over in loop");
+                    valuesObject.put("notes", historyArray.get(i).getNotes());
+
+                    list.put(valuesObject);
+                }
+                if (history.getStartTime() == historyArray.get(i).getStartTime()) {
+                    valuesObject = new JSONObject();
+
+                    valuesObject.put("start_time", historyArray.get(i).getStartTime());
+                    valuesObject.put("end_time", historyArray.get(i).getEndTime());
+                    valuesObject.put("duration", historyArray.get(i).getDuration());
+                    valuesObject.put("distance", historyArray.get(i).getDistance());
+                    valuesObject.put("avg_pace", historyArray.get(i).getAvgPace());
+                    jsonArrayLat = new JSONArray(Arrays.asList(historyArray.get(i).getLatitude()));
+                    jsonArrayLon = new JSONArray(Arrays.asList(historyArray.get(i).getLongitude()));
+                    valuesObject.put("latitude", jsonArrayLat);
+                    valuesObject.put("longitude", jsonArrayLon);
+                    Log.i("JsonUtils.java", "delete - copy notes over in loop");
+                    historyArray.get(i).setNotes(notesIn);
+                    valuesObject.put("notes", historyArray.get(i).getNotes());
+
+                    list.put(valuesObject);
+                }
+            }
+
+            mainObject.accumulate("history", list);
+
+            Log.i(TAG, "Modifying notes file for object " + history.getStartTime());
+            Log.i(TAG, "New JSON data:");
+            Log.i(TAG, mainObject.toString());
+
+            // Overwrite History.json
+            writeToFile(mainObject.toString(), context);
+
+            // successful write
+            return true;
+
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
+    }
 
     private void writeToFile(String data,Context context) {
 

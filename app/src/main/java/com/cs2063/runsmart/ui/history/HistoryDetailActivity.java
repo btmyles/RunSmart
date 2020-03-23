@@ -1,6 +1,7 @@
 package com.cs2063.runsmart.ui.history;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.cs2063.runsmart.LineLayerActivity;
 import com.cs2063.runsmart.R;
+import com.cs2063.runsmart.model.HistoryData;
+import com.cs2063.runsmart.util.JsonUtils;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -24,6 +27,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
     private final String TAG = "HistoryDetailActivity.java";
     private static DecimalFormat fmt= new DecimalFormat("######.##");
     SimpleDateFormat dayFmt = new SimpleDateFormat("yyyy/MM/dd ");
+    //private JsonUtils utils = new JsonUtils(context);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +35,8 @@ public class HistoryDetailActivity extends AppCompatActivity {
         setContentView(R.layout.history_item_detail);
 
         final Intent intent = getIntent();
-        long startTime = intent.getLongExtra("START_TIME", 0);
-        long endTime = intent.getLongExtra("END_TIME", 0);
+        final long startTime = intent.getLongExtra("START_TIME", 0);
+        final long endTime = intent.getLongExtra("END_TIME", 0);
         long duration = intent.getLongExtra("DURATION", 0);
         double distance = intent.getDoubleExtra("DISTANCE", 0);
         final double[] longitude = intent.getDoubleArrayExtra("LONGITUDE");
@@ -40,6 +44,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
         double avg_pace = intent.getDoubleExtra("AVG_PACE", 0);
         String notes = intent.getStringExtra("NOTES");
 
+        Log.i(TAG, "creating new Builder in onCreate.");
 
         TextView textStart = findViewById(R.id.value_start);
         textStart.setText((formatTime(startTime).replace("a.m", "AM").replace("p.m.","PM")));
@@ -57,6 +62,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
         textNotes.addTextChangedListener(new TextWatcher() {
             boolean _ignore = false;
             String newNotes = "";
+            HistoryData.Builder builder;
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -78,6 +84,10 @@ public class HistoryDetailActivity extends AppCompatActivity {
                 textNotes.setText(newNotes);
                 //needs to save the newNotes back to json
                 intent.putExtra("NOTES", newNotes);
+                //builder = new HistoryData.Builder(startTime, endTime, latitude, longitude, newNotes);
+                Log.i(TAG, "afterTextChanged - creating new HistoryData.");
+                //HistoryData current = new HistoryData(builder);
+                //utils.updateNotes(getApplicationContext(), current, newNotes);
                 Log.i(TAG, "TextWatcher - afterTextChanged: " + newNotes);
                 _ignore = false; //TextWatcher starts to listen again.
             }
