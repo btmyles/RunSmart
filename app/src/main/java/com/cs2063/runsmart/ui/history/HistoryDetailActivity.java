@@ -2,6 +2,9 @@ package com.cs2063.runsmart.ui.history;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -27,7 +30,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.history_item_detail);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         long startTime = intent.getLongExtra("START_TIME", 0);
         long endTime = intent.getLongExtra("END_TIME", 0);
         long duration = intent.getLongExtra("DURATION", 0);
@@ -35,6 +38,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
         final double[] longitude = intent.getDoubleArrayExtra("LONGITUDE");
         final double[] latitude = intent.getDoubleArrayExtra("LATITUDE");
         double avg_pace = intent.getDoubleExtra("AVG_PACE", 0);
+        String notes = intent.getStringExtra("NOTES");
 
 
         TextView textStart = findViewById(R.id.value_start);
@@ -47,7 +51,37 @@ public class HistoryDetailActivity extends AppCompatActivity {
         textDistance.setText(fmt.format(distance)+" km");
         TextView textAvgPace = findViewById(R.id.value_avg_pace);
         textAvgPace.setText(fmt.format((avg_pace/3.6))+" m/s");
-        // Eventually the notes section will be added here
+        Log.i(TAG, "onCreate - getting notes view by id");
+        final TextView textNotes = findViewById(R.id.edit_text);
+        textNotes.setText(notes);
+        textNotes.addTextChangedListener(new TextWatcher() {
+            boolean _ignore = false;
+            String newNotes = "";
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                // TODO Auto-generated method stub
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (_ignore)
+                    return;
+
+                _ignore = true; // prevent infinite loop
+                newNotes = textNotes.getText().toString();
+                textNotes.setText(newNotes);
+                //needs to save the newNotes back to json
+                intent.putExtra("NOTES", newNotes);
+                Log.i(TAG, "TextWatcher - afterTextChanged: " + newNotes);
+                _ignore = false; //TextWatcher starts to listen again.
+            }
+        });
 
         ImageButton mapButton = findViewById(R.id.button_map);
         mapButton.setOnClickListener(new View.OnClickListener() {

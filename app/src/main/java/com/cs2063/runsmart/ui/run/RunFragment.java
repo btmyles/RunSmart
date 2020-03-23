@@ -51,6 +51,7 @@ public class RunFragment extends Fragment {
     private static ArrayList<Double> longitudeList;
     private double[] latitudeArray;
     private double[] longitudeArray;
+    private String notes;
 
     HistoryData historyData;
 
@@ -75,6 +76,7 @@ public class RunFragment extends Fragment {
 
         sharedPreferences = getActivity().getApplicationContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
+        notes = ""; //default notes value when recording a new run.
 
         return root;
     }
@@ -157,7 +159,7 @@ public class RunFragment extends Fragment {
         endtime = Calendar.getInstance().getTimeInMillis();
         latitudeArray = list2double(latitudeList);
         longitudeArray = list2double(longitudeList);
-        historyData = new HistoryData.Builder(starttime, endtime, latitudeArray, longitudeArray).build();
+        historyData = new HistoryData.Builder(starttime, endtime, latitudeArray, longitudeArray, notes).build();
 
         // add this data to the JSON file
         MainActivity.jsonUtils.toJSon(getActivity(), historyData);

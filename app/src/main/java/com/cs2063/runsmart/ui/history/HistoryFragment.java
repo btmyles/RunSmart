@@ -149,6 +149,8 @@ public class HistoryFragment extends Fragment {
             intent.putExtra("LONGITUDE", currentHistory.getLongitude());
             intent.putExtra("LATITUDE", currentHistory.getLatitude());
             intent.putExtra("AVG_PACE", currentHistory.getAvgPace());
+            Log.i(TAG, "onBindViewHolder - putting notes extra");
+            intent.putExtra("NOTES", currentHistory.getNotes());
 
             //  Set the onClickListener for the TextView in the ViewHolder (holder) such that when it is clicked, it creates an explicit intent to launch DetailActivity
             holder.start.setOnClickListener(new View.OnClickListener() {

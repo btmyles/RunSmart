@@ -26,6 +26,7 @@ public class JsonUtils {
     private static final String KEY_LONGITUDE = "longitude";
     private static final String KEY_END_TIME = "end_time";
     private static final String KEY_START_TIME = "start_time";
+    private static final String KEY_NOTES = "notes";
 
     private ArrayList<HistoryData>  historyArray;
 
@@ -63,9 +64,12 @@ public class JsonUtils {
                         longitude[j] = Jsonlongitude.getDouble(j);
                     }
 
+                    Log.i("JsonUtils.java", "processJSON getting notes key from element object.");
+                    String notes = elementObject.getString(KEY_NOTES);
+
                     // Get data from individual JSON Object
                     HistoryData historyData = new HistoryData.Builder(elementObject.getLong(KEY_START_TIME),
-                            elementObject.getLong(KEY_END_TIME), latitude, longitude)
+                            elementObject.getLong(KEY_END_TIME), latitude, longitude, notes)
                             .build();
 
                     historyData.deriveAttributes();
@@ -112,6 +116,8 @@ public class JsonUtils {
             JSONArray jsonArrayLon = new JSONArray(Arrays.asList(history.getLongitude()));
             valuesObject.put("latitude", jsonArrayLat);
             valuesObject.put("longitude", jsonArrayLon);
+            Log.i("JsonUtils.java", "toJSon - convert HistoryData notes to JSON");
+            valuesObject.put("notes", history.getNotes());
 
             list.put(valuesObject);
 
@@ -128,6 +134,8 @@ public class JsonUtils {
                 jsonArrayLon = new JSONArray(Arrays.asList(historyArray.get(i).getLongitude()));
                 valuesObject.put("latitude", jsonArrayLat);
                 valuesObject.put("longitude", jsonArrayLon);
+                Log.i("JsonUtils.java", "toJSon - putting notes from loop.");
+                valuesObject.put("notes", historyArray.get(i).getNotes());
 
                 list.put(valuesObject);
             }
@@ -175,6 +183,8 @@ public class JsonUtils {
                     jsonArrayLon = new JSONArray(Arrays.asList(historyArray.get(i).getLongitude()));
                     valuesObject.put("latitude", jsonArrayLat);
                     valuesObject.put("longitude", jsonArrayLon);
+                    Log.i("JsonUtils.java", "delete - copy notes over in loop");
+                    valuesObject.put("notes", historyArray.get(i).getNotes());
 
                     list.put(valuesObject);
                 }

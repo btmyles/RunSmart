@@ -1,5 +1,7 @@
 package com.cs2063.runsmart.model;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import com.mapbox.turf.TurfMeasurement;
 import com.mapbox.geojson.Point;
@@ -14,6 +16,7 @@ public class HistoryData {
     private double[] latitude;
     private double[] longitude;
     private double avgPace;
+    private String notes;
 
     public long getStartTime() {
         return startTime;
@@ -43,17 +46,22 @@ public class HistoryData {
         return avgPace;
     }
 
+    public String getNotes() { return notes; }
+
     public static class Builder {
         private long startTime;   // in ms
         private long endTime;
         private double[] latitude;
         private double[] longitude;
+        private String notes;
 
-        public Builder(@NonNull long startTime,@NonNull long endTime,@NonNull double[] latitude,@NonNull double[] longitude){
+        public Builder(@NonNull long startTime,@NonNull long endTime,@NonNull double[] latitude,@NonNull double[] longitude, String notes){
             this.startTime = startTime;
             this.endTime = endTime;
             this.latitude = latitude;
             this.longitude = longitude;
+            Log.i("HistoryData.java", "Builder constructor. Setting notes.");
+            this.notes = notes;
         }
         public HistoryData build() { return new HistoryData(this);}
     }
@@ -63,6 +71,8 @@ public class HistoryData {
         this.endTime = builder.endTime;
         this.latitude = builder.latitude;
         this.longitude = builder.longitude;
+        Log.i("HistoryData.java", "HistoryData constructor, setting notes.");
+        this.notes = builder.notes;
     }
 
     public void deriveAttributes() {
