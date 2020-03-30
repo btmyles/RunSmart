@@ -8,84 +8,84 @@
 
     <TextView
         android:id="@+id/text_notes"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:autoSizeMaxTextSize="100sp"
         android:autoSizeMinTextSize="12sp"
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/opensans_extrabold"
         android:text="Notes:"
         android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/text_distance"
-        app:layout_constraintTop_toBottomOf="@+id/text_avg_pace" />
+        android:textSize="60sp"
+        app:layout_constraintEnd_toEndOf="@+id/edit_text"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintStart_toStartOf="@+id/edit_text"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/button_map"
-        android:layout_width="0dp"
-        android:layout_height="122dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/value_start"
-        app:layout_constraintTop_toTopOf="@+id/text_duration"
-        app:srcCompat="@drawable/mapicon5small" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/value_avg_pace"
+        app:layout_constraintStart_toStartOf="@+id/text_avg_pace"
+        app:layout_constraintTop_toBottomOf="@+id/text_avg_pace"
+        app:srcCompat="@drawable/mapicon5big" />
 
     <TextView
         android:id="@+id/text_distance"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:autoSizeMaxTextSize="100sp"
         android:autoSizeMinTextSize="12sp"
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/opensans_extrabold"
         android:text="Distance: "
         android:textColor="#FFFFFF"
-        android:textSize="20sp"
+        android:textSize="50sp"
         app:layout_constraintStart_toStartOf="@+id/text_duration"
         app:layout_constraintTop_toBottomOf="@+id/text_end" />
 
     <TextView
         android:id="@+id/value_distance"
-        android:layout_width="100dp"
-        android:layout_height="20dp"
-        android:autoSizeMaxTextSize="100sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoSizeMaxTextSize="24sp"
         android:autoSizeMinTextSize="12sp"
         android:fontFamily="@font/opensans_light"
         android:text="TextView"
         android:textColor="#FF0000"
+        android:textSize="@dimen/mapbox_internalMinSpan24"
         app:layout_constraintBottom_toBottomOf="@+id/text_distance"
         app:layout_constraintStart_toStartOf="@+id/value_duration" />
 
     <TextView
         android:id="@+id/text_duration"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
         android:autoSizeMaxTextSize="100sp"
         android:autoSizeMinTextSize="12sp"
         android:fontFamily="@font/opensans_extrabold"
-        android:text="Time: "
+        android:text="Duration: "
         android:textColor="#FFFFFF"
-        android:textSize="20sp"
+        android:textSize="50sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/text_notes" />
 
     <TextView
         android:id="@+id/value_duration"
-        android:layout_width="100dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:autoSizeMaxTextSize="100sp"
         android:autoSizeMinTextSize="12sp"
         android:fontFamily="@font/opensans_light"
         android:text="TextView"
         android:textColor="#FF0000"
+        android:textSize="@dimen/mapbox_internalMinSpan24"
         app:layout_constraintBottom_toBottomOf="@+id/text_duration"
         app:layout_constraintStart_toEndOf="@+id/text_avg_pace" />
 
@@ -94,27 +94,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:autoSizeMaxTextSize="100sp"
-        android:autoSizeMinTextSize="12sp"
+        android:autoSizeMinTextSize="30sp"
         android:fontFamily="@font/opensans_bold"
         android:text="Start Time: "
         android:textColor="#FFFFFF"
+        android:textSize="35sp"
         app:layout_constraintStart_toStartOf="@+id/text_duration"
         app:layout_constraintTop_toBottomOf="@+id/text_duration" />
 
     <TextView
         android:id="@+id/value_start"
-        android:layout_width="100dp"
-        android:layout_height="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:autoSizeMaxTextSize="100sp"
         android:autoSizeMinTextSize="12sp"
         android:fontFamily="@font/opensans_lightitalic"
         android:text="TextView"
         android:textColor="#FFFFFF"
+        android:textSize="@dimen/mapbox_internalMinSpan24"
         app:layout_constraintBottom_toBottomOf="@+id/text_start"
-        app:layout_constraintStart_toStartOf="@+id/value_duration" />
+        app:layout_constraintStart_toStartOf="@+id/value_duration"
+        app:layout_constraintTop_toTopOf="@+id/text_start" />
 
     <TextView
         android:id="@+id/text_end"
@@ -126,19 +129,20 @@
         android:fontFamily="@font/opensans_bold"
         android:text="End Time: "
         android:textColor="#FFFFFF"
+        android:textSize="35sp"
         app:layout_constraintStart_toStartOf="@+id/text_start"
         app:layout_constraintTop_toBottomOf="@+id/text_start" />
 
     <TextView
         android:id="@+id/value_end"
-        android:layout_width="100dp"
-        android:layout_height="20dp"
-        android:layout_marginBottom="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:autoSizeMaxTextSize="100sp"
         android:autoSizeMinTextSize="12sp"
         android:fontFamily="@font/opensans_lightitalic"
         android:text="TextView"
         android:textColor="#FFFFFF"
+        android:textSize="@dimen/mapbox_internalMinSpan24"
         app:layout_constraintBottom_toBottomOf="@+id/text_end"
         app:layout_constraintStart_toStartOf="@+id/value_start" />
 
@@ -149,62 +153,55 @@
         android:layout_marginTop="8dp"
         android:autoSizeMaxTextSize="100sp"
         android:autoSizeMinTextSize="12sp"
-        android:fontFamily="@font/opensans_bold"
+        android:fontFamily="@font/opensans_extrabold"
         android:text="Average Pace: "
         android:textColor="#FFFFFF"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/text_start"
+        android:textSize="35sp"
+        app:layout_constraintStart_toStartOf="@+id/text_end"
         app:layout_constraintTop_toBottomOf="@+id/text_distance" />
 
     <TextView
         android:id="@+id/value_avg_pace"
-        android:layout_width="100dp"
-        android:layout_height="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:autoSizeMaxTextSize="100sp"
         android:autoSizeMinTextSize="12sp"
         android:fontFamily="@font/opensans_lightitalic"
         android:text="TextView"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/text_avg_pace"
-        app:layout_constraintStart_toStartOf="@+id/value_end" />
+        android:textSize="@dimen/mapbox_internalMinSpan24"
+        app:layout_constraintStart_toStartOf="@+id/value_start"
+        app:layout_constraintTop_toBottomOf="@+id/value_distance" />
 
     <ImageButton
         android:id="@+id/button_prev"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
+        android:layout_height="65sp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/edit_text"
+        app:layout_constraintStart_toStartOf="@+id/edit_text"
         app:srcCompat="@android:drawable/ic_media_previous" />
-
-    <TextView
-        android:id="@+id/text_open_routes"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
-        android:fontFamily="@font/opensans_lightitalic"
-        android:text="Open Route"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/value_avg_pace"
-        app:layout_constraintEnd_toEndOf="@+id/button_map"
-        app:layout_constraintStart_toStartOf="@+id/button_map" />
 
     <EditText
         android:id="@+id/edit_text"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:fontFamily="@font/opensans_light"
         android:gravity="top"
-        android:hint="  Type Here..."
+        android:hint=" Type Here..."
         android:textColor="#8DFFFFFF"
         android:textColorHint="#8DFFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/button_prev"
-        app:layout_constraintTop_toBottomOf="@+id/text_notes"
-        tools:layout_editor_absoluteX="34dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/value_start"
+        app:layout_constraintTop_toBottomOf="@+id/text_notes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

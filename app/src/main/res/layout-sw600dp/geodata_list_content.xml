@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/history_item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:background="@color/colorPrimary"
+    android:padding="6dip">
+
+
+    <TextView
+        android:id="@+id/history_item_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans_bolditalic"
+        android:text="Start Time"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textColor="@color/colorAccent"
+        android:textSize="35sp" />
+
+    <TextView
+        android:id="@+id/history_item_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/history_item_start"
+        android:layout_alignStart="@+id/history_item_start"
+        android:layout_gravity="center"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="1dp"
+        android:fontFamily="@font/opensans_light"
+        android:text="Distance"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textColor="@color/colorAccent"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/history_item_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/history_item_distance"
+        android:layout_alignStart="@+id/history_item_distance"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:fontFamily="@font/opensans_light"
+        android:text="Duration"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textColor="@color/colorAccent"
+        android:textSize="25sp"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/item_delete"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="11dp"
+        android:src="@drawable/delete_std" />
+</RelativeLayout>
