@@ -218,7 +218,7 @@ public class JsonUtils {
             JSONArray jsonArrayLat;
             JSONArray jsonArrayLon;
 
-            // convert the history array into JSON and place it in the JSON list, except for the data to be deleted
+            // convert the history array into JSON and place it in the JSON list, except insert new notes data
             for (int i=0; i<historyArray.size(); i++) {
                 if (history.getStartTime() != historyArray.get(i).getStartTime()) {
                     valuesObject = new JSONObject();
@@ -232,7 +232,7 @@ public class JsonUtils {
                     jsonArrayLon = new JSONArray(Arrays.asList(historyArray.get(i).getLongitude()));
                     valuesObject.put("latitude", jsonArrayLat);
                     valuesObject.put("longitude", jsonArrayLon);
-                    Log.i("JsonUtils.java", "delete - copy notes over in loop");
+                    Log.i("JsonUtils.java", "notes - copy notes over in loop");
                     valuesObject.put("notes", historyArray.get(i).getNotes());
 
                     list.put(valuesObject);
@@ -249,7 +249,7 @@ public class JsonUtils {
                     jsonArrayLon = new JSONArray(Arrays.asList(historyArray.get(i).getLongitude()));
                     valuesObject.put("latitude", jsonArrayLat);
                     valuesObject.put("longitude", jsonArrayLon);
-                    Log.i("JsonUtils.java", "delete - copy notes over in loop");
+                    Log.i("JsonUtils.java", "notes - add new notes in loop");
                     historyArray.get(i).setNotes(notesIn);
                     valuesObject.put("notes", historyArray.get(i).getNotes());
 

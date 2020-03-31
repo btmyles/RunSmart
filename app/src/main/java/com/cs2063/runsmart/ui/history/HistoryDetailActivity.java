@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -59,6 +60,25 @@ public class HistoryDetailActivity extends AppCompatActivity {
         Log.i(TAG, "onCreate - getting notes view by id");
         final TextView textNotes = findViewById(R.id.edit_text);
         textNotes.setText(notes);
+        textNotes.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Log.i(TAG, "FocusChangeListener - checking v class");
+                if (v.getClass().equals(EditText.class)) {
+                    Log.i(TAG, "v.getClass is EditText");
+                    if (!hasFocus) {
+                        //do your stuff here
+                        String newNotes = textNotes.getText().toString();
+                        intent.putExtra("NOTES", newNotes);
+                        //needs to save the newNotes back to json
+                        //HistoryData current = new HistoryData(builder);
+                        //utils.updateNotes(getApplicationContext(), current, newNotes);
+                        //builder = new HistoryData.Builder(startTime, endTime, latitude, longitude, newNotes);
+                    }
+                }
+            }
+        });
+        /*
         textNotes.addTextChangedListener(new TextWatcher() {
             boolean _ignore = false;
             String newNotes = "";
@@ -81,6 +101,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
 
                 _ignore = true; // prevent infinite loop
                 newNotes = textNotes.getText().toString();
+                int position = textNotes.getSelectionStart();
                 textNotes.setText(newNotes);
                 //needs to save the newNotes back to json
                 intent.putExtra("NOTES", newNotes);
@@ -89,9 +110,13 @@ public class HistoryDetailActivity extends AppCompatActivity {
                 //HistoryData current = new HistoryData(builder);
                 //utils.updateNotes(getApplicationContext(), current, newNotes);
                 Log.i(TAG, "TextWatcher - afterTextChanged: " + newNotes);
+                //textNotes.setTextSelectHandle(position);
+                //textNotes.setTextCursorDrawable(position);
                 _ignore = false; //TextWatcher starts to listen again.
             }
         });
+
+         */
 
         ImageButton mapButton = findViewById(R.id.button_map);
         mapButton.setOnClickListener(new View.OnClickListener() {
