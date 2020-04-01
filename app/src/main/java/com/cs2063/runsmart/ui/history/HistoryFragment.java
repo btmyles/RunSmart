@@ -42,6 +42,7 @@ public class HistoryFragment extends Fragment {
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.i(TAG, "in onCreateView from onPause with: ");
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         Log.i(TAG, "running onCreateView()");
         View root = inflater.inflate(R.layout.fragment_history, container, false);
@@ -80,6 +81,7 @@ public class HistoryFragment extends Fragment {
 
             private ViewHolder(View v) {
                 super(v);
+                Log.i(TAG, "in adapter viewholder from onPause with: ");
                 start = v.findViewById(R.id.history_item_start);
                 distance = v.findViewById(R.id.history_item_distance);
                 duration = v.findViewById(R.id.history_item_duration);
@@ -125,6 +127,7 @@ public class HistoryFragment extends Fragment {
         public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.geodata_list_content, parent, false);
+            Log.i(TAG, "in adapter oncreateviewholder from onPause with: ");
             return new ViewHolder(v);
         }
 
@@ -158,6 +161,7 @@ public class HistoryFragment extends Fragment {
                 public void onClick(View v){
 
                     startActivity(intent);
+                    Log.i(TAG, "in first startactivity from onPause with: " + intent.getStringExtra("notes"));
                 }
             });
             holder.duration.setOnClickListener(new View.OnClickListener() {
@@ -165,6 +169,7 @@ public class HistoryFragment extends Fragment {
                 public void onClick(View v){
 
                     startActivity(intent);
+                    Log.i(TAG, "in second startactivity from onPause with: " + intent.getStringExtra("notes"));
                 }
             });
             holder.distance.setOnClickListener(new View.OnClickListener() {
@@ -172,8 +177,10 @@ public class HistoryFragment extends Fragment {
                 public void onClick(View v){
 
                     startActivity(intent);
+                    Log.i(TAG, "in third startactivity from onPause with: " + intent.getStringExtra("notes"));
                 }
             });
+            Log.i(TAG, "in OnBindViewHolder from onPause with: " + intent.getStringExtra("notes"));
         }
 
         @Override

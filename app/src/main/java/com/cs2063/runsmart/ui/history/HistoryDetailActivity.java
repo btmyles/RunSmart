@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cs2063.runsmart.LineLayerActivity;
+import com.cs2063.runsmart.MainActivity;
 import com.cs2063.runsmart.R;
 import com.cs2063.runsmart.model.HistoryData;
 import com.cs2063.runsmart.util.JsonUtils;
@@ -22,6 +23,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class HistoryDetailActivity extends AppCompatActivity {
@@ -46,6 +48,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
         String notes = intent.getStringExtra("NOTES");
 
         Log.i(TAG, "creating new Builder in onCreate.");
+        Log.i(TAG, "Notes: " + notes);
 
         TextView textStart = findViewById(R.id.value_start);
         textStart.setText((formatTime(startTime).replace("a.m", "AM").replace("p.m.","PM")));
@@ -60,63 +63,6 @@ public class HistoryDetailActivity extends AppCompatActivity {
         Log.i(TAG, "onCreate - getting notes view by id");
         final TextView textNotes = findViewById(R.id.edit_text);
         textNotes.setText(notes);
-        textNotes.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                Log.i(TAG, "FocusChangeListener - checking v class");
-                if (v.getClass().equals(EditText.class)) {
-                    Log.i(TAG, "v.getClass is EditText");
-                    if (!hasFocus) {
-                        //do your stuff here
-                        String newNotes = textNotes.getText().toString();
-                        intent.putExtra("NOTES", newNotes);
-                        //needs to save the newNotes back to json
-                        //HistoryData current = new HistoryData(builder);
-                        //utils.updateNotes(getApplicationContext(), current, newNotes);
-                        //builder = new HistoryData.Builder(startTime, endTime, latitude, longitude, newNotes);
-                    }
-                }
-            }
-        });
-        /*
-        textNotes.addTextChangedListener(new TextWatcher() {
-            boolean _ignore = false;
-            String newNotes = "";
-            HistoryData.Builder builder;
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                // TODO Auto-generated method stub
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (_ignore)
-                    return;
-
-                _ignore = true; // prevent infinite loop
-                newNotes = textNotes.getText().toString();
-                int position = textNotes.getSelectionStart();
-                textNotes.setText(newNotes);
-                //needs to save the newNotes back to json
-                intent.putExtra("NOTES", newNotes);
-                //builder = new HistoryData.Builder(startTime, endTime, latitude, longitude, newNotes);
-                Log.i(TAG, "afterTextChanged - creating new HistoryData.");
-                //HistoryData current = new HistoryData(builder);
-                //utils.updateNotes(getApplicationContext(), current, newNotes);
-                Log.i(TAG, "TextWatcher - afterTextChanged: " + newNotes);
-                //textNotes.setTextSelectHandle(position);
-                //textNotes.setTextCursorDrawable(position);
-                _ignore = false; //TextWatcher starts to listen again.
-            }
-        });
-
-         */
 
         ImageButton mapButton = findViewById(R.id.button_map);
         mapButton.setOnClickListener(new View.OnClickListener() {
@@ -134,6 +80,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //Log.i(TAG, "in onClick-backbutton from onPause with: " + getIntent().getStringExtra("notes"));
                     finish();
                 }
         });
@@ -142,6 +89,33 @@ public class HistoryDetailActivity extends AppCompatActivity {
         // This should be
         getSupportActionBar().setTitle((dayFmt.format(startTime)));
     }
+
+    @Override
+    protected void onPause() {
+        Log.i(TAG, "in onPause method");
+        super.onPause();
+
+        final Intent intent = getIntent();
+        String original = intent.getStringExtra("NOTES");
+        TextView textNotes = findViewById(R.id.edit_text);
+        String notes = textNotes.getText().toString();
+        Log.i(TAG, "Finished getting notes in onPause: " + notes);
+        if(notes != null && original != null && original.compareTo(notes) != 0) {
+            //intent.putExtra("notes", notes);
+            //Log.i(TAG, "sent new notes back through intent");
+            ArrayList<HistoryData> mHistoryDataList = MainActivity.jsonUtils.getHistoryData();
+            HistoryData current = null;
+            for (int i = 0; i < mHistoryDataList.size(); i++) {
+                if (mHistoryDataList.get(i).getStartTime() == intent.getLongExtra("START_TIME", 0)) {
+                    current = mHistoryDataList.get(i);
+                }
+            }
+            MainActivity.jsonUtils.updateNotes(getApplicationContext(), current, notes);
+            textNotes.setText(notes);
+            intent.putExtra("NOTES", notes);
+        }
+    }
+
     String formatDuration(long duration) {
         long second = (duration / 1000) % 60;
         long minute = (duration / (1000 * 60)) % 60;
