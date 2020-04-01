@@ -116,6 +116,29 @@ public class HistoryDetailActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        Intent intent = getIntent();
+        TextView textNotes = findViewById(R.id.edit_text);
+        String notes = null;
+        ArrayList<HistoryData> mHistoryDataList = MainActivity.jsonUtils.getHistoryData();
+        HistoryData current = null;
+        for (int i = 0; i < mHistoryDataList.size(); i++) {
+            if (mHistoryDataList.get(i).getStartTime() == intent.getLongExtra("START_TIME", 0)) {
+                current = mHistoryDataList.get(i);
+                notes = current.getNotes();
+                break;
+            }
+        }
+        if(notes != null) {
+            textNotes.setText(notes);
+            intent.putExtra("NOTES", notes);
+        }
+        Log.i(TAG, "In onResume with notes: " + intent.getStringExtra("NOTES"));
+    }
+
     String formatDuration(long duration) {
         long second = (duration / 1000) % 60;
         long minute = (duration / (1000 * 60)) % 60;
