@@ -56,7 +56,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
         TextView textDistance = findViewById(R.id.value_distance);
         textDistance.setText(fmt.format(distance)+" km");
         TextView textAvgPace = findViewById(R.id.value_avg_pace);
-        textAvgPace.setText(formatAvgPace((long)avg_pace)+"/km");
+        textAvgPace.setText(formatAvgPace((long)avg_pace,distance)+"/km");
         final TextView textNotes = findViewById(R.id.edit_text);
         textNotes.setText(notes);
 
@@ -136,10 +136,13 @@ public class HistoryDetailActivity extends AppCompatActivity {
         return String.format("%02d:%02d:%02d", hour, minute, second);
     }
 
-    String formatAvgPace(long pace) {
+    String formatAvgPace(long pace,double distance) {
         long second = (pace / 1000) % 60;
         long minute = (pace / (1000 * 60)) % 60;
-        return String.format("%02d:%02d", minute, second);
+        if (distance==0)
+            return "00:00";
+        else
+            return String.format("%02d:%02d", minute, second);
     }
 
     String formatTime(long duration) {
