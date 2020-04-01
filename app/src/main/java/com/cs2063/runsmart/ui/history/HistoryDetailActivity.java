@@ -47,9 +47,6 @@ public class HistoryDetailActivity extends AppCompatActivity {
         double avg_pace = intent.getDoubleExtra("AVG_PACE", 0);
         String notes = intent.getStringExtra("NOTES");
 
-        Log.i(TAG, "creating new Builder in onCreate.");
-        Log.i(TAG, "Notes: " + notes);
-
         TextView textStart = findViewById(R.id.value_start);
         textStart.setText((formatTime(startTime).replace("a.m", "AM").replace("p.m.","PM")));
         TextView textEnd = findViewById(R.id.value_end);
@@ -60,7 +57,6 @@ public class HistoryDetailActivity extends AppCompatActivity {
         textDistance.setText(fmt.format(distance)+" km");
         TextView textAvgPace = findViewById(R.id.value_avg_pace);
         textAvgPace.setText(fmt.format((avg_pace/3.6))+" m/s");
-        Log.i(TAG, "onCreate - getting notes view by id");
         final TextView textNotes = findViewById(R.id.edit_text);
         textNotes.setText(notes);
 
@@ -80,11 +76,9 @@ public class HistoryDetailActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Log.i(TAG, "in onClick-backbutton from onPause with: " + getIntent().getStringExtra("notes"));
                     finish();
                 }
         });
-
 
         // This should be
         getSupportActionBar().setTitle((dayFmt.format(startTime)));
@@ -99,10 +93,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
         String original = intent.getStringExtra("NOTES");
         TextView textNotes = findViewById(R.id.edit_text);
         String notes = textNotes.getText().toString();
-        Log.i(TAG, "Finished getting notes in onPause: " + notes);
         if(notes != null && original != null && original.compareTo(notes) != 0) {
-            //intent.putExtra("notes", notes);
-            //Log.i(TAG, "sent new notes back through intent");
             ArrayList<HistoryData> mHistoryDataList = MainActivity.jsonUtils.getHistoryData();
             HistoryData current = null;
             for (int i = 0; i < mHistoryDataList.size(); i++) {
@@ -136,7 +127,6 @@ public class HistoryDetailActivity extends AppCompatActivity {
             textNotes.setText(notes);
             intent.putExtra("NOTES", notes);
         }
-        Log.i(TAG, "In onResume with notes: " + intent.getStringExtra("NOTES"));
     }
 
     String formatDuration(long duration) {
