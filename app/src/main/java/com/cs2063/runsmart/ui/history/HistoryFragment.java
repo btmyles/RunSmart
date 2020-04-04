@@ -74,9 +74,10 @@ public class HistoryFragment extends Fragment {
             private TextView start;
             private TextView distance;
             private TextView duration;
-
+            private TextView clickView;
             private ViewHolder(View v) {
                 super(v);
+                clickView=v.findViewById(R.id.clickView);
                 start = v.findViewById(R.id.history_item_start);
                 distance = v.findViewById(R.id.history_item_distance);
                 duration = v.findViewById(R.id.history_item_duration);
@@ -165,6 +166,13 @@ public class HistoryFragment extends Fragment {
                 }
             });
             holder.distance.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v){
+
+                    startActivity(intent);
+                }
+            });
+            holder.clickView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v){
 
