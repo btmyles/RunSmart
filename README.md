@@ -13,12 +13,20 @@
 ## Table of Contents
 
   - [Screenshots](#screenshots)
+  - [Description](#description)
   - [Features](#features)
   - [Privacy](#privacy)
   - [Battery](#battery)
+  - [Installation](#installation)
+  - [Permissions](#battery)
+  - [How it Works](#how-it-works)
   - [License](#license)
 
 ### Screenshots
+
+### Description
+
+RunSmart is a tool designed to help novice runners achieve their next goals. It provides users a simple, and effective way of tracking their runs and measuring their progress without the need for a wearable fitness tracker.
 
 ### Features
 
@@ -36,5 +44,17 @@
 - All data is stored locally and is never uploaded online
 
 ### Battery
+
+- GPS significantly reduces battery life
+- When starting a run if the battery is below 25%, GPS location is accessed half as often
+
+### Installation
+- RunSmart can be installed on any android phone or tablet with Android 8.0 Oreo and above.
+- Install from the [Google Play Store](https://play.google.com/store/apps/details?id=com.cs2063.runsmart).
+- Download and install from the GitHub [releases](https://github.com/btymles/RunSmart/releases).
+
+## Permissions
+-Internal storage
+-GPS
 
 ### License
