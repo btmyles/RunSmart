@@ -46,15 +46,27 @@ RunSmart is a tool designed to help novice runners achieve their next goals. It 
 ### Battery
 
 - GPS significantly reduces battery life
-- When starting a run if the battery is below 25%, GPS location is accessed half as often
+- If the battery is below 25% when starting a run, GPS location is accessed half as often
 
 ### Installation
 - RunSmart can be installed on any android phone or tablet with Android 8.0 Oreo and above.
 - Install from the [Google Play Store](https://play.google.com/store/apps/details?id=com.cs2063.runsmart).
 - Download and install from the GitHub [releases](https://github.com/btmyles/RunSmart/releases).
 
-## Permissions
--Internal storage
--GPS
+### Permissions
+- Internal storage
+- GPS
+
+### How it Works
+
+Track your Run:
+- When you open the app, you will see a blue “Run” button. Pressing that button will begin tracking your location for a new run session.
+- After you press the button, the app will access your current location. The button will turn yellow while the app communicates with your GPS. 
+Note: you will need to enable GPS permissions for this feature to work.
+- Once your GPS has been successfully accessed, the button will turn Red with the text “Finish”. While this button is displayed, the app will access your location in real time as you run.
+- When you are finished running, press the red Finish button. The app will then display the statistics from your run. You will be able to see your run time, distance, average pace, and you will have the option to see a map of your route.
+- Pressing the Open Route button will display a map with your running route highlighted in blue. The map is interactive, and you can zoom and pan across the map.
+- There is space on your run summary for you to write custom notes if desired.
+
 
 ### License
