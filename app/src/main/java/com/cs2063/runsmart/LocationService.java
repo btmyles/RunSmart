@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -43,7 +44,16 @@ public class LocationService extends Service {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, listener);
+
+        // check battery level
+        BatteryManager bm = (BatteryManager) getSystemService(BATTERY_SERVICE);
+        int level = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
+
+        if (level > 25)
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, listener);
+        else
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, listener);
+
     }
 
     @Override
