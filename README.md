@@ -51,7 +51,7 @@ RunSmart is a tool designed to help novice runners achieve their next goals. It 
 ### Installation
 - RunSmart can be installed on any android phone or tablet with Android 8.0 Oreo and above.
 - Install from the [Google Play Store](https://play.google.com/store/apps/details?id=com.cs2063.runsmart).
-- Download and install from the GitHub [releases](https://github.com/btymles/RunSmart/releases).
+- Download and install from the GitHub [releases](https://github.com/btmyles/RunSmart/releases).
 
 ## Permissions
 -Internal storage
