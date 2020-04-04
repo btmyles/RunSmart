@@ -59,7 +59,7 @@ RunSmart is a tool designed to help novice runners achieve their next goals. It 
 
 ### How it Works
 
-Track your Run:
+#### Track your Run
 - When you open the app, you will see a blue “Run” button. Pressing that button will begin tracking your location for a new run session.
 - After you press the button, the app will access your current location. The button will turn yellow while the app communicates with your GPS. 
 Note: you will need to enable GPS permissions for this feature to work.
@@ -68,10 +68,17 @@ Note: you will need to enable GPS permissions for this feature to work.
 - Pressing the Open Route button will display a map with your running route highlighted in blue. The map is interactive, and you can zoom and pan across the map.
 - There is space on your run summary for you to write custom notes if desired.
 
-Find Related Articles:
+#### Find Related Articles
 - After opening the app, select Articles on the bottom navigation view.
 - There are links to various fitness-related articles. Clicking a link will prompt you to choose a browser in which to view the article.
 - After selecting a browser, that browser will launch and display the article.
 
 
 ### License
+[![GNU GPLv3 Image](https://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)  
+
+RunSmart is Free Software: You can use, study, share, and improve it at your
+will. Specifically you can redistribute and/or modify it under the terms of the
+[GNU General Public License](https://www.gnu.org/licenses/gpl.html) as
+published by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.  
