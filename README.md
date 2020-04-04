@@ -68,5 +68,10 @@ Note: you will need to enable GPS permissions for this feature to work.
 - Pressing the Open Route button will display a map with your running route highlighted in blue. The map is interactive, and you can zoom and pan across the map.
 - There is space on your run summary for you to write custom notes if desired.
 
+Find Related Articles:
+- After opening the app, select Articles on the bottom navigation view.
+- There are links to various fitness-related articles. Clicking a link will prompt you to choose a browser in which to view the article.
+- After selecting a browser, that browser will launch and display the article.
+
 
 ### License
