@@ -191,12 +191,6 @@ public class HistoryFragment extends Fragment {
         long hour = ((duration / (1000 * 60 * 60)) % 24);
         return String.format("%02d:%02d:%02d", hour, minute, second);
     }
-    String formatPace(long pace) {
-        long second = (pace / 1000) % 60;
-        long minute = (pace / (1000 * 60)) % 60;
-        long hour = ((pace / (1000 * 60 * 60)) % 24);
-        return String.format("%02d:%02d:%02d", hour, minute, second);
-    }
 
     String formatTime(long duration) {
         long second = (duration / 1000) % 60;
