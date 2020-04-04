@@ -12,14 +12,28 @@
 
 ## Table of Contents
 
+  - [Screenshots](#screenshots)
   - [Features](#features)
   - [Privacy](#privacy)
   - [Battery](#battery)
   - [License](#license)
 
+### Screenshots
+
 ### Features
 
+- GPS tracking even while the app is closed
+- Timer recording the duration of the run
+- Map to display running routes using MapBox
+- Run log showing previous run data
+- Notes section for details about a completed run
+- Recommended articles for novice and experienced runners
+
 ### Privacy
+
+- RunSmart does not require internet permissions
+- Network location is not used. GPS only
+- All data is stored locally and is never uploaded online
 
 ### Battery
 
