@@ -68,6 +68,15 @@ Note: you will need to enable GPS permissions for this feature to work.
 - Pressing the Open Route button will display a map with your running route highlighted in blue. The map is interactive, and you can zoom and pan across the map.
 - There is space on your run summary for you to write custom notes if desired.
 
+#### View your Running History
+- After opening the app, select the History tab on the bottom navigation view. 
+- A list will appear containing high level information of your past runs: date, start time, distance, and duration.
+- To access more information about your run, click on the desired list item.
+- The app will display your run time, distance, average pace, notes, and a button to view your route.
+- There is space on this screen to write custom notes if desired.
+- Pressing the Open Route button will display a map with your running route highlighted in blue. The map is interactive, and you can zoom and pan across the map.
+
+
 #### Find Related Articles
 - After opening the app, select Articles on the bottom navigation view.
 - There are links to various fitness-related articles. Clicking a link will prompt you to choose a browser in which to view the article.
