@@ -9,3 +9,18 @@
 <a href="https://github.com/btmyles/RunSmart" alt="GitHub release"><img src="https://img.shields.io/github/release/btmyles/RunSmart.svg" ></a>
 <a href="https://www.gnu.org/licenses/gpl-3.0" alt="License: GPLv3"><img src="https://img.shields.io/badge/License-GPL%20v3-blue.svg"></a>
 </p>
+
+## Table of Contents
+
+  - [Features](#features)
+  - [Privacy](#privacy)
+  - [Battery](#battery)
+  - [License](#license)
+
+### Features
+
+### Privacy
+
+### Battery
+
+### License
