@@ -18,10 +18,16 @@
   - [Battery](#battery)
   - [Privacy](#privacy)
   - [Installation](#installation)
-  - [How it Works](#how-Licenseit-works)
+  - [How it Works](#how-it-works)
   - [License](#license)
 
 ### Screenshots
+
+<p><img src="/screenshots/StartRun.png" width="150">
+   <img src="/screenshots/History.png" width="150">
+   <img src="/screenshots/Detail.png" width="150">
+   <img src="/screenshots/Map.png" width="150">
+   <img src="/screenshots/Articles.png" width="150"></p>
 
 ### Description
 
