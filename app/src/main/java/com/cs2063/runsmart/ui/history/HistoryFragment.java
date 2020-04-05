@@ -31,6 +31,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class HistoryFragment extends Fragment {
 
@@ -199,12 +200,7 @@ public class HistoryFragment extends Fragment {
         long hour = ((duration / (1000 * 60 * 60)) % 24);
         return String.format("%02d:%02d:%02d", hour, minute, second);
     }
-    String formatPace(long pace) {
-        long second = (pace / 1000) % 60;
-        long minute = (pace / (1000 * 60)) % 60;
-        long hour = ((pace / (1000 * 60 * 60)) % 24);
-        return String.format("%02d:%02d:%02d", hour, minute, second);
-    }
+
 
     String formatTime(long duration) {
         long second = (duration / 1000) % 60;
@@ -215,16 +211,13 @@ public class HistoryFragment extends Fragment {
     }
     String stdFmt(String militaryFmt){
         DateFormat df = new SimpleDateFormat("H:mm:ss");
-        //Date/time pattern of desired output date
         DateFormat outputformat = new SimpleDateFormat("h:mm:ss aa");
+        outputformat.setTimeZone(TimeZone.getTimeZone("GMT-3"));
         Date date;
         String output = null;
         try{
-            //Conversion of input String to date
             date= df.parse(militaryFmt);
-            //old date format to new date format
             output = outputformat.format(date);
-            System.out.println(output);
         }catch(ParseException pe){
             pe.printStackTrace();
         }

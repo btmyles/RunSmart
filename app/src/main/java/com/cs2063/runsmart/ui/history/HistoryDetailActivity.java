@@ -25,6 +25,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class HistoryDetailActivity extends AppCompatActivity {
     private final String TAG = "HistoryDetailActivity.java";
@@ -139,10 +140,9 @@ public class HistoryDetailActivity extends AppCompatActivity {
     String formatAvgPace(long pace,double distance) {
         long second = (pace / 1000) % 60;
         long minute = (pace / (1000 * 60)) % 60;
-        if (distance==0)
-            return "00:00";
-        else
-            return String.format("%02d:%02d", minute, second);
+        //if (distance==0)
+            //return "00:00";
+        return String.format("%02d:%02d", minute, second);
     }
 
     String formatTime(long duration) {
@@ -158,6 +158,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
         String output = null;
         DateFormat df = new SimpleDateFormat("H:mm:ss");
         DateFormat outputformat = new SimpleDateFormat("h:mm:ss aa");
+        outputformat.setTimeZone(TimeZone.getTimeZone("GMT-3"));
         try{
             date= df.parse(militaryFmt);
             output = outputformat.format(date);
