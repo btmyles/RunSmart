@@ -82,6 +82,7 @@ public class RunFragment extends Fragment {
     }
 
     private void enableChronometer(long base) {
+        //Chronometer idea from stackoverflow
         chronometer.setFormat("00:%s");
         chronometer.setBase(base);
 
@@ -102,8 +103,6 @@ public class RunFragment extends Fragment {
 
     private void runButtonPressed() {
 
-        Log.i(TAG, "Run button pressed. Button text = " + runButton.getText());
-
         if (runButton.getText().equals(getResources().getString(R.string.endrun_text)))
             endRun();
         else if(runButton.getText().equals(getResources().getString(R.string.loadingrun_text)))
@@ -113,18 +112,15 @@ public class RunFragment extends Fragment {
     }
 
     private void cancelRun() {
-        // In development: foreground service
         Intent locationIntent = new Intent(getActivity().getApplicationContext(), LocationService.class);
         getActivity().getApplicationContext().stopService(locationIntent);
 
         runButton.setText(R.string.startrun_text);
         runButton.setBackgroundResource(R.drawable.button_bg_round_blue);
 
-        Log.i(TAG, "Cancel Run");
     }
 
     private void startRun() {
-        Log.i(TAG, "Start run");
         if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
@@ -170,8 +166,6 @@ public class RunFragment extends Fragment {
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.stop();
 
-        Log.i(TAG, "End time = " + endtime);
-
         // Start map activity
         Intent intent = new Intent(getActivity().getApplicationContext(), HistoryDetailActivity.class);
         intent.putExtra("START_TIME", historyData.getStartTime());
@@ -185,7 +179,6 @@ public class RunFragment extends Fragment {
     }
 
     private void resumeRun(String buttonText, long chronometerBase) {
-        Log.i(TAG, "resumeRun");
         if (buttonText.equals(getString(R.string.endrun_text))) {
             // Turn red
             runButton.setText(R.string.endrun_text);
@@ -257,21 +250,17 @@ public class RunFragment extends Fragment {
         editor.putString(ButtonText, text);
         editor.putLong(ChronometerBase, base);
         editor.commit();
-        Log.i(TAG, "onPause: buttonText = " + text);
     }
     @Override
     public void onStop() {
         super.onStop();
-        Log.i(TAG, "onStop");
     }
     @Override
     public void onStart() {
         super.onStart();
-        Log.i(TAG, "onStart");
         String prefString = sharedPreferences.getString(ButtonText, "None");
         long prefBase = sharedPreferences.getLong(ChronometerBase, 0);
         if (prefString.equals(getString(R.string.endrun_text)) || prefString.equals(getString(R.string.loadingrun_text))) {
-            Log.i(TAG, "resuming run");
             resumeRun(prefString, prefBase);
         }
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -281,7 +270,6 @@ public class RunFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.i(TAG, "onResume");
     }
 }
 

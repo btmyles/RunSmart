@@ -31,7 +31,6 @@ public class HistoryDetailActivity extends AppCompatActivity {
     private final String TAG = "HistoryDetailActivity.java";
     private static DecimalFormat fmt= new DecimalFormat("######.##");
     SimpleDateFormat dayFmt = new SimpleDateFormat("yyyy/MM/dd ");
-    //private JsonUtils utils = new JsonUtils(context);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,13 +80,11 @@ public class HistoryDetailActivity extends AppCompatActivity {
                 }
         });
 
-        // This should be
         getSupportActionBar().setTitle((dayFmt.format(startTime)));
     }
 
     @Override
     protected void onPause() {
-        Log.i(TAG, "in onPause method");
         super.onPause();
 
         final Intent intent = getIntent();

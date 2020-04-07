@@ -62,7 +62,6 @@ public class HistoryData {
             this.endTime = endTime;
             this.latitude = latitude;
             this.longitude = longitude;
-            Log.i("HistoryData.java", "Builder constructor. Setting notes.");
             this.notes = notes;
         }
         public HistoryData build() { return new HistoryData(this);}
@@ -73,7 +72,6 @@ public class HistoryData {
         this.endTime = builder.endTime;
         this.latitude = builder.latitude;
         this.longitude = builder.longitude;
-        Log.i("HistoryData.java", "HistoryData constructor, setting notes.");
         this.notes = builder.notes;
     }
 

@@ -97,7 +97,6 @@ public class HistoryFragment extends Fragment {
 
                                         // Delete from JSON
                                         Boolean deleteSuccess = MainActivity.jsonUtils.delete(getActivity().getApplicationContext(), currentHistory);
-                                        Log.i(TAG, "Deletion successful : " + deleteSuccess);
 
                                         break;
 
@@ -124,7 +123,6 @@ public class HistoryFragment extends Fragment {
         public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.geodata_list_content, parent, false);
-            Log.i(TAG, "in adapter oncreateviewholder from onPause with: ");
             return new ViewHolder(v);
         }
 

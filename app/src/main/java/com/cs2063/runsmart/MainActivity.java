@@ -40,9 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         createHistoryDirectory("history");
 
-        Log.i(TAG, "Starting JSON Utils");
         jsonUtils = new JsonUtils(this);
-        Log.i(TAG, "Done with JSON Utils");
     }
 
     @Override
@@ -64,48 +62,11 @@ public class MainActivity extends AppCompatActivity {
 
         File folder = getFilesDir();
         File f = new File(folder, filename);
-        Log.i("Main", f.getAbsolutePath());
 
         if (!f.exists()) {
-            Log.i("Main", "File does not exist");
             if (!f.mkdir()) {
                 Toast.makeText(context, "Unable to create folder: " + filename, Toast.LENGTH_SHORT).show();
             }
-        }
-        String[] arr = context.fileList();
-        for (int i=0; i<arr.length; i++) {
-            Log.i("main", arr[i]);
-        }
-
-        try {
-            File outputFile = new File(f, "test.json");
-            FileWriter writer = new FileWriter(outputFile);
-            writer.append("Test file contents");
-            Log.i("Main", "test.json has been written - File list below");
-            String[] filelist = context.fileList();
-            for (int i=0; i<arr.length; i++) {
-                Log.i("main", arr[i]);
-            }
-            writer.flush();
-            writer.close();
-        }
-        catch (IOException e) {
-            Log.i("Main", e.toString());
-
-        }
-
-        try {
-            File outputFile = new File(f, "test.json");
-            FileInputStream is = new FileInputStream(outputFile);
-            int content;
-            Log.i("MAIN", "Starting to read from test.json");
-            while ((content=is.read()) != -1) {
-                Log.i("MAIN", Character.toString((char) content));
-            }
-            is.close();
-        }
-        catch (IOException e) {
-            Log.i("Main", e.toString());
         }
     }
 }

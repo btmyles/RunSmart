@@ -33,8 +33,6 @@ public class JsonUtils {
     // Initializer to read our data source (JSON file) into an array of course objects
     public JsonUtils(Context context) {
         // Write History.json to local files before reading from said local file
-
-        // Read from local files
         processJSON(context);
     }
 
@@ -64,7 +62,6 @@ public class JsonUtils {
                         longitude[j] = Jsonlongitude.getDouble(j);
                     }
 
-                    Log.i("JsonUtils.java", "processJSON getting notes key from element object.");
                     String notes = elementObject.getString(KEY_NOTES);
 
                     // Get data from individual JSON Object
@@ -116,7 +113,6 @@ public class JsonUtils {
             JSONArray jsonArrayLon = new JSONArray(Arrays.asList(history.getLongitude()));
             valuesObject.put("latitude", jsonArrayLat);
             valuesObject.put("longitude", jsonArrayLon);
-            Log.i("JsonUtils.java", "toJSon - convert HistoryData notes to JSON");
             valuesObject.put("notes", history.getNotes());
 
             list.put(valuesObject);
@@ -134,7 +130,6 @@ public class JsonUtils {
                 jsonArrayLon = new JSONArray(Arrays.asList(historyArray.get(i).getLongitude()));
                 valuesObject.put("latitude", jsonArrayLat);
                 valuesObject.put("longitude", jsonArrayLon);
-                Log.i("JsonUtils.java", "toJSon - putting notes from loop.");
                 valuesObject.put("notes", historyArray.get(i).getNotes());
 
                 list.put(valuesObject);
@@ -183,7 +178,6 @@ public class JsonUtils {
                     jsonArrayLon = new JSONArray(Arrays.asList(historyArray.get(i).getLongitude()));
                     valuesObject.put("latitude", jsonArrayLat);
                     valuesObject.put("longitude", jsonArrayLon);
-                    Log.i("JsonUtils.java", "delete - copy notes over in loop");
                     valuesObject.put("notes", historyArray.get(i).getNotes());
 
                     list.put(valuesObject);
@@ -191,10 +185,6 @@ public class JsonUtils {
             }
 
             mainObject.accumulate("history", list);
-
-            Log.i(TAG, "Deleting run at start time: " + history.getStartTime());
-            Log.i(TAG, "New JSON data:");
-            Log.i(TAG, mainObject.toString());
 
             // Overwrite History.json
             writeToFile(mainObject.toString(), context);
@@ -232,7 +222,6 @@ public class JsonUtils {
                     jsonArrayLon = new JSONArray(Arrays.asList(historyArray.get(i).getLongitude()));
                     valuesObject.put("latitude", jsonArrayLat);
                     valuesObject.put("longitude", jsonArrayLon);
-                    Log.i("JsonUtils.java", "notes - copy notes over in loop");
                     valuesObject.put("notes", historyArray.get(i).getNotes());
 
                     list.put(valuesObject);
@@ -249,7 +238,6 @@ public class JsonUtils {
                     jsonArrayLon = new JSONArray(Arrays.asList(historyArray.get(i).getLongitude()));
                     valuesObject.put("latitude", jsonArrayLat);
                     valuesObject.put("longitude", jsonArrayLon);
-                    Log.i("JsonUtils.java", "notes - add new notes in loop");
                     historyArray.get(i).setNotes(notesIn);
                     valuesObject.put("notes", historyArray.get(i).getNotes());
 
@@ -258,10 +246,6 @@ public class JsonUtils {
             }
 
             mainObject.accumulate("history", list);
-
-            Log.i(TAG, "Modifying notes file for object " + history.getStartTime());
-            Log.i(TAG, "New JSON data:");
-            Log.i(TAG, mainObject.toString());
 
             // Overwrite History.json
             writeToFile(mainObject.toString(), context);
@@ -286,7 +270,6 @@ public class JsonUtils {
             File gpxfile = new File(file, "History.json");
             FileWriter writer = new FileWriter(gpxfile);
             writer.write(data);
-            Log.i("Main", "History.json has been written");
             writer.flush();
             writer.close();
 
